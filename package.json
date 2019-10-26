@@ -1,0 +1,66 @@
+{
+  "name": "test-env",
+  "version": "0.1.0",
+  "description": "One line smart contracts test environment.",
+  "main": "./lib/index.js",
+  "scripts": {
+    "compile": "rm -rf lib && tsc",
+    "watch": "tsc -w",
+    "test": "./test/run.sh"
+  },
+  "files": [
+    "lib",
+    "scripts"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npx tsc --noEmit",
+      "pre-push": "npm run test"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenZeppelin/test-env.git"
+  },
+  "keywords": [
+    "smart-contracts",
+    "solidity",
+    "ethereum",
+    "test",
+    "javascript",
+    "web3"
+  ],
+  "author": "Francisco Giordano <fran@openzeppelin.com>, Nicolás Venturo <nicolas@openzeppelin.com>, Igor Yalovoy <igor@openzeppelin.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OpenZeppelin/test-env/issues"
+  },
+  "homepage": "https://github.com/OpenZeppelin/test-env#readme",
+  "devDependencies": {
+    "@types/node": "^12.7.4",
+    "@types/web3": "^1.0.19",
+    "@typescript-eslint/eslint-plugin": "^2.1.0",
+    "@typescript-eslint/parser": "^2.1.0",
+    "ava": "^2.4.0",
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.2.5",
+    "prettier": "^1.18.2",
+    "typescript": "^3.6.2"
+  },
+  "dependencies": {
+    "ethereumjs-wallet": "^0.6.3",
+    "ganache-core": "^2.8.0",
+    "p-queue": "^6.2.0",
+    "try-require": "^1.2.1",
+    "web3": "^1.2.1"
+  }
+}

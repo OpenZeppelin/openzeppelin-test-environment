@@ -1,0 +1,17 @@
+{
+  "name": "jest-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx asado test 'npx jest'"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "web3": "^1.2.1"
+  },
+  "dependencies": {}
+}
