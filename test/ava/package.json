@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx asado test 'npx ava'"
+    "test": "npx ava"
   },
   "author": "",
   "license": "MIT",
@@ -12,6 +12,5 @@
     "ava": "^2.4.0",
     "prettier": "^1.18.2",
     "web3": "^1.2.1"
-  },
-  "dependencies": {}
+  }
 }

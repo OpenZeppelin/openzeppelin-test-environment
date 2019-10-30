@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx asado test 'npx jest'"
+    "test": "npx jest --testTimeout 10000"
   },
   "author": "",
   "license": "MIT",
@@ -12,6 +12,5 @@
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "web3": "^1.2.1"
-  },
-  "dependencies": {}
+  }
 }

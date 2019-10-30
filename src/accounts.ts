@@ -2,7 +2,8 @@ import wallet, { Wallet } from 'ethereumjs-wallet';
 
 type WalletConfig = {
   balance: string;
-  privateKey: string;
+  // do not change the name Ganache depends on it
+  secretKey: string;
 };
 
 type AccountsConfig = {
@@ -13,7 +14,7 @@ type AccountsConfig = {
 function getConfig(wallet: Wallet): WalletConfig {
   return {
     balance: (1e18).toString(), // 1 ether
-    privateKey: wallet.getPrivateKeyString(),
+    secretKey: wallet.getPrivateKeyString(),
   };
 }
 

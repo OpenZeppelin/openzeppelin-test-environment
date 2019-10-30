@@ -1,16 +1,15 @@
 import test from 'ava';
 
-const { web3, getAccounts, getContract, getNetworkId } = require('asado');
+const { accounts, load } = require('test-env');
 
-const FooBar = getContract('FooBar');
+const FooBar = load('FooBar');
 
 let deployer;
-let accounts;
 let args;
 let fooBar;
 
 test.before(async function() {
-  [, deployer, ...accounts] = await getAccounts();
+  [, deployer] = accounts;
   args = { from: deployer, gas: 2e6 };
 
   // deploy your contract

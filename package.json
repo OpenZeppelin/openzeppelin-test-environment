@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "rm -rf lib && tsc",
     "watch": "tsc -w",
-    "test": "./test/run.sh"
+    "test": "npm run compile && ./test/run.sh"
   },
   "files": [
     "lib",
