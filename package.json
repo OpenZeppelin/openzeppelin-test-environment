@@ -57,6 +57,7 @@
     "typescript": "^3.6.2"
   },
   "dependencies": {
+    "@openzeppelin/contract-loader": "^0.2.0",
     "ethereumjs-wallet": "^0.6.3",
     "ganache-core": "^2.8.0",
     "p-queue": "^6.2.0",
