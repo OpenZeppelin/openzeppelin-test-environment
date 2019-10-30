@@ -1,4 +1,4 @@
-import web3 from 'web3';
+import Web3 from 'web3';
 import { Provider, JsonRPCRequest, Callback, JsonRPCResponse } from 'web3/providers';
 import { HttpProvider } from 'web3-core';
 import PQueue from 'p-queue';
@@ -22,7 +22,7 @@ export default class TestProvider implements HttpProvider {
   constructor(host: string) {
     this.host = host;
     this.connected = true;
-    this.provider = new web3.providers.HttpProvider(host);
+    this.provider = new Web3.providers.HttpProvider(host);
 
     this.queue = new PQueue({ concurrency: 1 });
 
