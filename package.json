@@ -1,5 +1,5 @@
 {
-  "name": "test-env",
+  "name": "@openzeppelin/test-env",
   "version": "0.1.0",
   "description": "One line smart contracts test environment.",
   "main": "./lib/index.js",
@@ -9,8 +9,7 @@
     "test": "npm run compile && ./test/run.sh"
   },
   "files": [
-    "lib",
-    "scripts"
+    "lib"
   ],
   "husky": {
     "hooks": {
@@ -34,7 +33,8 @@
     "ethereum",
     "test",
     "javascript",
-    "web3"
+    "web3",
+    "test"
   ],
   "author": "Francisco Giordano <fran@openzeppelin.com>, Nicolás Venturo <nicolas@openzeppelin.com>, Igor Yalovoy <igor@openzeppelin.com>",
   "license": "MIT",
