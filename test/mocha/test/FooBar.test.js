@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { accounts, load } = require('test-env');
+const { accounts, load } = require('@openzeppelin/test-env');
 
 const FooBar = load('FooBar');
 
