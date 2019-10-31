@@ -1,3 +1,5 @@
+import loaderFactory from '@openzeppelin/contract-loader';
+
 import isHelpersConfigured from './helpers';
 import { accounts, web3, provider } from './web3';
 
@@ -16,7 +18,7 @@ const loaderConfig = {
   defaultSender,
 };
 
-const load = require('@openzeppelin/contract-loader')(loaderConfig);
+const load = loaderFactory(loaderConfig);
 
 module.exports = {
   accounts: exposedAccounts,
