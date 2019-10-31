@@ -6,10 +6,12 @@ import TestProvider from './TestProvider';
 import { generateAccounts } from './accounts';
 
 const port = '8548';
+const gasLimit = 8e6;
+
 const { accounts, accountsConfig } = generateAccounts(10);
 
 const server = fork(path.join(__dirname, 'server'));
-server.send({ port, accountsConfig });
+server.send({ port, accountsConfig, gasLimit });
 
 const provider = new TestProvider(`http://localhost:${port}`);
 
