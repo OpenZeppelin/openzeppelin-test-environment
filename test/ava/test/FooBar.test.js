@@ -1,19 +1,15 @@
 import test from 'ava';
 
-const { accounts, load } = require('test-env');
+const { accounts, load } = require('@openzeppelin/test-env');
+const [ deployer ] = accounts;
 
 const FooBar = load('FooBar');
 
-let deployer;
-let args;
 let fooBar;
 
 test.before(async function() {
-  [, deployer] = accounts;
-  args = { from: deployer, gas: 2e6 };
-
   // deploy your contract
-  fooBar = await FooBar.deploy().send(args);
+  fooBar = await FooBar.deploy().send();
 });
 
 test('foo with a bar', async t => {
@@ -21,16 +17,16 @@ test('foo with a bar', async t => {
 });
 
 test('reverts a transaction', async t => {
-  const error = await t.throwsAsync(fooBar.methods.reverts().send(args));
+  const error = await t.throwsAsync(fooBar.methods.reverts().send());
   t.regex(error.message, /Just do it!/);
 });
 
 test('fails requires', async t => {
-  const error = await t.throwsAsync(fooBar.methods.requires(324).send(args));
+  const error = await t.throwsAsync(fooBar.methods.requires(324).send());
   t.regex(error.message, /Wrong answer/);
 });
 
 test('pass require with a right answer ', async t => {
-  const ret = await fooBar.methods.requires(42).send(args);
+  const ret = await fooBar.methods.requires(42).send();
   t.not(ret, null);
 });

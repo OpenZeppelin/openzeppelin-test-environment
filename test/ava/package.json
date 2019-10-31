@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx ava"
+    "compile": "npx oz compile",
+    "test": "npm run compile && npx ava"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@openzeppelin/cli": "^2.5.3",
     "ava": "^2.4.0",
     "prettier": "^1.18.2",
     "web3": "^1.2.1"
