@@ -5,15 +5,14 @@ import Web3 from 'web3';
 import TestProvider from './TestProvider';
 import { generateAccounts } from './accounts';
 
-const port = '8548';
-const gasLimit = 8e6;
+import config from './config';
 
-const { accounts, accountsConfig } = generateAccounts(10);
+const { accounts, accountsConfig } = generateAccounts(config.accounts + 1); // extra account for the default sender
 
 const server = fork(path.join(__dirname, 'server'));
-server.send({ port, accountsConfig, gasLimit });
+server.send({ port: config.port, accountsConfig, gasLimit: config.gasLimit });
 
-const provider = new TestProvider(`http://localhost:${port}`);
+const provider = new TestProvider(`http://localhost:${config.port}`);
 
 const web3 = new Web3(provider);
 
