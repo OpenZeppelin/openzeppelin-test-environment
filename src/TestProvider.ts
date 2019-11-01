@@ -7,6 +7,7 @@ export default class TestProvider implements HttpProvider {
   host: string;
   connected: boolean;
 
+  // These are required by the HttpProvider interface
   supportsSubscriptions(): boolean {
     throw new Error('Method not implemented.');
   }
@@ -21,6 +22,7 @@ export default class TestProvider implements HttpProvider {
 
   constructor(host: string) {
     this.host = host;
+    // TODO: forward these to the underlying provider
     this.connected = true;
     this.provider = new Web3.providers.HttpProvider(host);
 
