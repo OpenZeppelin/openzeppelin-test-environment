@@ -57,7 +57,8 @@
     "typescript": "^3.6.2"
   },
   "dependencies": {
-    "@openzeppelin/contract-loader": "^0.2.0",
+    "@openzeppelin/contract-loader": "^0.3.0",
+    "@truffle/contract": "^4.0.38",
     "ethereumjs-wallet": "^0.6.3",
     "find-up": "^4.1.0",
     "ganache-core": "^2.8.0",

@@ -1,5 +1,6 @@
-import loaderFactory from '@openzeppelin/contract-loader';
+import * as loader from '@openzeppelin/contract-loader';
 
+import config from './config';
 import isHelpersConfigured from './helpers';
 import { accounts, web3, provider } from './web3';
 
@@ -14,11 +15,22 @@ const defaultSender = accounts[0];
 const exposedAccounts = accounts.slice(1);
 
 const loaderConfig = {
-  web3Contract: web3.eth.Contract,
   defaultSender,
+  defaultGas: config.gasLimit,
 };
 
-const load = loaderFactory(loaderConfig);
+const load = {
+  web3: loader.web3({
+    ...loaderConfig,
+    web3Contract: web3.eth.Contract,
+  }),
+
+  truffle: loader.truffle({
+    ...loaderConfig,
+    truffleContract: web3.eth.Contract,
+    provider,
+  }),
+};
 
 module.exports = {
   accounts: exposedAccounts,
