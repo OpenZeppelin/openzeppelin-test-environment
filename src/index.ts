@@ -2,7 +2,7 @@ import * as loader from '@openzeppelin/contract-loader';
 
 import config from './config';
 import isHelpersConfigured from './helpers';
-import { accounts, web3, provider } from './web3';
+import { accounts, web3, provider } from './setup-node';
 
 // We use the first account as the default sender (when no sender is specified),
 // which provides versatility for tests where this sender is not important
