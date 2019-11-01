@@ -5,8 +5,9 @@
   "main": "./lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && tsc",
-    "watch": "tsc -w",
-    "test": "npm run compile && cd test && ./run-all.sh"
+    "prepare": "npm run compile",
+    "test": "npm run compile && cd test && ./run-all.sh",
+    "watch": "tsc -w"
   },
   "files": [
     "lib"
