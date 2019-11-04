@@ -5,6 +5,8 @@ import Web3 from 'web3';
 import TestProvider from './TestProvider';
 import { generateAccounts } from './accounts';
 
+import { Message } from './types';
+
 import config from './config';
 
 const { accounts, accountsConfig } = generateAccounts(
@@ -13,13 +15,13 @@ const { accounts, accountsConfig } = generateAccounts(
 );
 
 const server = fork(path.join(__dirname, 'ganache-server'));
-server.send({ port: config.port, accountsConfig, gasLimit: config.gasLimit });
+server.send({ accountsConfig, gasLimit: config.gasLimit });
 
-const provider = new TestProvider(`http://localhost:${config.port}`);
+const provider = new TestProvider();
 
 const web3 = new Web3(provider);
 
-const messageReceived = new Promise(
+const messageReceived: Promise<Message> = new Promise(
   (resolve): ChildProcess => {
     return server.once('message', resolve);
   },
@@ -28,13 +30,14 @@ const messageReceived = new Promise(
 provider.enqueue(async () => {
   const message = await messageReceived;
 
-  switch (message) {
+  switch (message.type) {
     case 'error':
       server.kill();
       break;
     case 'ready':
-      server.disconnect();
+      (server.channel as Pipe).unref(); // The type of server.channel is missing unref
       server.unref();
+      provider._port = message.port;
       break;
     default:
       throw new Error(`Uknown internal error ${message}`);
@@ -47,3 +50,7 @@ process.on('beforeExit', () => {
 });
 
 export { accounts, web3, provider };
+
+interface Pipe {
+  unref(): unknown;
+}
