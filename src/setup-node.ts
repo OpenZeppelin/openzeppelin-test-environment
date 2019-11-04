@@ -7,7 +7,10 @@ import { generateAccounts } from './accounts';
 
 import config from './config';
 
-const { accounts, accountsConfig } = generateAccounts(config.accounts + 1); // extra account for the default sender
+const { accounts, accountsConfig } = generateAccounts(
+  config.accounts.amount + 1, // extra account for the default sender
+  config.accounts.ether,
+);
 
 const server = fork(path.join(__dirname, 'ganache-server'));
 server.send({ port: config.port, accountsConfig, gasLimit: config.gasLimit });

@@ -43,6 +43,7 @@
   },
   "homepage": "https://github.com/OpenZeppelin/test-env#readme",
   "devDependencies": {
+    "@types/lodash.merge": "^4.6.6",
     "@types/node": "^12.7.4",
     "@types/web3": "^1.0.19",
     "@typescript-eslint/eslint-plugin": "^2.1.0",
@@ -62,6 +63,7 @@
     "ethereumjs-wallet": "^0.6.3",
     "find-up": "^4.1.0",
     "ganache-core": "^2.8.0",
+    "lodash.merge": "^4.6.2",
     "p-queue": "^6.2.0",
     "try-require": "^1.2.1",
     "web3": "^1.2.2"

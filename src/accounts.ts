@@ -1,4 +1,6 @@
 import wallet, { Wallet } from 'ethereumjs-wallet';
+import Web3  from 'web3';
+const { utils } = Web3;
 
 type WalletConfig = {
   balance: string;
@@ -11,16 +13,18 @@ type AccountsConfig = {
   accountsConfig: WalletConfig[];
 };
 
-function getConfig(wallet: Wallet): WalletConfig {
-  return {
-    balance: (1e18).toString(), // 1 ether
-    secretKey: wallet.getPrivateKeyString(),
-  };
+function getConfig(ether: number) {
+  return function (wallet: Wallet): WalletConfig {
+    return {
+      balance: utils.toWei(ether.toString(), 'ether'),
+      secretKey: wallet.getPrivateKeyString(),
+    };
+  }
 }
 
-export function generateAccounts(count: number): AccountsConfig {
+export function generateAccounts(count: number, ether: number): AccountsConfig {
   const wallets = Array.from({ length: count }, wallet.generate);
   const accounts = wallets.map(w => w.getChecksumAddressString());
-  const accountsConfig = wallets.map(getConfig);
+  const accountsConfig = wallets.map(getConfig(ether));
   return { accounts, accountsConfig };
 }
