@@ -14,12 +14,6 @@ describe('default config', function() {
     });
   });
 
-  describe('provider', function () {
-    it('port is 8545', function () {
-      expect(provider.host).to.include(':8545');
-    });
-  });
-
   describe('blockchain', function () {
     it('gasLimit is 8 000 000', async function () {
       await web3.eth.sendTransaction({ from: accounts[0], to: accounts[1], gas: 8000000 });

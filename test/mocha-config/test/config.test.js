@@ -16,12 +16,6 @@ describe('config', function() {
     });
   });
 
-  describe('provider', function () {
-    it('the port can be configured', function () {
-      expect(provider.host).to.include(`:${config.port}`);
-    });
-  });
-
   describe('blockchain', function () {
     it('the gasLimit can be configured', async function () {
       await web3.eth.sendTransaction({ from: accounts[0], to: accounts[1], gas: config.gasLimit });
