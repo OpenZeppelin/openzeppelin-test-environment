@@ -15,7 +15,7 @@ const defaultConfig = {
     ether: 100,
   },
   gasLimit: 8e6,
-  port: '8545',
+  port: 8545,
 };
 
 export default merge(defaultConfig, providedConfig);
