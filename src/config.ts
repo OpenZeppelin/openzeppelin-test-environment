@@ -11,7 +11,6 @@ const providedConfig = location !== undefined && fs.existsSync(location) ?
 const defaultConfig = {
   accounts: 10,
   gasLimit: 8e6,
-  port: '8545',
 };
 
 export default { ...defaultConfig, ...providedConfig };

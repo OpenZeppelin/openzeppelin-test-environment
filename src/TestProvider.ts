@@ -4,7 +4,6 @@ import { HttpProvider } from 'web3-core';
 import PQueue from 'p-queue';
 
 export default class TestProvider implements HttpProvider {
-  host: string;
   connected: boolean;
 
   // These are required by the HttpProvider interface
@@ -16,19 +15,33 @@ export default class TestProvider implements HttpProvider {
     throw new Error('Method not implemented.');
   }
 
-  private provider: Provider;
+  private _provider?: Provider;
+  _port?: number;
   private queue: PQueue;
   private sendAsync: (payload: JsonRPCRequest, callback: Callback<JsonRPCResponse>) => void;
 
-  constructor(host: string) {
-    this.host = host;
+  constructor() {
     // TODO: forward these to the underlying provider
     this.connected = true;
-    this.provider = new Web3.providers.HttpProvider(host);
 
     this.queue = new PQueue({ concurrency: 1 });
 
     this.sendAsync = this.send.bind(this);
+  }
+
+  get host(): string {
+    if (this._port === undefined) {
+      throw new Error('Host is not yet available');
+    } else {
+      return `http://localhost:${this._port}`;
+    }
+  }
+
+  get provider(): Provider {
+    if (this._provider === undefined) {
+      this._provider = new Web3.providers.HttpProvider(this.host);
+    }
+    return this._provider;
   }
 
   public enqueue<T>(asyncFn: () => PromiseLike<T>): void {
