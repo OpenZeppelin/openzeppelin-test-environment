@@ -12,7 +12,7 @@ process.once('message', options => {
     }
   });
 
-  process.on('SIGTERM', () => {
+  process.on('disconnect', () => {
     server.close();
   });
 });

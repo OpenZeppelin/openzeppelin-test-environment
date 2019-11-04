@@ -30,7 +30,7 @@ provider.enqueue(async () => {
       server.kill();
       break;
     case 'ready':
-      server.disconnect();
+      (server.channel as Pipe).unref(); // The type of server.channel is missing unref
       server.unref();
       break;
     default:
@@ -44,3 +44,7 @@ process.on('beforeExit', () => {
 });
 
 export { accounts, web3, provider };
+
+interface Pipe {
+  unref(): unknown;
+}
