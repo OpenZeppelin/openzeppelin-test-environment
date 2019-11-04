@@ -4,6 +4,8 @@ import config from './config';
 import isHelpersConfigured from './helpers';
 import { accounts, web3, provider } from './setup-node';
 
+const truffleContract = require('@truffle/contract');
+
 // We use the first account as the default sender (when no sender is specified),
 // which provides versatility for tests where this sender is not important
 // (e.g. when calling view functions).
@@ -27,7 +29,7 @@ const load = {
 
   truffle: loader.truffle({
     ...loaderConfig,
-    truffleContract: web3.eth.Contract,
+    truffleContract,
     provider,
   }),
 };
