@@ -1,4 +1,4 @@
-const { accounts, provider, web3 } = require('@openzeppelin/test-env');
+const { accounts, provider, web3, defaultSender } = require('@openzeppelin/test-env');
 const { expect } = require('chai');
 
 const uniq = require('lodash.uniq');
@@ -17,6 +17,10 @@ describe('default config', function() {
       // We check the balance of the last account, in the hope that it hasn't been used yet and therefore has the full
       // unspent initial balance
       expect(await web3.eth.getBalance(accounts[accounts.length - 1])).to.equal((100 * 1e18).toString());
+    });
+
+    it('the default sender is not on the accounts array', async function () {
+      expect(accounts).to.not.include(defaultSender);
     });
   });
 

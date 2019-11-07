@@ -36,6 +36,7 @@ const load = {
 
 module.exports = {
   accounts: exposedAccounts,
+  defaultSender,
   web3,
   provider,
   load,
