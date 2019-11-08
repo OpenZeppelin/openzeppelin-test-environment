@@ -3,16 +3,11 @@ import { fork, ChildProcess } from 'child_process';
 import Web3 from 'web3';
 
 import TestProvider from './TestProvider';
-import { generateAccounts } from './accounts';
+import { accountsConfig } from './accounts';
 
 import { Message } from './types';
 
 import config from './config';
-
-const { accounts, accountsConfig } = generateAccounts(
-  config.accounts.amount + 1, // extra account for the default sender
-  config.accounts.ether,
-);
 
 const server = fork(path.join(__dirname, 'ganache-server'));
 server.send({ accountsConfig, gasLimit: config.gasLimit });
@@ -49,7 +44,7 @@ process.on('beforeExit', () => {
   server.kill();
 });
 
-export { accounts, web3, provider };
+export { web3, provider };
 
 interface Pipe {
   unref(): unknown;
