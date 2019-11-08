@@ -1,51 +1,32 @@
 import path from 'path';
-import { fork, ChildProcess } from 'child_process';
+import { fork } from 'child_process';
 import Web3 from 'web3';
+import { Provider } from 'web3/providers';
+import { provider } from 'web3-core';
 
-import TestProvider from './TestProvider';
+import ChildTestProvider from './ChildTestProvider';
+import ExternalTestProvider from './ExternalTestProvider';
+
 import { accountsConfig } from './accounts';
-
-import { Message } from './types';
 
 import config from './config';
 
-const server = fork(path.join(__dirname, 'ganache-server'));
-server.send({ accountsConfig, gasLimit: config.gasLimit });
+let provider: Provider;
 
-const provider = new TestProvider();
+if (!config.provider) {
+  const server = fork(path.join(__dirname, 'ganache-server'));
+  server.send({ accountsConfig, gasLimit: config.gasLimit });
 
-const web3 = new Web3(provider);
+  provider = new ChildTestProvider(server);
 
-const messageReceived: Promise<Message> = new Promise(
-  (resolve): ChildProcess => {
-    return server.once('message', resolve);
-  },
-);
+  // TODO: also kill server when exiting due to error
+  process.on('beforeExit', () => {
+    server.kill();
+  });
+} else {
+  provider = new ExternalTestProvider(config.provider, accountsConfig);
+}
 
-provider.enqueue(async () => {
-  const message = await messageReceived;
-
-  switch (message.type) {
-    case 'error':
-      server.kill();
-      break;
-    case 'ready':
-      (server.channel as Pipe).unref(); // The type of server.channel is missing unref
-      server.unref();
-      provider._port = message.port;
-      break;
-    default:
-      throw new Error(`Uknown internal error ${message}`);
-  }
-});
-
-// TODO: also kill server when exiting due to error
-process.on('beforeExit', () => {
-  server.kill();
-});
+const web3 = new Web3(provider as provider);
 
 export { web3, provider };
-
-interface Pipe {
-  unref(): unknown;
-}
