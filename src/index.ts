@@ -1,10 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const truffleContract = require('@truffle/contract');
+
 import * as loader from '@openzeppelin/contract-loader';
 
 import config from './config';
 import isHelpersConfigured from './helpers';
 import { accounts, web3, provider } from './setup-node';
-
-const truffleContract = require('@truffle/contract');
 
 // We use the first account as the default sender (when no sender is specified),
 // which provides versatility for tests where this sender is not important

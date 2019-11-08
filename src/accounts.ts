@@ -1,8 +1,8 @@
 import wallet, { Wallet } from 'ethereumjs-wallet';
-import Web3  from 'web3';
+import Web3 from 'web3';
 const { utils } = Web3;
 
-type WalletConfig = {
+export type WalletConfig = {
   balance: string;
   // do not change the name Ganache depends on it
   secretKey: string;
@@ -14,12 +14,12 @@ type AccountsConfig = {
 };
 
 function getConfig(ether: number) {
-  return function (wallet: Wallet): WalletConfig {
+  return function(wallet: Wallet): WalletConfig {
     return {
       balance: utils.toWei(ether.toString(), 'ether'),
       secretKey: wallet.getPrivateKeyString(),
     };
-  }
+  };
 }
 
 export function generateAccounts(count: number, ether: number): AccountsConfig {
