@@ -16,7 +16,7 @@ export default class TestProvider implements HttpProvider {
   }
 
   private _provider?: Provider;
-  _port?: number;
+  private _host?: string;
   private queue: PQueue;
   private sendAsync: (payload: JsonRPCRequest, callback: Callback<JsonRPCResponse>) => void;
 
@@ -30,11 +30,19 @@ export default class TestProvider implements HttpProvider {
   }
 
   get host(): string {
-    if (this._port === undefined) {
+    if (this._host === undefined) {
       throw new Error('Host is not yet available');
-    } else {
-      return `http://localhost:${this._port}`;
     }
+
+    return this._host;
+  }
+
+  set host(url: string) {
+    if (this._host !== undefined) {
+      throw new Error('Host is already set');
+    }
+
+    this._host = url;
   }
 
   get provider(): Provider {
