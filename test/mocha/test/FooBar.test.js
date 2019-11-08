@@ -3,7 +3,7 @@ const [ deployer ] = accounts;
 
 const { expect } = require('chai');
 
-const FooBar = load.web3('FooBar');
+const FooBar = load.web3.fromArtifacts('FooBar');
 
 describe('FooBar', function() {
   beforeEach(async function() {
