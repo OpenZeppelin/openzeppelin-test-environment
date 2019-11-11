@@ -3,7 +3,7 @@ import test from 'ava';
 const { accounts, load } = require('@openzeppelin/test-env');
 const [ deployer ] = accounts;
 
-const FooBar = load.web3('FooBar');
+const FooBar = load.web3.fromArtifacts('FooBar');
 
 let fooBar;
 
