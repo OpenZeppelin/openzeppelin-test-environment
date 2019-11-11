@@ -49,6 +49,7 @@
     "@typescript-eslint/eslint-plugin": "^2.1.0",
     "@typescript-eslint/parser": "^2.1.0",
     "ava": "^2.4.0",
+    "code-style": "git+https://github.com/OpenZeppelin/code-style.git",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.2.0",
     "eslint-plugin-prettier": "^3.1.0",

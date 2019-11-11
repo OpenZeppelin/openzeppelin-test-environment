@@ -1,22 +1,7 @@
 {
+  "extends": "code-style/tsconfig.json",
   "compilerOptions": {
-    "incremental": true,
-    "pretty": true,
-    "module": "commonjs",
-    "moduleResolution": "Node",
-    "target": "es5",
-    "checkJs": false,
-    "strict": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
     "outDir": "./lib",
-    "allowJs": false,
-    "noEmitOnError": true,
-    "declaration": true,
-    "sourceMap": true,
-    "lib": ["es2017"],
-    "typeRoots": ["./node_modules/@types", "./src/typing"]
   },
-  "include": ["./src"],
-  "exclude": ["node_modules"]
+  "include": ["./src"]
 }
