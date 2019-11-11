@@ -54,6 +54,28 @@ jobs:
           name: Mocha integration tests
           command: cd test && ./run-test.sh mocha
 
+  test-ava:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          <<: *cache_key_node_modules
+      - *npm_install_if_necessary
+      - run:
+          name: Ava integration tests
+          command: cd test && ./run-test.sh ava
+
+  test-jest:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          <<: *cache_key_node_modules
+      - *npm_install_if_necessary
+      - run:
+          name: Jest integration tests
+          command: cd test && ./run-test.sh jest
+
   test-mocha-defaults:
     <<: *defaults
     steps:
