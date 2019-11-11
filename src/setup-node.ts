@@ -30,7 +30,10 @@ provider.enqueue(async () => {
       server.kill();
       break;
     case 'ready':
-      (server.channel as Pipe).unref(); // The type of server.channel is missing unref
+      if (server.channel === null || server.channel === undefined) {
+        throw new Error('Ganache was not set up correctly');
+      }
+      server.channel.unref();
       server.unref();
       provider._port = message.port;
       break;
@@ -45,7 +48,3 @@ process.on('beforeExit', () => {
 });
 
 export { web3, provider };
-
-interface Pipe {
-  unref(): unknown;
-}
