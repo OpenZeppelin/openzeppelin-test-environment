@@ -5,9 +5,7 @@ import merge from 'lodash.merge';
 const CONFIG_FILE = '.test-env.js';
 const location = findUp.sync(CONFIG_FILE, { type: 'file' });
 
-const providedConfig = location !== undefined && fs.existsSync(location) ?
-  require(location) :
-  {};
+const providedConfig = location !== undefined && fs.existsSync(location) ? require(location) : {};
 
 const defaultConfig = {
   accounts: {
