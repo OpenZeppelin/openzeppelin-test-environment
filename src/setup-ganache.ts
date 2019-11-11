@@ -1,7 +1,6 @@
 import path from 'path';
 import { fork, ChildProcess } from 'child_process';
 
-import TestProvider from './TestProvider';
 import { Message } from './types';
 
 import { accountsConfig } from './accounts';
@@ -11,7 +10,7 @@ interface Pipe {
   unref(): unknown;
 }
 
-export default async function (provider: TestProvider) {
+export default async function () {
   const server = fork(path.join(__dirname, 'ganache-server'));
   server.send({ accountsConfig, gasLimit: config.gasLimit });
 

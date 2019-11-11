@@ -1,55 +1,34 @@
 import Web3 from 'web3';
 import { Provider, JsonRPCRequest, Callback, JsonRPCResponse } from 'web3/providers';
-import { HttpProvider } from 'web3-core';
 import PQueue from 'p-queue';
 
-export default class TestProvider implements HttpProvider {
-  connected: boolean;
-
-  // These are required by the HttpProvider interface
-  supportsSubscriptions(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  disconnect(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  private _provider?: Provider;
-  private _host?: string;
+export default class TestProvider extends Provider {
+  private _wrappedProvider?: Provider;
   private queue: PQueue;
   private sendAsync: (payload: JsonRPCRequest, callback: Callback<JsonRPCResponse>) => void;
 
   constructor() {
-    // TODO: forward these to the underlying provider
-    this.connected = true;
+    super();
 
     this.queue = new PQueue({ concurrency: 1 });
 
     this.sendAsync = this.send.bind(this);
   }
 
-  get host(): string {
-    if (this._host === undefined) {
-      throw new Error('Host is not yet available');
+  get wrappedProvider(): Provider {
+    if (this._wrappedProvider === undefined) {
+      throw new Error('Base provider is not yet available');
     }
 
-    return this._host;
+    return this._wrappedProvider;
   }
 
-  set host(url: string) {
-    if (this._host !== undefined) {
-      throw new Error('Host is already set');
+  set wrappedProvider(wrappedProvider: Provider) {
+    if (this._wrappedProvider !== undefined) {
+      throw new Error('Base provider already set');
     }
 
-    this._host = url;
-  }
-
-  get provider(): Provider {
-    if (this._provider === undefined) {
-      this._provider = new Web3.providers.HttpProvider(this.host);
-    }
-    return this._provider;
+    this._wrappedProvider = wrappedProvider;
   }
 
   public enqueue<T>(asyncFn: () => PromiseLike<T>): void {
@@ -58,7 +37,7 @@ export default class TestProvider implements HttpProvider {
 
   public send(payload: JsonRPCRequest, callback: Callback<JsonRPCResponse>): void {
     this.queue.onIdle().then(() => {
-      this.provider.send(payload, callback);
+      this.wrappedProvider.send(payload, callback);
     });
   }
 }
