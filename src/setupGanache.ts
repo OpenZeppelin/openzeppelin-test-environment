@@ -12,7 +12,7 @@ interface Pipe {
 
 export default async function(): Promise<string> {
   const server = fork(path.join(__dirname, 'ganacheServer'));
-  server.send({ accountsConfig, gasLimit: config.gasLimit });
+  server.send({ accountsConfig, gasLimit: config.blockGasLimit });
 
   const messageReceived: Promise<Message> = new Promise(
     (resolve): ChildProcess => {

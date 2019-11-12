@@ -10,6 +10,6 @@ if (config.contracts.type !== 'truffle' && config.contracts.type !== 'web3') {
 
 export default setupLoader({
   defaultSender,
-  defaultGas: config.gasLimit,
+  defaultGas: config.contracts.defaultGas,
   provider,
 })[config.contracts.type];
