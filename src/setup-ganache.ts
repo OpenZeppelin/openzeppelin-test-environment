@@ -6,10 +6,6 @@ import { Message } from './types';
 import { accountsConfig } from './accounts';
 import config from './config';
 
-interface Pipe {
-  unref(): unknown;
-}
-
 export default async function(): Promise<string> {
   const server = fork(path.join(__dirname, 'ganache-server'));
   server.send({ accountsConfig, gasLimit: config.gasLimit });
@@ -22,15 +18,17 @@ export default async function(): Promise<string> {
 
   const message = await messageReceived;
 
-  if (message.type === 'ready') {
-    (server.channel as Pipe).unref(); // The type of server.channel is missing unref
-    server.unref();
-
-    return `http://localhost:${message.port}`;
-  } else if (message.type === 'error') {
-    server.kill();
-    throw new Error('Unhandled server error');
-  } else {
-    throw new Error(`Uknown server message: '${message}'`);
+  switch (message.type) {
+    case 'ready':
+      if (server.channel) {
+        server.channel.unref();
+      }
+      server.unref();
+      return `http://localhost:${message.port}`;
+    case 'error':
+      server.kill();
+      throw new Error('Unhandled server error');
+    default:
+      throw new Error(`Uknown server message: '${message}'`);
   }
 }
