@@ -2,7 +2,7 @@ import Web3 from 'web3';
 import { Provider, JsonRPCRequest, Callback, JsonRPCResponse } from 'web3/providers';
 import PQueue from 'p-queue';
 
-import setupNode from './setup-node';
+import setupGanache from './setup-ganache';
 import config from './config';
 
 export default class TestProvider implements Provider {
@@ -25,7 +25,7 @@ export default class TestProvider implements Provider {
       this.wrappedProvider.send(payload, callback);
     } else {
       // Setup node
-      setupNode()
+      setupGanache()
         .then(
           url => {
             // Create base provider (connection to node)
