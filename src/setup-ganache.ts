@@ -10,7 +10,7 @@ interface Pipe {
   unref(): unknown;
 }
 
-export default async function () {
+export default async function() {
   const server = fork(path.join(__dirname, 'ganache-server'));
   server.send({ accountsConfig, gasLimit: config.gasLimit });
 

@@ -1,4 +1,5 @@
 import Web3 from 'web3';
+import { provider } from 'web3-core';
 
 import TestProvider from './TestProvider';
 import config from './config';
@@ -19,6 +20,6 @@ provider.enqueue(async () => {
   provider.wrappedProvider = await config.setupProvider();
 });
 
-const web3 = new Web3(provider);
+const web3 = new Web3(provider as provider);
 
 export { web3, provider };

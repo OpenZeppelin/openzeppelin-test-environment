@@ -1,15 +1,14 @@
 import Web3 from 'web3';
 import { Provider, JsonRPCRequest, Callback, JsonRPCResponse } from 'web3/providers';
+import { HttpProvider } from 'web3-core';
 import PQueue from 'p-queue';
 
-export default class TestProvider extends Provider {
+export default class TestProvider implements Provider {
   private _wrappedProvider?: Provider;
   private queue: PQueue;
   private sendAsync: (payload: JsonRPCRequest, callback: Callback<JsonRPCResponse>) => void;
 
   constructor() {
-    super();
-
     this.queue = new PQueue({ concurrency: 1 });
 
     this.sendAsync = this.send.bind(this);
