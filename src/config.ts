@@ -7,7 +7,13 @@ import { Provider } from 'web3/providers';
 const CONFIG_FILE = '.test-env.js';
 const location = findUp.sync(CONFIG_FILE, { type: 'file' });
 
-const providedConfig = location !== undefined && fs.existsSync(location) ? require(location) : {};
+type Config = {
+  accounts: { amount: number; ether: number };
+  gasLimit: number;
+  provider?: Provider;
+};
+
+const providedConfig: Partial<Config> = location !== undefined && fs.existsSync(location) ? require(location) : {};
 
 const defaultConfig = {
   accounts: {
