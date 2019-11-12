@@ -20,6 +20,9 @@ const defaultConfig = {
     amount: 10,
     ether: 100,
   },
+  contracts: {
+    type: 'web3',
+  },
   gasLimit: 8e6,
   setupProvider: async (baseProvider: Provider): Promise<Provider> => baseProvider,
 };
