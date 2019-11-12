@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 import { Provider, JsonRPCRequest, Callback, JsonRPCResponse } from 'web3/providers';
 
-import setupGanache from './setupGanache';
+import setupGanache from './setup-ganache';
 import config from './config';
 
 export default class TestProvider implements Provider {

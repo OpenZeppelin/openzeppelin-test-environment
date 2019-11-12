@@ -11,7 +11,7 @@ interface Pipe {
 }
 
 export default async function(): Promise<string> {
-  const server = fork(path.join(__dirname, 'ganacheServer'));
+  const server = fork(path.join(__dirname, 'ganache-server'));
   server.send({ accountsConfig, gasLimit: config.gasLimit });
 
   const messageReceived: Promise<Message> = new Promise(
