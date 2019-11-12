@@ -1,6 +1,6 @@
 import tryRequire from 'try-require';
 
-import { provider } from './setup-provider';
+import { provider } from './setupProvider';
 
 const testHelpersConfigure = tryRequire('@openzeppelin/test-helpers/configure');
 if (testHelpersConfigure !== undefined) {

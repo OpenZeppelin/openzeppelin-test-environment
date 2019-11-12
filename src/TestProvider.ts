@@ -2,7 +2,7 @@ import Web3 from 'web3';
 import { Provider, JsonRPCRequest, Callback, JsonRPCResponse } from 'web3/providers';
 import PQueue from 'p-queue';
 
-import setupGanache from './setup-ganache';
+import setupGanache from './setupGanache';
 import config from './config';
 
 export default class TestProvider implements Provider {
