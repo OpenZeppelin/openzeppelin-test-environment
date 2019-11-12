@@ -1,28 +1,21 @@
 import Web3 from 'web3';
 import { Provider, JsonRPCRequest, Callback, JsonRPCResponse } from 'web3/providers';
-import PQueue from 'p-queue';
 
 import setupGanache from './setupGanache';
 import config from './config';
 
 export default class TestProvider implements Provider {
   private wrappedProvider?: Provider;
-  private queue: PQueue;
   private sendAsync: (payload: JsonRPCRequest, callback: Callback<JsonRPCResponse>) => void;
 
   constructor() {
-    this.queue = new PQueue({ concurrency: 1 });
-
     this.sendAsync = this.send.bind(this);
-  }
-
-  public enqueue<T>(asyncFn: () => PromiseLike<T>): void {
-    this.queue.add(asyncFn);
   }
 
   public send(payload: JsonRPCRequest, callback: Callback<JsonRPCResponse>): void {
     if (this.wrappedProvider) {
       this.wrappedProvider.send(payload, callback);
+                  console.log(this.wrappedProvider  )
     } else {
       // Setup node
       setupGanache()
