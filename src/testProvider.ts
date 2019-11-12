@@ -15,7 +15,6 @@ export default class TestProvider implements Provider {
   public send(payload: JsonRPCRequest, callback: Callback<JsonRPCResponse>): void {
     if (this.wrappedProvider) {
       this.wrappedProvider.send(payload, callback);
-                  console.log(this.wrappedProvider  )
     } else {
       // Setup node
       setupGanache()
