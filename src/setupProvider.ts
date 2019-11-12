@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 import { provider } from 'web3-core';
 
-import TestProvider from './TestProvider';
+import TestProvider from './testProvider';
 
 const provider = new TestProvider();
 
