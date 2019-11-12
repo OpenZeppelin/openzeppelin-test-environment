@@ -26,7 +26,7 @@ const defaultConfig: Config = {
 
   contracts: {
     type: 'web3',
-    defaultGas: DEFAULT_GAS_LIMIT,
+    defaultGas: DEFAULT_GAS_LIMIT * 0.75,
   },
 
   blockGasLimit: DEFAULT_GAS_LIMIT,
