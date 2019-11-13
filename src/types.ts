@@ -1,5 +1,3 @@
-import { Wallet } from 'ethereumjs-wallet';
-
 export namespace GanacheServer {
   interface ErrorMessage {
     type: 'error';
@@ -11,15 +9,11 @@ export namespace GanacheServer {
   }
 
   export type Message = ErrorMessage | ReadyMessage;
+
+  export type AccountConfig = {
+    balance: string;
+    // do not change the name Ganache depends on it
+    secretKey: string;
+  };
 }
 
-export type WalletConfig = {
-  balance: string;
-  // do not change the name Ganache depends on it
-  secretKey: string;
-};
-
-export type AccountsConfig = {
-  accounts: string[];
-  accountsConfig: WalletConfig[];
-};

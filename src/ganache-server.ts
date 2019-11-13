@@ -1,8 +1,8 @@
 import ganache from 'ganache-core';
 
-import { Message } from './types';
+import { GanacheServer } from './types';
 
-function send(msg: Message): void {
+function send(msg: GanacheServer.Message): void {
   if (process.send === undefined) {
     throw new Error('Module must be started through child_process.fork');
   }
