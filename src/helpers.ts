@@ -3,7 +3,7 @@ import semver from 'semver';
 
 import { defaultSender } from './accounts';
 import config from './config';
-import { provider } from './setupProvider';
+import { provider } from './setup-provider';
 
 const colors = require('ansi-colors');
 

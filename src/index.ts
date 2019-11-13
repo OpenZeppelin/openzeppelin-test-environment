@@ -1,7 +1,7 @@
 import isHelpersConfigured from './helpers';
-import { web3, provider } from './setupProvider';
+import { web3, provider } from './setup-provider';
 import { accounts, defaultSender } from './accounts';
-import load from './setupLoader';
+import load from './setup-loader';
 
 module.exports = {
   accounts,

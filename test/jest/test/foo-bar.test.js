@@ -1,5 +1,5 @@
 const { accounts, load } = require('@openzeppelin/test-env');
-const [ deployer ] = accounts;
+const [deployer] = accounts;
 
 const FooBar = load.fromArtifacts('FooBar');
 let fooBar;
