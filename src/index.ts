@@ -1,15 +1,7 @@
-import { setupLoader } from '@openzeppelin/contract-loader';
-
-import config from './config';
 import isHelpersConfigured from './helpers';
 import { web3, provider } from './setup-provider';
 import { accounts, defaultSender } from './accounts';
-
-const load = setupLoader({
-  defaultSender,
-  defaultGas: config.gasLimit,
-  provider,
-});
+import load from './setup-loader';
 
 module.exports = {
   accounts,
