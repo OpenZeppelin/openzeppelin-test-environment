@@ -1,7 +1,7 @@
 import path from 'path';
 import { fork, ChildProcess } from 'child_process';
 
-import { Message } from './types';
+import { GanacheServer } from './types';
 
 import { accountsConfig } from './accounts';
 import config from './config';
@@ -10,7 +10,7 @@ export default async function(): Promise<string> {
   const server = fork(path.join(__dirname, 'ganache-server'));
   server.send({ accountsConfig, gasLimit: config.blockGasLimit });
 
-  const messageReceived: Promise<Message> = new Promise(
+  const messageReceived: Promise<GanacheServer.Message> = new Promise(
     (resolve): ChildProcess => {
       return server.once('message', resolve);
     },

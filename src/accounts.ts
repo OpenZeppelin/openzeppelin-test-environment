@@ -2,19 +2,9 @@ import wallet, { Wallet } from 'ethereumjs-wallet';
 import Web3 from 'web3';
 
 import config from './config';
+import { AccountsConfig, WalletConfig } from './types';
 
 const { utils } = Web3;
-
-type WalletConfig = {
-  balance: string;
-  // do not change the name Ganache depends on it
-  secretKey: string;
-};
-
-type AccountsConfig = {
-  accounts: string[];
-  accountsConfig: WalletConfig[];
-};
 
 function getConfig(ether: number) {
   return function(wallet: Wallet): WalletConfig {
