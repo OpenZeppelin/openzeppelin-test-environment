@@ -9,7 +9,7 @@ function send(msg: GanacheServer.Message): void {
   process.send(msg);
 }
 
-process.once('message', options => {
+process.once('message', (options: GanacheServer.Options) => {
   const { accountsConfig, gasLimit } = options;
   const server = ganache.server({ accounts: accountsConfig, gasLimit });
 

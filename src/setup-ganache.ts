@@ -8,7 +8,12 @@ import config from './config';
 
 export default async function(): Promise<string> {
   const server = fork(path.join(__dirname, 'ganache-server'));
-  server.send({ accountsConfig, gasLimit: config.blockGasLimit });
+
+  const options: GanacheServer.Options = {
+    accountsConfig,
+    gasLimit: config.blockGasLimit
+  };
+  server.send(options);
 
   const messageReceived: Promise<GanacheServer.Message> = new Promise(
     (resolve): ChildProcess => {

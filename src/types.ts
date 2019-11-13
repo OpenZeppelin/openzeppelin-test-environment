@@ -15,5 +15,10 @@ export namespace GanacheServer {
     // do not change the name Ganache depends on it
     secretKey: string;
   };
+
+  export type Options = {
+    accountsConfig: AccountConfig[];
+    gasLimit: number;
+  };
 }
 
