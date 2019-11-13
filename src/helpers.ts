@@ -28,7 +28,7 @@ if (testHelpersPackage !== undefined) {
 
     configured = true;
 
-  } else if (semver.satisfies(version, '^0.5.0 && <0.5.4')) {
+  } else if (semver.satisfies(version, '^0.5.0 <0.5.4')) { // Whitespaces indicate intersection ('and') in semver
     // Alternatively, 'environment' was available from 0.5.0, but the gas and
     // sender could not be configured
     configure({ provider, environment: config.contracts.type });
@@ -37,7 +37,7 @@ if (testHelpersPackage !== undefined) {
 
   } else {
     const warn = (msg: string) => {
-      console.log(`\${colors.white.bgBlack('@openzeppelin/test-env')} ${colors.black.bgYellow('WARN')} ${msg}`);
+      console.log(`${colors.white.bgBlack('@openzeppelin/test-env')} ${colors.black.bgYellow('WARN')} ${msg}`);
     };
 
     warn(`Unknown version of @openzeppelin/test-helpers: '${version}', cannot configure`);
