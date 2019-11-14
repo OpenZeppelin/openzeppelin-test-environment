@@ -23,6 +23,7 @@ export type AccountConfig = {
 export type Options = {
   accountsConfig: AccountConfig[];
   gasLimit: number;
+  coverage: boolean;
 };
 
 export default async function(): Promise<string> {
@@ -30,7 +31,8 @@ export default async function(): Promise<string> {
 
   const options: Options = {
     accountsConfig,
-    gasLimit: config.blockGasLimit
+    gasLimit: config.blockGasLimit,
+    coverage: process.env.OZ_TEST_ENV_COVERAGE !== undefined,
   };
   server.send(options);
 
