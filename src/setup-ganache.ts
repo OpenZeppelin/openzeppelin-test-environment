@@ -1,21 +1,40 @@
 import path from 'path';
 import { fork, ChildProcess } from 'child_process';
 
-import { GanacheServer } from './types';
-
 import { accountsConfig } from './accounts';
 import config from './config';
+
+interface ErrorMessage {
+  type: 'error';
+}
+
+interface ReadyMessage {
+  type: 'ready';
+  port: number;
+}
+
+export type Message = ErrorMessage | ReadyMessage;
+
+export type AccountConfig = {
+  balance: string;
+  secretKey: string;
+};
+
+export type Options = {
+  accountsConfig: AccountConfig[];
+  gasLimit: number;
+};
 
 export default async function(): Promise<string> {
   const server = fork(path.join(__dirname, 'ganache-server'));
 
-  const options: GanacheServer.Options = {
+  const options: Options = {
     accountsConfig,
     gasLimit: config.blockGasLimit
   };
   server.send(options);
 
-  const messageReceived: Promise<GanacheServer.Message> = new Promise(
+  const messageReceived: Promise<Message> = new Promise(
     (resolve): ChildProcess => {
       return server.once('message', resolve);
     },

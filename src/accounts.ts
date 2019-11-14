@@ -2,12 +2,12 @@ import wallet, { Wallet } from 'ethereumjs-wallet';
 import Web3 from 'web3';
 
 import config from './config';
-import { GanacheServer } from './types';
+import { AccountConfig } from './setup-ganache';
 
 const { utils } = Web3;
 
 function getConfig(ether: number) {
-  return function(wallet: Wallet): GanacheServer.AccountConfig {
+  return function(wallet: Wallet): AccountConfig {
     return {
       balance: utils.toWei(ether.toString(), 'ether'),
       secretKey: wallet.getPrivateKeyString(),

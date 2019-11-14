@@ -1,15 +1,15 @@
 import ganache from 'ganache-core';
 
-import { GanacheServer } from './types';
+import { Message, Options } from './setup-ganache';
 
-function send(msg: GanacheServer.Message): void {
+function send(msg: Message): void {
   if (process.send === undefined) {
     throw new Error('Module must be started through child_process.fork');
   }
   process.send(msg);
 }
 
-process.once('message', (options: GanacheServer.Options) => {
+process.once('message', (options: Options) => {
   const { accountsConfig, gasLimit } = options;
   const server = ganache.server({ accounts: accountsConfig, gasLimit });
 
