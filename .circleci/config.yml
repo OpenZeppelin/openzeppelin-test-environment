@@ -43,6 +43,17 @@ jobs:
           name: Compile
           command: npm run compile
 
+  test-unit:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          <<: *cache_key_node_modules
+      - *npm_install_if_necessary
+      - run:
+          name: Unit tests
+          command: npm run test:unit
+
   test-mocha:
     <<: *defaults
     steps:

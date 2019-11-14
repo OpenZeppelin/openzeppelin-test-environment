@@ -7,7 +7,7 @@
     "compile": "rm -rf lib && tsc",
     "prepare": "npm run compile",
     "test": "npm run compile && cd test && ./run-all.sh",
-    "test:unit": "npm run compile && jest --verbose",
+    "test:unit": "npx jest --verbose",
     "watch": "tsc -w"
   },
   "files": [
@@ -44,6 +44,7 @@
   },
   "homepage": "https://github.com/OpenZeppelin/test-env#readme",
   "devDependencies": {
+    "@types/jest": "^24.0.23",
     "@types/lodash.merge": "^4.6.6",
     "@types/node": "^12.12.7",
     "@types/web3": "^1.0.19",

@@ -11,11 +11,12 @@ type Config = {
   accounts: { amount: number; ether: number };
   gasLimit: number;
   provider?: Provider;
+  setupProvider: (base: Provider) => Promise<Provider>;
 };
 
 const providedConfig: Partial<Config> = location !== undefined && fs.existsSync(location) ? require(location) : {};
 
-const defaultConfig = {
+const defaultConfig: Config = {
   accounts: {
     amount: 10,
     ether: 100,
