@@ -117,6 +117,10 @@ workflows:
       - compile:
           requires:
             - dependencies
+      - test-unit:
+          requires:
+            - dependencies
+            - compile
       - test-mocha:
           requires:
             - dependencies
