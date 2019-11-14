@@ -70,8 +70,8 @@
     "find-up": "^4.1.0",
     "ganache-core": "^2.8.0",
     "lodash.merge": "^4.6.2",
-    "semver": "^6.3.0",
     "p-queue": "^6.2.0",
+    "semver": "^6.3.0",
     "try-require": "^1.2.1",
     "web3": "^1.2.2"
   }

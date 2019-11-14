@@ -29,7 +29,7 @@ export default class TestProvider implements Provider {
   public send(payload: JsonRPCRequest, callback: Callback<JsonRPCResponse>): void {
     this.queue.onIdle().then(() => {
       // wrapped provider is always not a null due to PQueue running the provider initialization
-      // before any send calls yet TypeScript can't possibly knowts that
+      // before any send calls yet TypeScript can't possibly knows that
       this.wrappedProvider && this.wrappedProvider.send(payload, callback);
     });
   }
