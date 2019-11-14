@@ -1,11 +1,16 @@
-import config from './config';
+import config, { DEFAULT_GAS_LIMIT } from './config';
 
 const defaultConfig = {
   accounts: {
     amount: 10,
     ether: 100,
   },
-  gasLimit: 8e6,
+  contracts: {
+    type: 'web3',
+    defaultGas: DEFAULT_GAS_LIMIT * 0.75,
+  },
+
+  blockGasLimit: DEFAULT_GAS_LIMIT,
 };
 
 describe('config', (): void => {

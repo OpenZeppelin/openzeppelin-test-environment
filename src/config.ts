@@ -16,7 +16,7 @@ type Config = {
 
 const providedConfig: Partial<Config> = location !== undefined && fs.existsSync(location) ? require(location) : {};
 
-const DEFAULT_GAS_LIMIT = 8e6;
+export const DEFAULT_GAS_LIMIT = 8e6;
 
 const defaultConfig: Config = {
   accounts: {
