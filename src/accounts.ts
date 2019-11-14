@@ -47,4 +47,4 @@ const { accounts: allAccounts, accountsConfig } = generateAccounts(
 const defaultSender = allAccounts[0];
 const accounts = allAccounts.slice(1);
 
-export { accounts, accountsConfig, defaultSender };
+export { accounts, accountsConfig, defaultSender, getConfig, generateAccounts };

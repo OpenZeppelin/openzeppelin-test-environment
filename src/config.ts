@@ -9,7 +9,7 @@ const location = findUp.sync(CONFIG_FILE, { type: 'file' });
 
 type Config = {
   accounts: { amount: number; ether: number };
-  contracts: { type: string; defaultGas: number; };
+  contracts: { type: string; defaultGas: number };
   blockGasLimit: number;
   setupProvider: (baseProvider: Provider) => Promise<Provider>;
 };
@@ -31,7 +31,7 @@ const defaultConfig: Config = {
 
   blockGasLimit: DEFAULT_GAS_LIMIT,
 
-  setupProvider: async (baseProvider) => baseProvider,
+  setupProvider: async baseProvider => baseProvider,
 };
 
 export default merge(defaultConfig, providedConfig);
