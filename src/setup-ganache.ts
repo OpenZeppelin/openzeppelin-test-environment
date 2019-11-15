@@ -23,6 +23,8 @@ export type AccountConfig = {
 export type Options = {
   accountsConfig: AccountConfig[];
   gasLimit: number;
+  gasPrice: number;
+  coverage: boolean;
 };
 
 export default async function(): Promise<string> {
@@ -30,7 +32,9 @@ export default async function(): Promise<string> {
 
   const options: Options = {
     accountsConfig,
-    gasLimit: config.blockGasLimit
+    gasLimit: config.blockGasLimit,
+    gasPrice: config.gasPrice,
+    coverage: config.coverage,
   };
   server.send(options);
 

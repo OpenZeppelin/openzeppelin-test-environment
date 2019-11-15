@@ -1,4 +1,5 @@
-import ganache from 'ganache-core';
+import ganacheNormal from 'ganache-core';
+import ganacheCoverage from 'ganache-core-coverage';
 
 import { Message, Options } from './setup-ganache';
 
@@ -9,9 +10,20 @@ function send(msg: Message): void {
   process.send(msg);
 }
 
+function setupServer({ accountsConfig, gasLimit, gasPrice, coverage }: Options) {
+  const ganache = coverage ? ganacheCoverage : ganacheNormal;
+
+  return ganache.server({
+    accounts: accountsConfig,
+    gasLimit,
+    gasPrice: `0x${gasPrice.toString(16)}`,
+    allowUnlimitedContractSize: coverage,
+    emitFreeLogs: coverage,
+  });
+}
+
 process.once('message', (options: Options) => {
-  const { accountsConfig, gasLimit } = options;
-  const server = ganache.server({ accounts: accountsConfig, gasLimit });
+  const server = setupServer(options);
 
   // An undefined port number makes ganache-core choose a random free port,
   // which plays nicely with environments such as jest and ava, where multiple
