@@ -1,6 +1,6 @@
 import ganache from 'ganache-core';
 
-import { Message } from './types';
+import { Message, Options } from './setup-ganache';
 
 function send(msg: Message): void {
   if (process.send === undefined) {
@@ -9,11 +9,16 @@ function send(msg: Message): void {
   process.send(msg);
 }
 
-process.once('message', options => {
-  const { port, accountsConfig, gasLimit } = options;
+process.once('message', (options: Options) => {
+  const { accountsConfig, gasLimit } = options;
   const server = ganache.server({ accounts: accountsConfig, gasLimit });
 
-  server.listen(port, function(err: unknown) {
+  // An undefined port number makes ganache-core choose a random free port,
+  // which plays nicely with environments such as jest and ava, where multiple
+  // processes of test-env may be run in parallel.
+  // It also means however that the port (and therefore host URL) is not
+  // available until the server finishes initialization.
+  server.listen(undefined, function(err: unknown) {
     if (err) {
       send({ type: 'error' });
     } else {
