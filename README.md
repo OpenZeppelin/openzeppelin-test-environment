@@ -3,13 +3,15 @@
 [![NPM Package](https://img.shields.io/npm/v/@openzeppelin/test-env.svg)](https://www.npmjs.org/package/@openzeppelin/test-env)
 [![Build Status](https://circleci.com/gh/OpenZeppelin/openzeppelin-test-env.svg?style=shield)](https://circleci.com/gh/OpenZeppelin/openzeppelin-test-env)
 
-One line test environment for smart contracts tests.
+One line test environment for Ethereum smart contracts tests.
 
 - Blazing fast.
-- Test framework agnostic – use mocha, jest, ava or anything you want.
-- Supports web3.js and Truffle contracts.
+- Sync access to `accounts`, loading contracts, and web3 provider.
+- Test framework agnostic – use Mocha, Jest, Ava or anything you want.
+- Supports web3.js and Truffle contract abstractions.
 - You can run your test over customer web3 providers like GSN.
 - First class support of [OpenZeppelin Test Helpers](https://github.com/OpenZeppelin/openzeppelin-test-helpers).
+- Highly configurable using `test-env.config.js`
 
 ## Quickstart
 
@@ -130,7 +132,7 @@ describe('FooBar', function() {
 });
 ```
 
-### Test with Ava
+#### Test with Ava
 
 ```javascript
 import test from 'ava';
@@ -167,11 +169,58 @@ test('pass require with a right answer ', async t => {
 });
 ```
 
+#### Test with OpenZeppelin Test Helpers
+
+```javascript
+```
+
 ### Config
+
+`test-env.config.js`
 
 ### Migrate from Truffle Test
 
 ## API
+
+```javascript
+const { accounts, load, provider, defaultSender, web3 } = require('@openzeppelin/test-env');
+```
+
+#### accounts
+
+```typescript
+accounts: string[]
+```
+
+`accounts` is an array of strings representing all the accounts avaiable for testing. Every account is funded with initial balance equal be default to 100 ETH. Default deployer account is not among them. That is by design.
+
+#### load
+
+```typescript
+load.fromABI: (abi: object, bytecode?: string | undefined) => any;
+load.fromArtifact: (contract: string) => any;
+```
+
+`load` object contains two functions `fromABI` and `fromArtifacts` allowing to load contracts from an ABI or an artifact correspondendly. Returns either [web3-eth-contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) or [@truffle/contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) depending on a [configuration](#config).
+
+```javascript
+// Load from artifacts built by the compiler (stored in .json files)
+const ERC20 = web3Loader.fromArtifact('ERC20');
+
+// Or load directly from an ABI
+const abi = [ ... ];
+const ERC20 = load.fromABI(abi);
+```
+
+Learn more about [OpenZeppelin Contract Loader](https://github.com/OpenZeppelin/openzeppelin-contract-loader).
+
+#### provider
+
+```typescript
+provider: Provider;
+```
+
+`provider` is a [web3.js](https://github.com/ethereum/web3.js/) provider wrapped around a [Ganache](https://github.com/trufflesuite/ganache-core) Ethereum test client. Can be used to create a new instances of convinience web3 libraries like [web3.js](<[web3.js](https://github.com/ethereum/web3.js/)>), [ethers.js](https://github.com/ethers-io/ethers.js/).
 
 ## License
 
