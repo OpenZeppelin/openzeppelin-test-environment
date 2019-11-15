@@ -11,7 +11,7 @@ const defaultConfig = {
   },
 
   blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
-  gasPrice: 20e12,
+  gasPrice: 20e9,
 };
 
 describe('config', (): void => {

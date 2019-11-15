@@ -31,7 +31,7 @@ const defaultConfig: Config = {
   },
 
   blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
-  gasPrice: 20e12, // 20 gigawei
+  gasPrice: 20e9, // 20 gigawei
 
   setupProvider: async baseProvider => baseProvider,
 
