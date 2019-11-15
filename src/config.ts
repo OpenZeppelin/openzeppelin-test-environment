@@ -17,7 +17,7 @@ type Config = {
   coverage: boolean;
 };
 
-const DEFAULT_BLOCK_GAS_LIMIT = 8e6;
+export const DEFAULT_BLOCK_GAS_LIMIT = 8e6;
 
 const defaultConfig: Config = {
   accounts: {
