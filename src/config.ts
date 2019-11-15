@@ -5,18 +5,17 @@ import merge from 'lodash.merge';
 import { Provider } from 'web3/providers';
 
 const CONFIG_FILE = '.test-env.js';
-const location = findUp.sync(CONFIG_FILE, { type: 'file' });
 
 type Config = {
   accounts: { amount: number; ether: number };
   contracts: { type: string; defaultGas: number };
   blockGasLimit: number;
+  gasPrice: number;
   setupProvider: (baseProvider: Provider) => Promise<Provider>;
+  coverage: boolean;
 };
 
-const providedConfig: Partial<Config> = location !== undefined && fs.existsSync(location) ? require(location) : {};
-
-export const DEFAULT_GAS_LIMIT = 8e6;
+const DEFAULT_BLOCK_GAS_LIMIT = 8e6;
 
 const defaultConfig: Config = {
   accounts: {
@@ -26,12 +25,38 @@ const defaultConfig: Config = {
 
   contracts: {
     type: 'web3',
-    defaultGas: DEFAULT_GAS_LIMIT * 0.75,
+    defaultGas: DEFAULT_BLOCK_GAS_LIMIT * 0.75,
   },
 
-  blockGasLimit: DEFAULT_GAS_LIMIT,
+  blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
+  gasPrice: 20e12, // 20 gigawei
 
   setupProvider: async baseProvider => baseProvider,
+
+  coverage: false,
 };
 
-export default merge(defaultConfig, providedConfig);
+function getConfig(): Config {
+  const location = findUp.sync(CONFIG_FILE, { type: 'file' });
+  const providedConfig: Partial<Config> = location !== undefined && fs.existsSync(location) ? require(location) : {};
+
+  const config: Config = merge(defaultConfig, providedConfig);
+
+  if (process.env.OZ_TEST_ENV_COVERAGE !== undefined) {
+    console.log('Running on coverage mode: overriding some configuration values');
+    config.coverage = true;
+
+    // Solidity coverage causes transactions to require much more gas. We need to:
+    //  1. increase the block gas limit so that transactions don't go over it
+    //  2. increase how much gas transactions send by default
+    //  3. reduce the gas price to prevent the account's funds from being affected by this too much
+
+    config.blockGasLimit = 0xfffffffffffff;
+    config.contracts.defaultGas = config.blockGasLimit * 0.75;
+    config.gasPrice = 1;
+  }
+
+  return config;
+}
+
+export default getConfig();
