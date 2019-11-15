@@ -2,6 +2,8 @@ import fs from 'fs';
 import findUp from 'find-up';
 import merge from 'lodash.merge';
 
+import { log } from './log';
+
 import { Provider } from 'web3/providers';
 
 const CONFIG_FILE = '.test-env.js';
@@ -43,7 +45,7 @@ function getConfig(): Config {
   const config: Config = merge(defaultConfig, providedConfig);
 
   if (process.env.OZ_TEST_ENV_COVERAGE !== undefined) {
-    console.log('Running on coverage mode: overriding some configuration values');
+    log('Running on coverage mode: overriding some configuration values');
     config.coverage = true;
 
     // Solidity coverage causes transactions to require much more gas. We need to:
