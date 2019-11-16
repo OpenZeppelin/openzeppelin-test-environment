@@ -75,7 +75,7 @@ const [ initalHolder, other ] = accounts;
 
 const { expect } = require('chai');
 
-const MyToken = contract.fromArtifacts('MyToken');
+const MyToken = contract.fromArtifact('MyToken');
 
 describe('MyToken', function() {
   beforeEach(async function() {
@@ -119,7 +119,7 @@ Jest looks very similar to Mocha (`describe`, `it` and `beforeEach` are all ther
 const { accounts, contract } = require('@openzeppelin/test-env');
 const [ initialHolder, other ] = accounts;
 
-const MyToken = contract.fromArtifacts('MyToken');
+const MyToken = contract.fromArtifact('MyToken');
 let token;
 
 describe('MyToken', function() {
@@ -160,7 +160,7 @@ import test from 'ava';
 import { accounts, contract } from '@openzeppelin/test-env';
 const [ initialHolder, other ] = accounts;
 
-const MyToken = contract.fromArtifacts('MyToken');
+const MyToken = contract.fromArtifact('MyToken');
 
 test.before(async t => {
   t.context.token = await FooBar.deploy().send({ from: initialHolder });
@@ -221,7 +221,7 @@ load.fromABI: (abi: object, bytecode?: string | undefined) => any;
 load.fromArtifact: (contract: string) => any;
 ```
 
-`load` object contains two functions `fromABI` and `fromArtifacts` allowing to load contracts from an ABI or an artifact correspondendly. Returns either [web3-eth-contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) or [@truffle/contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) depending on a [configuration](#config).
+`load` object contains two functions `fromABI` and `fromArtifact` allowing to load contracts from an ABI or an artifact correspondendly. Returns either [web3-eth-contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) or [@truffle/contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) depending on a [configuration](#config).
 
 ```javascript
 // Load from artifacts built by the compiler (stored in .json files)

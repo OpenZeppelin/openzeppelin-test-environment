@@ -3,7 +3,7 @@ import test from 'ava';
 const { accounts, load } = require('@openzeppelin/test-env');
 const [ deployer ] = accounts;
 
-const FooBar = load.fromArtifacts('FooBar');
+const FooBar = load.fromArtifact('FooBar');
 
 let fooBar;
 
