@@ -44,7 +44,6 @@
   },
   "homepage": "https://github.com/OpenZeppelin/test-env#readme",
   "devDependencies": {
-    "@openzeppelin/contract-loader": "^0.5.0",
     "@types/jest": "^24.0.23",
     "@types/lodash.merge": "^4.6.6",
     "@types/node": "^12.12.7",
@@ -64,6 +63,7 @@
     "typescript": "^3.6.2"
   },
   "dependencies": {
+    "@openzeppelin/contract-loader": "^0.5.0",
     "@truffle/contract": "^4.0.38",
     "ansi-colors": "^4.1.1",
     "ethereumjs-wallet": "^0.6.3",
