@@ -40,10 +40,6 @@ async function test() {
 
 _Note: if you'd rather not rely on truffle contracts and use web3 contract types directly, worry not: you can [configure `test-environment`](#configuration) to use the `web3-eth-contract` abstraction._
 
-## [OpenZeppelin Test Helpers](https://github.com/OpenZeppelin/openzeppelin-test-helpers) support
-
-`testing-environment` does not include the Test Helpers library, but it will automatically detect it and configure it if it is installed. Simply `require('@openzeppelin/test-helpers')` and use it as you are already used to.
-
 ## Test runners
 
 `test-environment` is a testing _library_, something you use _in_ your tests, as opposed to what actually _runs_ them. For that, you are free to use any regular JavaScript test runner. We recommend picking one of the following:
@@ -53,137 +49,9 @@ _Note: if you'd rather not rely on truffle contracts and use web3 contract types
 
 Both Jest and Ava have their own assertions library, but for Mocha, you may want to also use [Chai](https://www.chaijs.com).
 
-Let's take a look a how testing the following contract would look with each runner.
+Head to our [test runners guide](docs/test-runners) to learn more about how to setup each one.
 
-```solidity
-pragma solidity ^0.5.0;
-
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-
-contract MyToken is ERC20 {
-  constructor() public {
-    _mint(msg.sender, 1000);
-  }
-}
-```
-
-### Using Mocha
-
-```javascript
-const { accounts, contract } = require('@openzeppelin/test-env');
-const [ initalHolder, other ] = accounts;
-
-const { expect } = require('chai');
-
-const MyToken = contract.fromArtifact('MyToken');
-
-describe('MyToken', function() {
-  beforeEach(async function() {
-    this.token = await MyToken.new({ from: initialHolder });
-  });
-
-  it('initialHolder can transfer tokens', async function() {
-    await this.token.transfer(other, 20, { from: initialHolder });
-    expect(await this.token.balanceOf(other)).to.equal('20');
-  });
-});
-```
-
-Install Mocha and Chai via:
-
-```
-npm install --save-dev mocha chai
-```
-
-And run all tests in the `test` directory with:
-
-```
-npx mocha --recursive test --exit
-```
-
-_Note: the `--exit` flag is required in Mocha when using the truffle contract abstraction: otherwise, Mocha will hang after all tests finish running._
-
-### About parallel tests
-
-Both Jest and Ava will let you run tests in parallel: each test file will be executed at the same time, leading to massive time savings when running a large test suite. `test-environment` is smart enough to create a separate local blockchain for each parallel run, so there is zero risk of your tests interacting with each other and causing issues.
-
-Migrating from Mocha to Jest is rather straightforward, and is well worth the effort if you are spending too much time waiting for tests to finish.
-
-### Using Jest
-
-Jest looks very similar to Mocha (`describe`, `it` and `beforeEach` are all there), but there are two big differences:
- * You don't need to use Chai, since Jest has its own assertion library (read the docs [here!](https://jestjs.io/docs/en/using-matchers))
- * You cannot store objects in `this` inside `beforeEach`
-
-```javascript
-const { accounts, contract } = require('@openzeppelin/test-env');
-const [ initialHolder, other ] = accounts;
-
-const MyToken = contract.fromArtifact('MyToken');
-let token;
-
-describe('MyToken', function() {
-  beforeEach(async function() {
-    token = await MyToken.new({ from: initialHolder });
-  });
-
-  it('initialHolder can transfer tokens', async function() {
-    await this.token.transfer(other, 20, { from: initialHolder });
-    expect(await this.token.balanceOf(other)).toEqual('20');
-  });
-});
-```
-
-_If migrating from Mocha, you can still use Chai to reduce the number of changes you need to make to your tests. Just be careful not to get Chai's and Jest's `expect` mixed up!._
-
-Install Jest via:
-
-```
-npm install --save-dev jest
-```
-
-Jest will run all `*.test.js` files with:
-
-```
-npx jest ./test
-```
-
-It also features [extensive command line options](https://jestjs.io/docs/en/cli) for you to quickly run a reduced set of tests, which comes very handy during development.
-
-### Using Ava
-
-Ava is a new, modern test runner, product of learnings on the JavaScript ecosystem over the years. As such, it may look different from what you're used to, but it is a great tool that is worth learning how to use. [Their documentation](https://github.com/avajs/ava/blob/master/docs/01-writing-tests.md) is a great starting point.
-
-```javascript
-import test from 'ava';
-
-import { accounts, contract } from '@openzeppelin/test-env';
-const [ initialHolder, other ] = accounts;
-
-const MyToken = contract.fromArtifact('MyToken');
-
-test.before(async t => {
-  t.context.token = await MyToken.new({ from: initialHolder });
-});
-
-test('initialHolder can transfer tokens', async t => {
-  await t.context.token.transfer(other, 20, { from: initialHolder });
-  t.is(await t.context.token.balanceOf(other), '20');
-});
-```
-
-Install Ava via:
-
-```
-npm install --save-dev ava
-```
-
-Ava will run all files in the `test` directory with:
-
-```
-npx ava
-```
-### Compiling your contracts
+## Compiling your contracts
 
 `test-environment` is not a contract compiler: for that, you'll want to use the [OpenZeppelin CLI](https://docs.openzeppelin.com/sdk/2.5/).
 
@@ -192,18 +60,105 @@ npm install --save-dev @openzeppelin/cli
 npx oz compile
 ```
 
-Compilation artifacts will be stored in the `build/contracts` directory.
+Compilation artifacts will be stored in the `build/contracts` directory, where `testing-environment` (and most other tools) will read them from.
 
-### Configuration
+## [OpenZeppelin Test Helpers](https://github.com/OpenZeppelin/openzeppelin-test-helpers) support
 
-`test-env.config.js`
+`testing-environment` does not include the Test Helpers library, but it will automatically detect it and configure it if it is installed. Simply `require('@openzeppelin/test-helpers')` and use it as you already do.
 
-### Migrate from Truffle Test
+## Configuration
+
+The default options are very sensible and should work fine for most testing setups, but you are free to modify these. Simply create a file named `test-env.config.js` at the root level of your project: its contents will be automatically loaded.
+
+```javascript
+module.exports = {
+  accounts: {
+    amount: 10, // Number of unlocked accounts
+    ether: 100, // Initial balance of unlocked accounts (in ether)
+  },
+
+  contracts: {
+    type: 'truffle', // Contract abstraction to use: 'truffle' for @truffle/contract or 'web3' for web3-eth-contract
+    defaultGas: 6e6, // Maximum gas for contract calls (when unspecified)
+  },
+
+  blockGasLimit: 8e6, // Maximum gas per block
+};
+```
+
+## Migrating from `truffle test`
+
+Truffle uses a lightly modified Mocha (bundled with Chai) as a test runner, making it the best choice for a simple migration.
+
+```
+npm install --save-dev mocha chai
+```
+
+### Importing `test-environment` and `chai`
+
+Add the following line to the top of each of your test files:
+
+```javascript
+const { accounts, contract, web3 } = require('@openzeppelin/test-environment');
+```
+
+Truffle also automagically imports Chai, so you'll need to do that manually:
+
+```javascript
+// For expect() assertions
+const { expect } = require('chai');
+
+// For should() assertions
+require('chai').should();
+```
+
+### Replacing truffle constructs
+
+In `truffle test`, contract objects are loaded by calling `artifacts.require()`. Replace all instances for calls to `contract.fromArtifact`.
+
+Replace the top level call to truffle's `contract` function by a regular Mocha `describe`. `contract` receives an array of accounts as an argument, which `test-environment` exports as `accounts`.
+
+### Test command
+
+Finally, run `npx mocha --exit --recursive test` to run your tests. Enjoy lightning fast testing!
+
+You can add this to your `package.json` file under `scripts/test` to then run tests via `npm test`:
+
+```json
+// package.json
+"scripts": {
+  "test": "npx mocha --exit --recursive test"
+}
+```
+
+### Example migration
+
+Using `truffle test`:
+
+```javascript
+const ERC20 = artifacts.require('ERC20');
+
+contract('ERC20', function (accounts) {
+  ...
+}
+```
+
+Using `test-environment`:
+
+```javascript
+const { accounts, contract, web3 } = require('@openzeppelin/test-environment');
+
+const ERC20 = contract.fromAbstraction('ERC20');
+
+describe('ERC20', function () {
+  ...
+}
+```
 
 ## API
 
 ```javascript
-const { accounts, load, provider, defaultSender, web3 } = require('@openzeppelin/test-env');
+const { accounts, contract, web3 } = require('@openzeppelin/test-environment');
 ```
 
 #### accounts
