@@ -7,7 +7,7 @@
 
 - Near-instant start up: have your code running in under 2s after typing `npm test`.
 - Test runner agnostic – from the familiarity of Mocha, to _parallel tests_ using Jest or Ava!
-- Non-opinionated: use either [`web3-eth-contract`](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) or [`@truffle/contract`](https://www.npmjs.com/package/@truffle/contract) as you see fit.
+- Non-opinionated: use either [`@truffle/contract`](https://www.npmjs.com/package/@truffle/contract) or [`web3-eth-contract`](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) as you see fit.
 - First class support for the [OpenZeppelin Test Helpers](https://github.com/OpenZeppelin/openzeppelin-test-helpers).
 - Highly configurable: from gas limit and initial balance, to complex custom web3 providers.
 - No global variables, no hacks.
@@ -33,12 +33,12 @@ const [ tokenHolder ] = accounts;
 const ERC20 = contract.fromArtifact('ERC20'); // Loads a compiled contract
 
 async function test() {
-  const token = await ERC20.deploy().send({ from: tokenHolder });
+  const token = await ERC20.new({ from: tokenHolder });
   const initialBalance = await token.balanceOf(tokenHolder);
 }
 ```
 
-_Note: if you're used to `truffle test` and are not familiar with the `.send()` syntax, worry not: you can [configure `test-environment`](#configuration) to use the truffle contract abstraction._
+_Note: if you'd rather not rely on truffle contracts and use web3 contract types directly, worry not: you can [configure `test-environment`](#configuration) to use the `web3-eth-contract` abstraction._
 
 ## [OpenZeppelin Test Helpers](https://github.com/OpenZeppelin/openzeppelin-test-helpers) support
 
@@ -51,7 +51,7 @@ _Note: if you're used to `truffle test` and are not familiar with the `.send()` 
  * [Jest](https://jestjs.io/): the most popular runner out there, featuring lightning speed, parallel tests, and extensive guides
  * [Ava](https://www.npmjs.com/package/ava/): a minimalistic runner with parallel tests and support for ES6 and TypeScript
 
-Both Jest and Ava have their own assertions library, but for Mocha, you'll also want to use [Chai](https://www.chaijs.com).
+Both Jest and Ava have their own assertions library, but for Mocha, you may want to also use [Chai](https://www.chaijs.com).
 
 Let's take a look a how testing the following contract would look with each runner.
 
@@ -79,12 +79,12 @@ const MyToken = contract.fromArtifact('MyToken');
 
 describe('MyToken', function() {
   beforeEach(async function() {
-    this.token = await MyToken.deploy().send({ from: initialHolder });
+    this.token = await MyToken.new({ from: initialHolder });
   });
 
   it('initialHolder can transfer tokens', async function() {
-    await this.token.methods.transfer(other, 20).send({ from: initialHolder });
-    expect(await this.token.balanceOf(other).call()).to.equal('20');
+    await this.token.transfer(other, 20, { from: initialHolder });
+    expect(await this.token.balanceOf(other)).to.equal('20');
   });
 });
 ```
@@ -124,12 +124,12 @@ let token;
 
 describe('MyToken', function() {
   beforeEach(async function() {
-    token = await MyToken.deploy().send({ from: initialHolder });
+    token = await MyToken.new({ from: initialHolder });
   });
 
   it('initialHolder can transfer tokens', async function() {
-    await this.token.methods.transfer(other, 20).send({ from: initialHolder });
-    expect(await this.token.balanceOf(other).call()).toEqual('20');
+    await this.token.transfer(other, 20, { from: initialHolder });
+    expect(await this.token.balanceOf(other)).toEqual('20');
   });
 });
 ```
@@ -163,12 +163,12 @@ const [ initialHolder, other ] = accounts;
 const MyToken = contract.fromArtifact('MyToken');
 
 test.before(async t => {
-  t.context.token = await FooBar.deploy().send({ from: initialHolder });
+  t.context.token = await MyToken.new({ from: initialHolder });
 });
 
 test('initialHolder can transfer tokens', async t => {
-  await t.context.token.methods.transfer(other, 20).send({ from: initialHolder });
-  t.is(await t.context.token.balanceOf(other).call(), '20');
+  await t.context.token.transfer(other, 20, { from: initialHolder });
+  t.is(await t.context.token.balanceOf(other), '20');
 });
 ```
 

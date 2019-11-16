@@ -25,7 +25,7 @@ const defaultConfig: Config = {
   },
 
   contracts: {
-    type: 'web3',
+    type: 'truffle',
     defaultGas: DEFAULT_GAS_LIMIT * 0.75,
   },
 

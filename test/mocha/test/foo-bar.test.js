@@ -7,16 +7,16 @@ const FooBar = contract.fromArtifact('FooBar');
 
 describe('FooBar', function() {
   beforeEach(async function() {
-    this.fooBar = await FooBar.deploy().send();
+    this.fooBar = await FooBar.new();
   });
 
   it('foo with a bar', async function() {
-    expect(await this.fooBar.methods.foo().call()).to.be.equal('bar');
+    expect(await this.fooBar.foo()).to.be.equal('bar');
   });
 
   it('reverts a transaction', async function() {
     try {
-      const ret = await this.fooBar.methods.reverts().send();
+      const ret = await this.fooBar.reverts();
     } catch (err) {
       return expect(err.message).to.match(/Just do it!/);
     }
@@ -25,7 +25,7 @@ describe('FooBar', function() {
 
   it('fails requires', async function() {
     try {
-      const ret = await this.fooBar.methods.requires(324).send();
+      const ret = await this.fooBar.requires(324);
     } catch (err) {
       return expect(err.message).to.match(/Wrong answer/);
     }
@@ -33,7 +33,7 @@ describe('FooBar', function() {
   });
 
   it('pass require with a right answer ', async function() {
-    const ret = await this.fooBar.methods.requires(42).send();
+    const ret = await this.fooBar.requires(42);
     expect(ret).to.not.be.null;
   });
 });
