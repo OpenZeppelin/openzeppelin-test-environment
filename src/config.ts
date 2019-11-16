@@ -4,7 +4,7 @@ import merge from 'lodash.merge';
 
 import { Provider } from 'web3/providers';
 
-const CONFIG_FILE = 'test-env.config.js';
+const CONFIG_FILE = 'test-environment.config.js';
 const location = findUp.sync(CONFIG_FILE, { type: 'file' });
 
 type Config = {

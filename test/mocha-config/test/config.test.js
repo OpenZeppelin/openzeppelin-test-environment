@@ -2,7 +2,7 @@ const { accounts, provider, web3 } = require('@openzeppelin/test-env');
 const { expect } = require('chai');
 const BN = require('bn.js');
 
-const config = require('../.test-env.config.js');
+const config = require('../test-environment.config.js');
 
 const uniq = require('lodash.uniq');
 

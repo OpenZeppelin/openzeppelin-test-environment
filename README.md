@@ -68,7 +68,7 @@ Compilation artifacts will be stored in the `build/contracts` directory, where `
 
 ## Configuration
 
-The default options are very sensible and should work fine for most testing setups, but you are free to modify these. Simply create a file named `test-env.config.js` at the root level of your project: its contents will be automatically loaded.
+The default options are very sensible and should work fine for most testing setups, but you are free to modify these. Simply create a file named `test-environment.config.js` at the root level of your project: its contents will be automatically loaded.
 
 ```javascript
 module.exports = {
