@@ -214,14 +214,14 @@ accounts: string[]
 
 `accounts` is an array of strings representing all the accounts avaiable for testing. Every account is funded with initial balance equal be default to 100 ETH. Default deployer account is not among them. That is by design.
 
-#### load
+#### contract
 
 ```typescript
-load.fromABI: (abi: object, bytecode?: string | undefined) => any;
-load.fromArtifact: (contract: string) => any;
+contract.fromABI: (abi: object, bytecode?: string | undefined) => any;
+contract.fromArtifact: (contract: string) => any;
 ```
 
-`load` object contains two functions `fromABI` and `fromArtifact` allowing to load contracts from an ABI or an artifact correspondendly. Returns either [web3-eth-contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) or [@truffle/contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) depending on a [configuration](#config).
+`contract` object contains two functions `fromABI` and `fromArtifact` allowing to load contracts from an ABI or an artifact correspondendly. Returns either [web3-eth-contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) or [@truffle/contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) depending on a [configuration](#config).
 
 ```javascript
 // Load from artifacts built by the compiler (stored in .json files)
@@ -231,8 +231,6 @@ const ERC20 = web3Loader.fromArtifact('ERC20');
 const abi = [ ... ];
 const ERC20 = load.fromABI(abi);
 ```
-
-Learn more about [OpenZeppelin Contract Loader](https://github.com/OpenZeppelin/openzeppelin-contract-loader).
 
 #### provider
 

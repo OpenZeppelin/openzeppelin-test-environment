@@ -1,9 +1,9 @@
-const { accounts, load } = require('@openzeppelin/test-env');
+const { accounts, contract } = require('@openzeppelin/test-env');
 const [ deployer ] = accounts;
 
 const { expect } = require('chai');
 
-const FooBar = load.fromArtifact('FooBar');
+const FooBar = contract.fromArtifact('FooBar');
 
 describe('FooBar', function() {
   beforeEach(async function() {
