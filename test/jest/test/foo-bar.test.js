@@ -1,11 +1,11 @@
 const { accounts, contract } = require('@openzeppelin/test-env');
-const [deployer] = accounts;
+const [ deployer ] = accounts;
 
 const FooBar = contract.fromArtifact('FooBar');
 let fooBar;
 
 describe('FooBar', function() {
-  beforeAll(async function() {
+  beforeEach(async function() {
     fooBar = await FooBar.deploy().send();
   });
 
