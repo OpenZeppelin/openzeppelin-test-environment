@@ -4,14 +4,15 @@ import semver from 'semver';
 import { defaultSender } from './accounts';
 import config from './config';
 import { provider } from './setup-provider';
-
-const colors = require('ansi-colors');
+import { warn } from './log';
 
 let configured = false;
 
 const testHelpersPackage = tryRequire('@openzeppelin/test-helpers/package.json');
 if (testHelpersPackage !== undefined) {
   // TODO: skip if already configured?
+
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const configure = require('@openzeppelin/test-helpers/configure');
 
   const version = testHelpersPackage.version;
@@ -35,10 +36,6 @@ if (testHelpersPackage !== undefined) {
 
     configured = true;
   } else {
-    const warn = (msg: string) => {
-      console.log(`${colors.white.bgBlack('@openzeppelin/test-env')} ${colors.black.bgYellow('WARN')} ${msg}`);
-    };
-
     warn(
       `Currently installed version of @openzeppelin/test-helpers (${version}) is unsupported, cannot configure.
 
