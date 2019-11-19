@@ -49,7 +49,7 @@ _Note: if you'd rather not rely on truffle contracts and use web3 contract types
 
 Both Jest and Ava have their own assertions library, but for Mocha, you may want to also use [Chai](https://www.chaijs.com).
 
-Head to our [test runners guide](docs/test-runners) to learn more about how to setup each one.
+Head to our [test runners guide](docs/test-runners.md) to learn more about how to setup each one.
 
 ## Compiling your contracts
 
