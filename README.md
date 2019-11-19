@@ -3,7 +3,7 @@
 [![NPM Package](https://img.shields.io/npm/v/@openzeppelin/test-env.svg)](https://www.npmjs.org/package/@openzeppelin/test-env)
 [![Build Status](https://circleci.com/gh/OpenZeppelin/openzeppelin-test-env.svg?style=shield)](https://circleci.com/gh/OpenZeppelin/openzeppelin-test-env)
 
-**Blazing fast smart contract testing.** One-line setup for a dramatically better testing experience.
+**Blazing fast smart contract testing.** One-line setup for an awesome testing experience.
 
 - Near-instant start up: have your code running in under 2s after typing `npm test`.
 - Test runner agnostic – from the familiarity of Mocha, to _parallel tests_ using Jest or Ava!
@@ -24,7 +24,7 @@ npm install --save-dev @openzeppelin/test-environment
 
 ### Usage
 
-Simply `require('@openzeppelin/test-environment')` in your test files, and it will take care of all Ethereum-related tasks. A local blockchain with unlocked accounts will be spinned up, and all tools will be configured to work with it.
+Simply `require('@openzeppelin/test-environment')` in your test files, and it will take care of all Ethereum-related tasks. A local [ganache-powered blockchain](https://github.com/trufflesuite/ganache-core) with unlocked accounts will be spinned up, and all tools will be configured to work with it.
 
 ```javascript
 const { accounts, contract } = require('@openzeppelin/test-environment');
