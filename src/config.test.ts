@@ -6,7 +6,7 @@ const defaultConfig = {
     ether: 100,
   },
   contracts: {
-    type: 'web3',
+    type: 'truffle',
     defaultGas: DEFAULT_BLOCK_GAS_LIMIT * 0.75,
   },
 

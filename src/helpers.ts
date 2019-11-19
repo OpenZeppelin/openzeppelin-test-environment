@@ -36,7 +36,12 @@ if (testHelpersPackage !== undefined) {
 
     configured = true;
   } else {
-    warn(`Unknown version of @openzeppelin/test-helpers: '${version}', cannot configure`);
+    warn(
+      `Currently installed version of @openzeppelin/test-helpers (${version}) is unsupported, cannot configure.
+
+Please upgrade to v0.5.0 or newer:
+npm install --save-dev @openzeppelin/test-helpers@latest`,
+    );
   }
 }
 

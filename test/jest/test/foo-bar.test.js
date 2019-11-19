@@ -1,21 +1,21 @@
-const { accounts, load } = require('@openzeppelin/test-env');
-const [deployer] = accounts;
+const { accounts, contract } = require('@openzeppelin/test-env');
+const [ deployer ] = accounts;
 
-const FooBar = load.fromArtifacts('FooBar');
+const FooBar = contract.fromArtifact('FooBar');
 let fooBar;
 
 describe('FooBar', function() {
-  beforeAll(async function() {
-    fooBar = await FooBar.deploy().send();
+  beforeEach(async function() {
+    fooBar = await FooBar.new();
   });
 
   it('foo with a bar', async function() {
-    expect(await fooBar.methods.foo().call()).toEqual('bar');
+    expect(await fooBar.foo()).toEqual('bar');
   });
 
   it('reverts a transaction', async function() {
     try {
-      const ret = await fooBar.methods.reverts().send();
+      const ret = await fooBar.reverts();
     } catch (err) {
       return expect(err.message).toMatch(/Just do it/);
     }
@@ -24,7 +24,7 @@ describe('FooBar', function() {
 
   it('fails requires', async function() {
     try {
-      const ret = await fooBar.methods.requires(324).send();
+      const ret = await fooBar.requires(324);
     } catch (err) {
       return expect(err.message).toMatch(/Wrong answer/);
     }
@@ -32,7 +32,7 @@ describe('FooBar', function() {
   });
 
   it('pass require with a right answer ', async function() {
-    const ret = await fooBar.methods.requires(42).send();
+    const ret = await fooBar.requires(42);
     expect(ret).not.toBeNull();
   });
 });

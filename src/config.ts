@@ -6,7 +6,7 @@ import { log } from './log';
 
 import { Provider } from 'web3/providers';
 
-const CONFIG_FILE = '.test-env.js';
+const CONFIG_FILE = 'test-environment.config.js';
 
 type Config = {
   accounts: { amount: number; ether: number };
@@ -26,7 +26,7 @@ const defaultConfig: Config = {
   },
 
   contracts: {
-    type: 'web3',
+    type: 'truffle',
     defaultGas: DEFAULT_BLOCK_GAS_LIMIT * 0.75,
   },
 
