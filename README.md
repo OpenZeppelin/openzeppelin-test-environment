@@ -55,7 +55,7 @@ Head to our [test runners guide](docs/test-runners) to learn more about how to s
 
 `test-environment` is not a contract compiler: for that, you'll want to use the [OpenZeppelin CLI](https://docs.openzeppelin.com/sdk/2.5/).
 
-```
+```bash
 npm install --save-dev @openzeppelin/cli
 npx oz compile
 ```
@@ -88,72 +88,49 @@ module.exports = {
 
 ## Migrating from `truffle test`
 
-Truffle uses a lightly modified Mocha (bundled with Chai) as a test runner, making it the best choice for a simple migration.
+Despite Truffle's design and goals being different from `test-environment`'s (one is an all-out development framework and the other a testing library), it is still quite simple to migrate from a `truffle test`-based suite. Doing the whole process on the OpenZeppelin Contracts repository took less than thirty minutes!
 
-```
+Because `truffle test` uses a lightly modified Mocha as a test runner (bundled with Chai for assertions), these two make best choice for a simple migration:
+
+```bash
 npm install --save-dev mocha chai
 ```
 
-### Importing `test-environment` and `chai`
+Don't forget to make Mocha the entry point of your test suite once you install it:
 
-Add the following line to the top of each of your test files:
-
-```javascript
-const { accounts, contract, web3 } = require('@openzeppelin/test-environment');
-```
-
-Truffle also automagically imports Chai, so you'll need to do that manually:
-
-```javascript
-// For expect() assertions
-const { expect } = require('chai');
-
-// For should() assertions
-require('chai').should();
-```
-
-### Replacing truffle constructs
-
-In `truffle test`, contract objects are loaded by calling `artifacts.require()`. Replace all instances for calls to `contract.fromArtifact`.
-
-Replace the top level call to truffle's `contract` function by a regular Mocha `describe`. `contract` receives an array of accounts as an argument, which `test-environment` exports as `accounts`.
-
-### Test command
-
-Finally, run `npx mocha --exit --recursive test` to run your tests. Enjoy lightning fast testing!
-
-You can add this to your `package.json` file under `scripts/test` to then run tests via `npm test`:
-
-```json
-// package.json
+```diff
+// in package.json
 "scripts": {
-  "test": "npx mocha --exit --recursive test"
+-  "test": "npx truffle test"
++  "test": "npx mocha --exit --recursive test"
 }
 ```
 
-### Example migration
+It is now time to modify the test files themselves. The changes are few, but important:
+ 1. Add `require('@openzeppelin/test-environment')` to access the variables exported by the library: `accounts`, `contract`, `web3`, etc.
+ 1. `truffle test` automagically imports Chai: you will need to `require` it and set it up manually
+ 1. Replace all instances of `artifacts.require` for `contract.fromArtifact`
+ 1. Replace all intances of `truffle test`'s `contract` function with a regular Mocha `describe`. You can still access the accounts array in `accounts`
 
-Using `truffle test`:
+That's it! Let's see how a full migration might look like:
 
-```javascript
-const ERC20 = artifacts.require('ERC20');
+```diff
++const { accounts, contract, web3 } = require('@openzeppelin/test-environment');
 
-contract('ERC20', function (accounts) {
+// Setup Chai for 'expect' or 'should' style assertions (you only need one)
++const { expect } = require('chai');
++require('chai').should();
+
+-const ERC20 = artifacts.require('ERC20');
++const ERC20 = contract.fromAbstraction('ERC20');
+
+-contract('ERC20', function (accounts) {
++describe('ERC20', function () {
   ...
 }
 ```
 
-Using `test-environment`:
-
-```javascript
-const { accounts, contract, web3 } = require('@openzeppelin/test-environment');
-
-const ERC20 = contract.fromAbstraction('ERC20');
-
-describe('ERC20', function () {
-  ...
-}
-```
+You are now ready to start using `test-environment` by running `npm test`. Enjoy lightning fast testing!
 
 ## API
 
