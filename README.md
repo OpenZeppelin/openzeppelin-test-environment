@@ -62,7 +62,7 @@ npx oz compile
 
 Compilation artifacts will be stored in the `build/contracts` directory, where `testing-environment` (and most other tools) will read them from.
 
-## [OpenZeppelin Test Helpers](https://github.com/OpenZeppelin/openzeppelin-test-helpers) support
+## OpenZeppelin [Test Helpers](https://github.com/OpenZeppelin/openzeppelin-test-helpers) support
 
 `testing-environment` does not include the Test Helpers library, but it will automatically detect it and configure it if it is installed. Simply `require('@openzeppelin/test-helpers')` and use it as you already do.
 
@@ -134,43 +134,79 @@ You are now ready to start using `test-environment` by running `npm test`. Enjoy
 
 ## API
 
+`test-environment` exposes a number of variables that are used to interact with the local testing blockchain it setups. These are described in detail here:
+
 ```javascript
-const { accounts, contract, web3 } = require('@openzeppelin/test-environment');
+const { accounts, defaultSender, contract, web3, provider, isHelpersConfigured } = require('@openzeppelin/test-environment');
 ```
 
-#### accounts
+### accounts
 
 ```typescript
 accounts: string[]
 ```
 
-`accounts` is an array of strings representing all the accounts avaiable for testing. Every account is funded with initial balance equal be default to 100 ETH. Default deployer account is not among them. That is by design.
-
-#### contract
-
-```typescript
-contract.fromABI: (abi: object, bytecode?: string | undefined) => any;
-contract.fromArtifact: (contract: string) => any;
-```
-
-`contract` object contains two functions `fromABI` and `fromArtifact` allowing to load contracts from an ABI or an artifact correspondendly. Returns either [web3-eth-contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) or [@truffle/contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) depending on a [configuration](#config).
+An array of strings with the addresses of the accounts available for testing. By default, there are 10 unlocked accounts with 100 ETH each, but this can be [configured](#configuration).
 
 ```javascript
-// Load from artifacts built by the compiler (stored in .json files)
-const ERC20 = web3Loader.fromArtifact('ERC20');
+const [ sender, receiver ] = accounts;
 
-// Or load directly from an ABI
-const abi = [ ... ];
-const ERC20 = load.fromABI(abi);
+await myToken.transfer(receiver, 100, { from: sender });
 ```
 
-#### provider
+### defaultSender
 
 ```typescript
-provider: Provider;
+defaultSender: string
 ```
 
-`provider` is a [web3.js](https://github.com/ethereum/web3.js/) provider wrapped around a [Ganache](https://github.com/trufflesuite/ganache-core) Ethereum test client. Can be used to create a new instances of convinience web3 libraries like [web3.js](<[web3.js](https://github.com/ethereum/web3.js/)>), [ethers.js](https://github.com/ethers-io/ethers.js/).
+A special account that is used by contracts created via `contract` when no account is specified for a transaction (i.e. there is no explicit `from`). This account is _not_ included in `accounts` to prevent accidental bugs during testing: whenever you want an account to make an action (deploy a contract, transfer ownership, etc.) you should be explicit about the sender of the transaction:
+
+```javascript
+const [ owner ] = accounts;
+
+// The depoloyment will be made by 'defaultSender' (not 'owner'!), making it
+// the contract's owner
+const myContract = await Ownable.new();
+
+// And the following test will fail
+expect(await myContract.owner()).to.equal(owner);
+```
+
+### contract
+
+```typescript
+contract.fromArtifact: (contract: string) => any;
+contract.fromABI: (abi: object, bytecode?: string | undefined) => any;
+```
+
+The `contract` object is in charge of creating contracts from compilation artifacts. It does this via two functions:
+ * `fromArtifact` looks for a `.json` file in the `build/contracts` directory (equivalent to Truffle's `artifact.require`)
+ * `fromABI` receives an ABI object directly, useful when the full compilation artifacts are not available
+
+ They both return instances of either [@truffle/contract](https://www.npmjs.com/package/@truffle/contract) (by default) or [web3-eth-contract](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html), depending on [configuration](#configurations).
+
+```javascript
+const ERC20 = contract.fromArtifact('ERC20');
+
+const myToken = await ERC20.new(initialBalance, initialHolder);
+```
+
+### web3
+
+A [`web3`](https://www.npmjs.com/package/web3) instance, connected to the local testing blockchain. Useful to access utiltiies like `web3.eth.sign`, `web3.eth.getTransaction`, or `web3.utils.sha3`.
+
+### provider
+
+A [`web3`](https://github.com/ethereum/web3.js/) provider, connected to the local testing blockchain. Used in more advanced scenarios, such as creation of custom `web3` or [`ethers`](https://www.npmjs.com/package/ethers) instances.
+
+### isHelpersConfigured
+
+```typescript
+isHelpersConfigured: boolean
+```
+
+A boolean indicating if the OpenZeppelin [Test Helpers](https://github.com/OpenZeppelin/openzeppelin-test-helpers) library was autodetected and configured.
 
 ## License
 
