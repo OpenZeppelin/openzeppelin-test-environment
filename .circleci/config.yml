@@ -63,7 +63,7 @@ jobs:
       - *npm_install_if_necessary
       - run:
           name: Mocha integration tests
-          command: cd test && ./run-test.sh mocha
+          command: cd test-integration && ./run-test.sh mocha
 
   test-ava:
     <<: *defaults
@@ -74,7 +74,7 @@ jobs:
       - *npm_install_if_necessary
       - run:
           name: Ava integration tests
-          command: cd test && ./run-test.sh ava
+          command: cd test-integration && ./run-test.sh ava
 
   test-jest:
     <<: *defaults
@@ -85,7 +85,7 @@ jobs:
       - *npm_install_if_necessary
       - run:
           name: Jest integration tests
-          command: cd test && ./run-test.sh jest
+          command: cd test-integration && ./run-test.sh jest
 
   test-mocha-defaults:
     <<: *defaults
@@ -96,7 +96,7 @@ jobs:
       - *npm_install_if_necessary
       - run:
           name: Default options integration tests (Mocha)
-          command: cd test && ./run-test.sh mocha-defaults
+          command: cd test-integration && ./run-test.sh mocha-defaults
 
   test-mocha-config:
     <<: *defaults
@@ -107,7 +107,7 @@ jobs:
       - *npm_install_if_necessary
       - run:
           name: Explicit options integration tests (Mocha)
-          command: cd test && ./run-test.sh mocha-config
+          command: cd test-integration && ./run-test.sh mocha-config
 
 workflows:
   version: 2

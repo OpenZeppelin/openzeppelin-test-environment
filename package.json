@@ -6,8 +6,9 @@
   "scripts": {
     "compile": "rm -rf lib && tsc",
     "prepare": "npm run compile",
-    "test": "npm run compile && cd test && ./run-all.sh",
+    "test:integration": "npm run compile && cd test-integration && ./run-all.sh",
     "test:unit": "npx jest --verbose",
+    "test": "npm run test:unit && npm run test:integration",
     "watch": "tsc -w"
   },
   "files": [
