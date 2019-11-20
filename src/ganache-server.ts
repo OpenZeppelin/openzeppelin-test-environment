@@ -1,5 +1,4 @@
-import ganacheNormal from 'ganache-core';
-import ganacheCoverage from 'ganache-core-coverage';
+import ganache from 'ganache-core';
 
 import { Message, Options } from './setup-ganache';
 
@@ -11,15 +10,21 @@ function send(msg: Message): void {
 }
 
 function setupServer({ accountsConfig, gasLimit, gasPrice, coverage }: Options) {
-  const ganache = coverage ? ganacheCoverage : ganacheNormal;
-
-  return ganache.server({
+  const ganacheOpts = {
     accounts: accountsConfig,
     gasLimit,
     gasPrice: `0x${gasPrice.toString(16)}`,
-    allowUnlimitedContractSize: coverage,
-    emitFreeLogs: coverage,
-  });
+  };
+
+  if (!coverage) {
+    return ganache.server(ganacheOpts);
+  } else {
+    return require('ganache-core-coverage').server({
+      ...ganacheOpts,
+      allowFreeLogs: true,
+      allowUnlimitedContractSize: true,
+    });
+  }
 }
 
 process.once('message', (options: Options) => {
