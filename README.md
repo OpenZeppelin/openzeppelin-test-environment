@@ -1,7 +1,7 @@
 # OpenZeppelin Test Environment
 
-[![NPM Package](https://img.shields.io/npm/v/@openzeppelin/test-env.svg)](https://www.npmjs.org/package/@openzeppelin/test-env)
-[![Build Status](https://circleci.com/gh/OpenZeppelin/openzeppelin-test-env.svg?style=shield)](https://circleci.com/gh/OpenZeppelin/openzeppelin-test-env)
+[![NPM Package](https://img.shields.io/npm/v/@openzeppelin/test-environment.svg)](https://www.npmjs.org/package/@openzeppelin/test-environment)
+[![Build Status](https://circleci.com/gh/OpenZeppelin/openzeppelin-test-environment.svg?style=shield)](https://circleci.com/gh/OpenZeppelin/openzeppelin-test-environment)
 
 **Blazing fast smart contract testing.** One-line setup for an awesome testing experience.
 

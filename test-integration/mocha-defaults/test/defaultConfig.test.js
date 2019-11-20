@@ -1,4 +1,4 @@
-const { accounts, provider, web3, defaultSender } = require('@openzeppelin/test-env');
+const { accounts, provider, web3, defaultSender } = require('@openzeppelin/test-environment');
 const { expect } = require('chai');
 
 const uniq = require('lodash.uniq');

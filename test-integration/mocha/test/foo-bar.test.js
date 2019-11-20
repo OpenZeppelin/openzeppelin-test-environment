@@ -1,4 +1,4 @@
-const { accounts, contract } = require('@openzeppelin/test-env');
+const { accounts, contract } = require('@openzeppelin/test-environment');
 const [ deployer ] = accounts;
 
 const { expect } = require('chai');

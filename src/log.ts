@@ -1,7 +1,7 @@
 import colors from 'ansi-colors';
 
 export function log(msg: string): void {
-  console.log(`${colors.white.bgBlack('@openzeppelin/test-env')} ${msg}`);
+  console.log(`${colors.white.bgBlack('@openzeppelin/test-environment')} ${msg}`);
 }
 
 export function warn(msg: string): void {

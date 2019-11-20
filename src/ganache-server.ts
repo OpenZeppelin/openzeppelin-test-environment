@@ -27,7 +27,7 @@ process.once('message', (options: Options) => {
 
   // An undefined port number makes ganache-core choose a random free port,
   // which plays nicely with environments such as jest and ava, where multiple
-  // processes of test-env may be run in parallel.
+  // processes of test-environment may be run in parallel.
   // It also means however that the port (and therefore host URL) is not
   // available until the server finishes initialization.
   server.listen(undefined, function(err: unknown) {

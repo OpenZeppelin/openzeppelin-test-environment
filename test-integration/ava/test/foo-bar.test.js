@@ -1,6 +1,6 @@
 import test from 'ava';
 
-const { accounts, contract } = require('@openzeppelin/test-env');
+const { accounts, contract } = require('@openzeppelin/test-environment');
 const [ deployer ] = accounts;
 
 const FooBar = contract.fromArtifact('FooBar');

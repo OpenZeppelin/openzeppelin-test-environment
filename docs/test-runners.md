@@ -15,7 +15,7 @@ contract MyToken is ERC20 {
 ### Using Mocha
 
 ```javascript
-const { accounts, contract } = require('@openzeppelin/test-env');
+const { accounts, contract } = require('@openzeppelin/test-environment');
 const [ initalHolder, other ] = accounts;
 
 const { expect } = require('chai');
@@ -61,7 +61,7 @@ Jest looks very similar to Mocha (`describe`, `it` and `beforeEach` are all ther
  * You cannot store objects in `this` inside `beforeEach`
 
 ```javascript
-const { accounts, contract } = require('@openzeppelin/test-env');
+const { accounts, contract } = require('@openzeppelin/test-environment');
 const [ initialHolder, other ] = accounts;
 
 const MyToken = contract.fromArtifact('MyToken');
@@ -102,7 +102,7 @@ Ava is a new, modern test runner, product of learnings on the JavaScript ecosyst
 ```javascript
 import test from 'ava';
 
-import { accounts, contract } from '@openzeppelin/test-env';
+import { accounts, contract } from '@openzeppelin/test-environment';
 const [ initialHolder, other ] = accounts;
 
 const MyToken = contract.fromArtifact('MyToken');
