@@ -12,7 +12,9 @@
     "watch": "tsc -w"
   },
   "files": [
-    "lib"
+    "lib",
+    "!*.test.js",
+    "!*.test.js.map"
   ],
   "husky": {
     "hooks": {
