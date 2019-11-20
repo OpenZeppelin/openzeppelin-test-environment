@@ -125,6 +125,14 @@ workflows:
           requires:
             - dependencies
             - compile
+      - test-ava:
+          requires:
+            - dependencies
+            - compile
+      - test-jest:
+          requires:
+            - dependencies
+            - compile
       - test-mocha-defaults:
           requires:
             - dependencies
