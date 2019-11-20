@@ -1,6 +1,7 @@
 import fs from 'fs';
 import findUp from 'find-up';
 import merge from 'lodash.merge';
+import tryRequire from 'try-require'
 
 import { log } from './log';
 
@@ -45,6 +46,11 @@ function getConfig(): Config {
   const config: Config = merge(defaultConfig, providedConfig);
 
   if (process.env.OZ_TEST_ENV_COVERAGE !== undefined) {
+    const coveragePath = tryRequire.resolve('ganache-core-coverage');
+    if (coveragePath === undefined) {
+      throw new Error(`Package 'ganache-core-coverage' is required for coverage runs.`);
+    }
+
     log('Running on coverage mode: overriding some configuration values');
     config.coverage = true;
 
