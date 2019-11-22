@@ -28,7 +28,9 @@ export type Options = {
 };
 
 export default async function(): Promise<string> {
-  const server = fork(path.join(__dirname, 'ganache-server'), [], { execArgv: [] });
+  const server = fork(path.join(__dirname, 'ganache-server'), [], {
+    execArgv: process.execArgv.filter(opt => opt !== '--inspect')
+  });
 
   const options: Options = {
     accountsConfig,
