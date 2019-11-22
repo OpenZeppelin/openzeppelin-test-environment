@@ -28,7 +28,7 @@ export type Options = {
 };
 
 export default async function(): Promise<string> {
-  const server = fork(path.join(__dirname, 'ganache-server'));
+  const server = fork(path.join(__dirname, 'ganache-server'), [], { execArgv: [] });
 
   const options: Options = {
     accountsConfig,
