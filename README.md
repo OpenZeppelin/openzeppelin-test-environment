@@ -53,7 +53,7 @@ Head to our [test runners guide](docs/test-runners.md) to learn more about how t
 
 ## Compiling your contracts
 
-`test-environment` is not a contract compiler: for that, you'll want to use the [OpenZeppelin CLI](https://docs.openzeppelin.com/sdk/2.5/).
+`test-environment` is not a contract compiler. You can use the [OpenZeppelin CLI](https://docs.openzeppelin.com/sdk) to compile your Solidity files just as easily.
 
 ```bash
 npm install --save-dev @openzeppelin/cli
