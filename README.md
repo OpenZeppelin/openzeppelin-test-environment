@@ -106,6 +106,8 @@ Don't forget to make Mocha the entry point of your test suite once you install i
 }
 ```
 
+_Note: the `--exit` flag is required when using truffle contracts. Otherwise, the test suite will not exit._
+
 It is now time to modify the test files themselves. The changes are few, but important:
  1. Add `require('@openzeppelin/test-environment')` to access the variables exported by the library: `accounts`, `contract`, `web3`, etc.
  1. `truffle test` automagically imports Chai: you will need to `require` it and set it up manually
