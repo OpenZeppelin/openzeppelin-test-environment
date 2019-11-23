@@ -24,7 +24,7 @@ npm install --save-dev @openzeppelin/test-environment
 
 ### Usage
 
-Simply `require('@openzeppelin/test-environment')` in your test files, and it will take care of all Ethereum-related tasks. A local [ganache-powered blockchain](https://github.com/trufflesuite/ganache-core) with unlocked accounts will be spinned up, and all tools will be configured to work with it.
+Simply `require('@openzeppelin/test-environment')` in your test files, and it will take care of all Ethereum-related tasks. A local [ganache-powered blockchain](https://github.com/trufflesuite/ganache-core) with unlocked accounts will be spun up, and all tools will be configured to work with it.
 
 ```javascript
 const { accounts, contract } = require('@openzeppelin/test-environment');
@@ -122,7 +122,7 @@ That's it! Let's see how a full migration might look like:
 +require('chai').should();
 
 -const ERC20 = artifacts.require('ERC20');
-+const ERC20 = contract.fromAbstraction('ERC20');
++const ERC20 = contract.fromArtifact('ERC20');
 
 -contract('ERC20', function (accounts) {
 +describe('ERC20', function () {
