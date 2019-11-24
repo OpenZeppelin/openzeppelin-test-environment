@@ -112,7 +112,7 @@ It is now time to modify the test files themselves. The changes are few, but imp
  1. Replace all instances of `artifacts.require` for `contract.fromArtifact`
  1. Replace all intances of `truffle test`'s `contract` function with a regular Mocha `describe`. You can still access the accounts array in `accounts`
 
-That's it! Let's see how a full migration might look like:
+That's it! Let's see what a full migration might look like:
 
 ```diff
 +const { accounts, contract, web3 } = require('@openzeppelin/test-environment');
