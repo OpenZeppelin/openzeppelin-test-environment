@@ -21,7 +21,7 @@ function setupServer({ accountsConfig, gasLimit, gasPrice, coverage }: Options) 
   } else {
     return require('ganache-core-coverage').server({
       ...ganacheOpts,
-      allowFreeLogs: true,
+      emitFreeLogs: true,
       allowUnlimitedContractSize: true,
     });
   }
