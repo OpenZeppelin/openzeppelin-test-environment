@@ -16,7 +16,7 @@ contract MyToken is ERC20 {
 
 ```javascript
 const { accounts, contract } = require('@openzeppelin/test-environment');
-const [ initalHolder, other ] = accounts;
+const [ initialHolder, other ] = accounts;
 
 const { expect } = require('chai');
 
@@ -29,7 +29,7 @@ describe('MyToken', function() {
 
   it('initialHolder can transfer tokens', async function() {
     await this.token.transfer(other, 20, { from: initialHolder });
-    expect(await this.token.balanceOf(other)).to.equal('20');
+    expect((await this.token.balanceOf(other)).toString()).to.equal('20');
   });
 });
 ```
@@ -73,8 +73,8 @@ describe('MyToken', function() {
   });
 
   it('initialHolder can transfer tokens', async function() {
-    await this.token.transfer(other, 20, { from: initialHolder });
-    expect(await this.token.balanceOf(other)).toEqual('20');
+    await token.transfer(other, 20, { from: initialHolder });
+    expect((await token.balanceOf(other)).toString()).toEqual('20');
   });
 });
 ```
@@ -113,7 +113,7 @@ test.before(async t => {
 
 test('initialHolder can transfer tokens', async t => {
   await t.context.token.transfer(other, 20, { from: initialHolder });
-  t.is(await t.context.token.balanceOf(other), '20');
+  t.is((await t.context.token.balanceOf(other)).toString(), '20');
 });
 ```
 
