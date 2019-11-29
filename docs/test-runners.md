@@ -74,8 +74,8 @@ describe('MyToken', function() {
   });
 
   it('initialHolder can transfer tokens', async function() {
-    await this.token.transfer(other, 20, { from: initialHolder });
-    expect(await this.token.balanceOf(other)).toEqual('20');
+    await token.transfer(other, 20, { from: initialHolder });
+    expect(await token.balanceOf(other)).toEqual('20');
   });
 });
 ```
