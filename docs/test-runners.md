@@ -16,7 +16,7 @@ contract MyToken is ERC20 {
 
 ```javascript
 const { accounts, contract } = require('@openzeppelin/test-environment');
-const [ initalHolder, other ] = accounts;
+const [ initialHolder, other ] = accounts;
 
 const { expect } = require('chai');
 
