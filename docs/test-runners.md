@@ -114,7 +114,7 @@ test.before(async t => {
 
 test('initialHolder can transfer tokens', async t => {
   await t.context.token.transfer(other, 20, { from: initialHolder });
-  t.is(await t.context.token.balanceOf(other), '20');
+  t.is((await t.context.token.balanceOf(other)).toString(), '20');
 });
 ```
 
