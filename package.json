@@ -5,6 +5,8 @@
   "main": "./lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && tsc",
+    "docs": "oz-docs -c docs",
+    "docs:watch": "npm run docs watch",
     "prepare": "npm run compile",
     "test:integration": "npm run compile && cd test-integration && ./run-all.sh",
     "test:unit": "npx jest --verbose",
@@ -61,6 +63,7 @@
     "husky": "^3.0.5",
     "jest": "^24.9.0",
     "lint-staged": "^9.2.5",
+    "openzeppelin-docs-preview": "github:OpenZeppelin/docs-preview-script",
     "prettier": "^1.18.2",
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.2"
