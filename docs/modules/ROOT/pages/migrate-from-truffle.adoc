@@ -1,6 +1,6 @@
 = Migrating from `truffle test`
 
-Despite Truffle’s design and goals being different from `test-environment`’s (one is an all-out development framework and the other a testing library), it is still quite simple to migrate from a `truffle test`-based suite. Doing the whole process on the OpenZeppelin Contracts repository took less than thirty minutes!
+Despite Truffle's design and goals being different from `test-environment`'s (one is an all-out development framework and the other a testing library), it is still quite simple to migrate from a `truffle test`-based suite. Doing the whole process on the OpenZeppelin Contracts repository took less than thirty minutes!
 
 Because `truffle test` uses a lightly modified Mocha as a test runner (bundled with Chai for assertions), these two make best choice for a simple migration:
 
@@ -9,7 +9,7 @@ Because `truffle test` uses a lightly modified Mocha as a test runner (bundled w
 npm install --save-dev mocha chai
 ----
 
-Don’t forget to make Mocha the entry point of your test suite once you install it:
+Don't forget to make Mocha the entry point of your test suite once you install it:
 
 [source,diff]
 ----
@@ -22,9 +22,9 @@ Don’t forget to make Mocha the entry point of your test suite once you install
 
 _Note: the `--exit` flag is required when using truffle contracts. Otherwise, the test suite will not exit._
 
-It is now time to modify the test files themselves. The changes are few, but important: 1. Add `require('@openzeppelin/test-environment')` to access the variables exported by the library: `accounts`, `contract`, `web3`, etc. 1. `truffle test` automagically imports Chai: you will need to `require` it and set it up manually 1. Replace all instances of `artifacts.require` for `contract.fromArtifact` 1. Replace all intances of `truffle test`’s `contract` function with a regular Mocha `describe`. You can still access the accounts array in `accounts`
+It is now time to modify the test files themselves. The changes are few, but important: 1. Add `require('@openzeppelin/test-environment')` to access the variables exported by the library: `accounts`, `contract`, `web3`, etc. 1. `truffle test` automagically imports Chai: you will need to `require` it and set it up manually 1. Replace all instances of `artifacts.require` for `contract.fromArtifact` 1. Replace all intances of `truffle test`'s `contract` function with a regular Mocha `describe`. You can still access the accounts array in `accounts`
 
-That’s it! Let’s see what a full migration might look like:
+That's it! Let's see what a full migration might look like:
 
 [source,diff]
 ----

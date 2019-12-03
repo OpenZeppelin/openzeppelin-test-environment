@@ -1,6 +1,6 @@
 = Test Runners
 
-Let’s take a look at how testing the following contract would look with each runner.
+Let's take a look at how testing the following contract would look with each runner.
 
 [source,solidity]
 ----
@@ -62,7 +62,7 @@ Migrating from Mocha to Jest is rather straightforward, and is well worth the ef
 
 Jest looks very similar to Mocha (`describe`, `it` and `beforeEach` are all there), but there are two big differences:
 
-* You don’t need to use Chai, since Jest has its own assertion library (read the docs https://jestjs.io/docs/en/using-matchers[here!])
+* You don't need to use Chai, since Jest has its own assertion library (read the docs https://jestjs.io/docs/en/using-matchers[here!])
 * You cannot store objects in `this` inside `beforeEach`
 
 [source,javascript]
@@ -85,7 +85,7 @@ describe('MyToken', function() {
 });
 ----
 
-_If migrating from Mocha, you can still use Chai to reduce the number of changes you need to make to your tests. Just be careful not to get Chai’s and Jest’s `expect` mixed up!._
+_If migrating from Mocha, you can still use Chai to reduce the number of changes you need to make to your tests. Just be careful not to get Chai's and Jest's `expect` mixed up!._
 
 Install Jest via:
 
@@ -103,7 +103,7 @@ It also features https://jestjs.io/docs/en/cli[extensive command line options] f
 
 == Using Ava
 
-Ava is a new, modern test runner, product of learnings on the JavaScript ecosystem over the years. As such, it may look different from what you’re used to, but it is a great tool that is worth learning how to use. https://github.com/avajs/ava/blob/master/docs/01-writing-tests.md[Their documentation] is a great starting point.
+Ava is a new, modern test runner, product of learnings on the JavaScript ecosystem over the years. As such, it may look different from what you're used to, but it is a great tool that is worth learning how to use. https://github.com/avajs/ava/blob/master/docs/01-writing-tests.md[Their documentation] is a great starting point.
 
 [source,javascript]
 ----
