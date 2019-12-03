@@ -39,7 +39,7 @@ async function test() {
 }
 ----
 
-_Note: if you'd rather not rely on truffle contracts and use web3 contract types directly, worry not: you can link:docs/modules/ROOT/setup.adoc#configuration[configure `test-environment`] to use the `web3-eth-contract` abstraction._
+_Note: if you'd rather not rely on truffle contracts and use web3 contract types directly, worry not: you can link:docs/modules/ROOT/pages/setup.adoc#configuration[configure `test-environment`] to use the `web3-eth-contract` abstraction._
 
 == Documentation
 
