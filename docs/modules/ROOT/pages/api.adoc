@@ -1,4 +1,4 @@
-= API
+= API Reference
 
 `test-environment` exposes a number of variables that are used to interact with the local testing blockchain it setups. These are described in detail here:
 
