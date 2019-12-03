@@ -1,6 +1,9 @@
+= Test Runners
+
 Let's take a look at how testing the following contract would look with each runner.
 
-```solidity
+[source,solidity]
+----
 pragma solidity ^0.5.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -10,11 +13,12 @@ contract MyToken is ERC20 {
     _mint(msg.sender, 1000);
   }
 }
-```
+----
 
-### Using Mocha
+== Using Mocha
 
-```javascript
+[source,javascript]
+----
 const { accounts, contract } = require('@openzeppelin/test-environment');
 const [ initialHolder, other ] = accounts;
 
@@ -32,35 +36,37 @@ describe('MyToken', function() {
     expect((await this.token.balanceOf(other)).toString()).to.equal('20');
   });
 });
-```
+----
 
 Install Mocha and Chai via:
 
-```
+....
 npm install --save-dev mocha chai
-```
+....
 
 And run all tests in the `test` directory with:
 
-```
+....
 npx mocha --recursive test --exit
-```
+....
 
 _Note: the `--exit` flag is required in Mocha when using the truffle contract abstraction: otherwise, Mocha will hang after all tests finish running._
 
-### About parallel tests
+== About parallel tests
 
 Both Jest and Ava will let you run tests in parallel: each test file will be executed at the same time, leading to massive time savings when running a large test suite. `test-environment` is smart enough to create a separate local blockchain for each parallel run, so there is zero risk of your tests interacting with each other and causing issues.
 
 Migrating from Mocha to Jest is rather straightforward, and is well worth the effort if you are spending too much time waiting for tests to finish.
 
-### Using Jest
+== Using Jest
 
 Jest looks very similar to Mocha (`describe`, `it` and `beforeEach` are all there), but there are two big differences:
- * You don't need to use Chai, since Jest has its own assertion library (read the docs [here!](https://jestjs.io/docs/en/using-matchers))
- * You cannot store objects in `this` inside `beforeEach`
 
-```javascript
+* You don't need to use Chai, since Jest has its own assertion library (read the docs https://jestjs.io/docs/en/using-matchers[here!])
+* You cannot store objects in `this` inside `beforeEach`
+
+[source,javascript]
+----
 const { accounts, contract } = require('@openzeppelin/test-environment');
 const [ initialHolder, other ] = accounts;
 
@@ -77,29 +83,30 @@ describe('MyToken', function() {
     expect((await token.balanceOf(other)).toString()).toEqual('20');
   });
 });
-```
+----
 
 _If migrating from Mocha, you can still use Chai to reduce the number of changes you need to make to your tests. Just be careful not to get Chai's and Jest's `expect` mixed up!._
 
 Install Jest via:
 
-```
+....
 npm install --save-dev jest
-```
+....
 
 Jest will run all `*.test.js` files with:
 
-```
+....
 npx jest ./test
-```
+....
 
-It also features [extensive command line options](https://jestjs.io/docs/en/cli) for you to quickly run a reduced set of tests, which comes very handy during development.
+It also features https://jestjs.io/docs/en/cli[extensive command line options] for you to quickly run a reduced set of tests, which comes very handy during development.
 
-### Using Ava
+== Using Ava
 
-Ava is a new, modern test runner, product of learnings on the JavaScript ecosystem over the years. As such, it may look different from what you're used to, but it is a great tool that is worth learning how to use. [Their documentation](https://github.com/avajs/ava/blob/master/docs/01-writing-tests.md) is a great starting point.
+Ava is a new, modern test runner, product of learnings on the JavaScript ecosystem over the years. As such, it may look different from what you're used to, but it is a great tool that is worth learning how to use. https://github.com/avajs/ava/blob/master/docs/01-writing-tests.md[Their documentation] is a great starting point.
 
-```javascript
+[source,javascript]
+----
 import test from 'ava';
 
 import { accounts, contract } from '@openzeppelin/test-environment';
@@ -115,16 +122,16 @@ test('initialHolder can transfer tokens', async t => {
   await t.context.token.transfer(other, 20, { from: initialHolder });
   t.is((await t.context.token.balanceOf(other)).toString(), '20');
 });
-```
+----
 
 Install Ava via:
 
-```
+....
 npm install --save-dev ava
-```
+....
 
 Ava will run all files in the `test` directory with:
 
-```
+....
 npx ava
-```
+....
