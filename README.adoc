@@ -41,6 +41,13 @@ async function test() {
 
 _Note: if you’d rather not rely on truffle contracts and use web3 contract types directly, worry not: you can link:docs/modules/ROOT/setup.adoc#configuration[configure `test-environment`] to use the `web3-eth-contract` abstraction._
 
+== Documentation
+
+* link:docs/modules/ROOT/pages/api.adoc[API Reference]
+* link:docs/modules/ROOT/pages/migrate-from-truffle.adoc[Migrate from Truffle]
+* link:docs/modules/ROOT/pages/setup.adoc[Setting up Your Project]
+* link:docs/modules/ROOT/pages/test-runners.adoc[Test Runners]
+
 == License
 
 Released under the link:LICENSE[MIT License].
