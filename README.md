@@ -42,10 +42,10 @@ _Note: if you'd rather not rely on truffle contracts and use web3 contract types
 
 ## Documentation
 
-- [API Reference](docs/modules/ROOT/pages/api.adoc)
-- [Migrate from Truffle](docs/modules/ROOT/pages/migrate-from-truffle.adoc)
 - [Setting up Your Project](docs/modules/ROOT/pages/setup.adoc)
+- [Migrate from Truffle](docs/modules/ROOT/pages/migrate-from-truffle.adoc)
 - [Test Runners](docs/modules/ROOT/pages/test-runners.adoc)
+- [API Reference](docs/modules/ROOT/pages/api.adoc)
 
 ## License
 
