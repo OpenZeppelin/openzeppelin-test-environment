@@ -38,7 +38,7 @@ async function test() {
 }
 ```
 
-_Note: if you'd rather not rely on truffle contracts and use web3 contract types directly, worry not: you can [configure `test-environment`](#configuration) to use the `web3-eth-contract` abstraction._
+_Note: if you'd rather not rely on truffle contracts and use web3 contract types directly, worry not: you can [configure `test-environment`](https://github.com/OpenZeppelin/openzeppelin-test-environment/blob/master/docs/modules/ROOT/pages/setup.adoc#configuration) to use the `web3-eth-contract` abstraction._
 
 ## Documentation
 
