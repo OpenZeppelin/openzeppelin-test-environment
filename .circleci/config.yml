@@ -24,7 +24,7 @@ commands:
       - save_cache:
           <<: *cache-key-node-modules
           paths:
-            - "<< parameters.dir >>"/node_modules
+            - "<< parameters.dir >>/node_modules"
 
   integration-test:
     parameters:
