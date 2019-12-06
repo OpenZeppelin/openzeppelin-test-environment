@@ -28,16 +28,16 @@ commands:
 
   integration-test:
     parameters:
-      name:
+      test-name:
         type: string
     steps:
       - checkout
       - npm-install-with-cache
       - npm-install-with-cache:
-          dir: "test-integration/<< parameters.name >>"
+          dir: "test-integration/<< parameters.test-name >>"
       - run:
-          name: "Integration Test: << parameters.name >>"
-          command: "npm run test:integration << parameters.name >>"
+          name: "Integration Test: << parameters.test-name >>"
+          command: "npm run test:integration << parameters.test-name >>"
 
 jobs:
   dependencies:
@@ -59,31 +59,31 @@ jobs:
     <<: *defaults
     steps:
       - integration-test:
-          name: mocha
+          test-name: mocha
 
   test-ava:
     <<: *defaults
     steps:
       - integration-test:
-          name: ava
+          test-name: ava
 
   test-jest:
     <<: *defaults
     steps:
       - integration-test:
-          name: jest
+          test-name: jest
 
   test-mocha-defaults:
     <<: *defaults
     steps:
       - integration-test:
-          name: mocha-defaults
+          test-name: mocha-defaults
 
   test-mocha-config:
     <<: *defaults
     steps:
       - integration-test:
-          name: mocha-config
+          test-name: mocha-config
 
 workflows:
   version: 2
