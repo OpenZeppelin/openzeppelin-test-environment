@@ -8,7 +8,7 @@
     "docs": "oz-docs -c docs",
     "docs:watch": "npm run docs watch",
     "prepare": "npm run compile",
-    "test:integration": "npm run compile && cd test-integration && ./run-all.sh",
+    "test:integration": "bash scripts/run-integration-test.sh",
     "test:unit": "jest --verbose",
     "test": "npm run test:unit && npm run test:integration",
     "watch": "tsc -w"
