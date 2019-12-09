@@ -38,7 +38,7 @@ commands:
           dir: "test-integration/<< parameters.test-name >>"
       - run:
           name: "Integration Test: << parameters.test-name >>"
-          command: "npm run test:integration run -p package.tgz << parameters.test-name >>"
+          command: "npm run test:integration -- run -p package.tgz << parameters.test-name >>"
 
 jobs:
   dependencies:
@@ -48,7 +48,7 @@ jobs:
       - npm-install-with-cache
       - run:
           name: "Pack tarball for integration tests"
-          command: "npm run test:integration pack -p package.tgz"
+          command: "npm run test:integration -- pack -p package.tgz"
       - persist_to_workspace:
           root: .
           paths:
