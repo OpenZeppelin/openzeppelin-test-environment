@@ -14,7 +14,7 @@ if (command === 'run') {
 } else if (command === 'run-tarball') {
   run(args.slice(1), args[0]);
 } else if (command === 'pack') {
-  pack(package);
+  pack(args[0]);
 }
 
 async function run(tests, package) {
