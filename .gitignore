@@ -4,3 +4,4 @@ zos.*
 build
 /lib
 .openzeppelin
+*.tgz
