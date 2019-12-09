@@ -7,27 +7,17 @@ const { once } = require('events');
 const proc = require('child_process');
 const execFile = promisify(proc.execFile);
 
-async function spawn(...args) {
-  const child = proc.spawn(...args);
-  const [code] = await once(child, 'exit');
-  if (code !== 0) {
-    console.error(args);
-    throw new Error(`Process exited with an error`);
-  }
-}
-
-const {
-  p: package,
-  _: [ command = 'run', ...args ],
-} = require('minimist')(process.argv.slice(2));
+const [,, command = 'run', ...args] = process.argv;
 
 if (command === 'run') {
-  run(args, { package });
+  run(args);
+} else if (command === 'run-tarball') {
+  run(args.slice(1), args[0]);
 } else if (command === 'pack') {
   pack(package);
 }
 
-async function run(tests, { package }) {
+async function run(tests, package) {
   if (tests.length === 0) {
     tests = await fs.readdir('test-integration');
   } else {
@@ -75,5 +65,14 @@ async function exists(path) {
     } else {
       throw e;
     }
+  }
+}
+
+async function spawn(...args) {
+  const child = proc.spawn(...args);
+  const [code] = await once(child, 'exit');
+  if (code !== 0) {
+    console.error(args);
+    throw new Error(`Process exited with an error`);
   }
 }
