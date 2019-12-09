@@ -1,9 +1,20 @@
 #!/usr/bin/env node
 
+const path = require('path');
 const { promises: fs } = require('fs');
 const { promisify } = require('util');
+const { once } = require('events');
 const proc = require('child_process');
-const exec = promisify(proc.exec);
+const execFile = promisify(proc.execFile);
+
+async function spawn(...args) {
+  const child = proc.spawn(...args);
+  const [code] = await once(child, 'exit');
+  if (code !== 0) {
+    console.error(args);
+    throw new Error(`Process exited with an error`);
+  }
+}
 
 const {
   p: package,
@@ -11,23 +22,46 @@ const {
 } = require('minimist')(process.argv.slice(2));
 
 if (command === 'run') {
-  async run(args, { package });
+  run(args, { package });
+} else if (command === 'pack') {
+  pack(package);
 }
 
 async function run(tests, { package }) {
   if (tests.length === 0) {
     tests = await fs.readdir('test-integration');
+  } else {
+    for (const test of tests) {
+      if (!await exists(`test-integration/${test}`)) {
+        throw new Error(`Integration test '${test}' does not exist`);
+      }
+    }
   }
 
-  if (package === undefined) {
-    const { stdout } = await exec('npm', ['run', 'pack']);
-    package = stdout.match(/\n(.+)\n$/)[1];
+  if (package === undefined || !await exists(package)) {
+    package = await pack(package);
   }
 
   for (const test of tests) {
-    if (!await exists(`test-integration/${test}`)) {
-
+    const cwd = `test-integration/${test}`;
+    if (!await exists(`${cwd}/node_modules`)) {
+      await spawn('npm', ['ci'], { cwd, stdio: 'inherit' });
     }
+
+    await spawn('npm', ['install', '--no-save', path.resolve(package)], { cwd, stdio: 'inherit' });
+    await spawn('npm', ['test'], { cwd, stdio: 'inherit' });
+  }
+}
+
+async function pack(dest) {
+  const { stdout } = await execFile('npm', ['pack']);
+  const package = stdout.match(/\n(.+)\n$/)[1];
+  if (dest === undefined) {
+    return package;
+  } else {
+    await fs.mkdir(path.dirname(dest), { recursive: true });
+    await fs.rename(package, dest);
+    return dest;
   }
 }
 

@@ -32,12 +32,13 @@ commands:
         type: string
     steps:
       - checkout
-      - npm-install-with-cache
+      - attach_workspace:
+          at: .
       - npm-install-with-cache:
           dir: "test-integration/<< parameters.test-name >>"
       - run:
           name: "Integration Test: << parameters.test-name >>"
-          command: "npm run test:integration << parameters.test-name >>"
+          command: "npm run test:integration run -p package.tgz << parameters.test-name >>"
 
 jobs:
   dependencies:
@@ -45,6 +46,13 @@ jobs:
     steps:
       - checkout
       - npm-install-with-cache
+      - run:
+          name: "Pack tarball for integration tests"
+          command: "npm run test:integration pack -p package.tgz"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - package.tgz
 
   test-unit:
     <<: *defaults
