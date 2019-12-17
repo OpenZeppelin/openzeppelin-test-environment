@@ -1,55 +1,64 @@
-version: 2
-# 2.1 does not yet support local run
-# unless with workaround. For simplicity just use it.
-# https://github.com/CircleCI-Public/circleci-cli/issues/79
+version: 2.1
 
 aliases:
   - &defaults
     docker:
       - image: circleci/node:10
 
-  - &npm_install_if_necessary
-    run:
-      name: Install npm dependencies
-      command: |
-        if [ ! -d node_modules ]; then
-          npm ci
-        fi
+commands:
+  npm-install-with-cache:
+    parameters:
+      dir:
+        type: string
+        default: "."
+    steps:
+      - restore_cache: &cache-key-node-modules
+          key: v1-node_modules-{{ checksum "<< parameters.dir >>/package-lock.json" }}
+      - run:
+          name: Install npm dependencies
+          working_directory: "<< parameters.dir >>"
+          command: |
+            if [ ! -d node_modules ]; then
+              npm ci
+            fi
+      - save_cache:
+          <<: *cache-key-node-modules
+          paths:
+            - "<< parameters.dir >>/node_modules"
 
-  - &cache_key_node_modules
-    key: v1-node_modules-{{ checksum "package-lock.json" }}
+  integration-test:
+    parameters:
+      test-name:
+        type: string
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - npm-install-with-cache:
+          dir: "test-integration/<< parameters.test-name >>"
+      - run:
+          name: "Integration Test: << parameters.test-name >>"
+          command: "npm run test:integration run-tarball package.tgz << parameters.test-name >>"
 
 jobs:
   dependencies:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache:
-          <<: *cache_key_node_modules
-      - *npm_install_if_necessary
-      - save_cache:
-          paths:
-            - node_modules
-          <<: *cache_key_node_modules
-
-  compile:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache:
-          <<: *cache_key_node_modules
-      - *npm_install_if_necessary
+      - npm-install-with-cache
       - run:
-          name: Compile
-          command: npm run compile
+          name: "Pack tarball for integration tests"
+          command: "npm run test:integration pack package.tgz"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - package.tgz
 
   test-unit:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache:
-          <<: *cache_key_node_modules
-      - *npm_install_if_necessary
+      - npm-install-with-cache
       - run:
           name: Unit tests
           command: npm run test:unit
@@ -57,87 +66,53 @@ jobs:
   test-mocha:
     <<: *defaults
     steps:
-      - checkout
-      - restore_cache:
-          <<: *cache_key_node_modules
-      - *npm_install_if_necessary
-      - run:
-          name: Mocha integration tests
-          command: cd test-integration && ./run-test.sh mocha
+      - integration-test:
+          test-name: mocha
 
   test-ava:
     <<: *defaults
     steps:
-      - checkout
-      - restore_cache:
-          <<: *cache_key_node_modules
-      - *npm_install_if_necessary
-      - run:
-          name: Ava integration tests
-          command: cd test-integration && ./run-test.sh ava
+      - integration-test:
+          test-name: ava
 
   test-jest:
     <<: *defaults
     steps:
-      - checkout
-      - restore_cache:
-          <<: *cache_key_node_modules
-      - *npm_install_if_necessary
-      - run:
-          name: Jest integration tests
-          command: cd test-integration && ./run-test.sh jest
+      - integration-test:
+          test-name: jest
 
   test-mocha-defaults:
     <<: *defaults
     steps:
-      - checkout
-      - restore_cache:
-          <<: *cache_key_node_modules
-      - *npm_install_if_necessary
-      - run:
-          name: Default options integration tests (Mocha)
-          command: cd test-integration && ./run-test.sh mocha-defaults
+      - integration-test:
+          test-name: mocha-defaults
 
   test-mocha-config:
     <<: *defaults
     steps:
-      - checkout
-      - restore_cache:
-          <<: *cache_key_node_modules
-      - *npm_install_if_necessary
-      - run:
-          name: Explicit options integration tests (Mocha)
-          command: cd test-integration && ./run-test.sh mocha-config
+      - integration-test:
+          test-name: mocha-config
 
 workflows:
   version: 2
   everything:
     jobs:
       - dependencies
-      - compile:
-          requires:
-            - dependencies
       - test-unit:
           requires:
             - dependencies
-            - compile
       - test-mocha:
           requires:
             - dependencies
-            - compile
       - test-ava:
           requires:
             - dependencies
-            - compile
       - test-jest:
           requires:
             - dependencies
-            - compile
       - test-mocha-defaults:
           requires:
             - dependencies
-            - compile
       - test-mocha-config:
           requires:
             - dependencies
-            - compile
