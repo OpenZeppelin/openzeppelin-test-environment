@@ -1,6 +1,5 @@
-.Docs
 * xref:index.adoc[Overview]
-* xref:setup.adoc[Setting up Your Project]
-* xref:migrate-from-truffle.adoc[Migrating from `truffle test`]
-* xref:test-runners.adoc[Test Runners]
+* xref:getting-started.adoc[Getting Started]
+* xref:migrating-from-truffle.adoc[Migrating from Truffle]
+* xref:choosing-a-test-runner.adoc[Choosing a Test Runner]
 * xref:api.adoc[API Reference]
