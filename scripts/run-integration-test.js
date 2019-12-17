@@ -8,6 +8,7 @@ const { promisify } = require('util');
 const { once } = require('events');
 const proc = require('child_process');
 const execFile = promisify(proc.execFile);
+const chalk = require('chalk');
 
 const args = process.argv.slice(2);
 
@@ -30,11 +31,15 @@ async function run(tests, package) {
     }
   }
 
-  if (package === undefined || !await exists(package)) {
+  if (package === undefined) {
     package = await pack(package);
+  } else if (!await exists(package)) {
+    console.error(chalk.red(`File not found: '${package}'\n`));
+    process.exit(1);
   }
 
   for (const test of tests) {
+    console.error(chalk.yellow(`[test:integration running ${test}]`));
     const cwd = `test-integration/${test}`;
     if (!await exists(`${cwd}/node_modules`)) {
       await spawn('npm', ['ci'], { cwd, stdio: 'inherit' });
@@ -46,6 +51,7 @@ async function run(tests, package) {
 }
 
 async function pack(dest) {
+  console.error(chalk.yellow(`[test:integration packing tarball]`));
   const { stdout } = await execFile('npm', ['pack']);
   const package = stdout.match(/\n(.+)\n$/)[1];
   if (dest === undefined) {
