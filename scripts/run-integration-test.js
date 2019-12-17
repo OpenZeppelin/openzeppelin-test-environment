@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint-disable */
+
 const path = require('path');
 const { promises: fs } = require('fs');
 const { promisify } = require('util');
