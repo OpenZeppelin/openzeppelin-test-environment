@@ -74,7 +74,6 @@ async function spawn(...args) {
   const child = proc.spawn(...args);
   const [code] = await once(child, 'exit');
   if (code !== 0) {
-    console.error(args);
     throw new Error(`Process exited with an error`);
   }
 }
