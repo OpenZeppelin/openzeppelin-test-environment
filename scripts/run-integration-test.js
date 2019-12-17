@@ -9,14 +9,14 @@ const { once } = require('events');
 const proc = require('child_process');
 const execFile = promisify(proc.execFile);
 
-const [,, command = 'run', ...args] = process.argv;
+const args = process.argv.slice(2);
 
-if (command === 'run') {
+if (args[0] === 'run-tarball') {
+  run(args.slice(2), args[1]);
+} else if (args[0] === 'pack') {
+  pack(args[1]);
+} else {
   run(args);
-} else if (command === 'run-tarball') {
-  run(args.slice(1), args[0]);
-} else if (command === 'pack') {
-  pack(args[0]);
 }
 
 async function run(tests, package) {
