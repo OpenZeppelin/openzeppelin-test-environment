@@ -56,7 +56,6 @@
     "@types/web3": "^1.0.19",
     "@typescript-eslint/eslint-plugin": "^2.1.0",
     "@typescript-eslint/parser": "^2.1.0",
-    "chalk": "^3.0.0",
     "code-style": "git+https://github.com/OpenZeppelin/code-style.git",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.2.0",
