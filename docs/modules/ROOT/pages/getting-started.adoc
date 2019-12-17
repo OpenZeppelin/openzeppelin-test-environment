@@ -111,7 +111,7 @@ This is what that looks like when using Mocha:
 // package.json
 
 "scripts": {
-  "test": "npx mocha --exit --recursive test"
+  "test": "mocha --exit --recursive test"
 }
 ```
 
@@ -147,7 +147,18 @@ $ npx oz compile
 
 Compilation artifacts will be stored in the `build/contracts` directory, where Test Environment (and most other tools) will read them from.
 
-TIP:
+[TIP]
+====
+You can set your project to recompile all contracts when running tests by adding this step to your `test` script:
+
+```javascript
+// package.json
+
+"scripts": {
+  "test": "oz compile && mocha --exit --recursive test"
+}
+```
+====
 
 == Using OpenZeppelin Test Helpers
 
