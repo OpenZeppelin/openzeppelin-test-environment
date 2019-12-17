@@ -50,10 +50,10 @@ _Note: if you'd rather not rely on truffle contracts and use web3 contract types
 
 ## Learn More
 
- * Check out [Getting Started](docs/modules/ROOT/prages/getting-started.adoc) to use Test Environment in a new project.
- * If you are currently using `truffle test`, head instead to [Migrating from Truffle](docs/modules/ROOT/prages/migrating-from-truffle.adoc).
- * The [Choosing a Test Runner](docs/modules/ROOT/prages/choosing-a-test-runner.adoc) guide will teach you how to use each of the different runners.
- * For detailed usage information, take a look at the [API Reference](docs/modules/ROOT/prages/api.adoc).
+ * Check out [Getting Started](docs/modules/ROOT/pages/getting-started.adoc) to use Test Environment in a new project.
+ * If you are currently using `truffle test`, head instead to [Migrating from Truffle](docs/modules/ROOT/pages/migrating-from-truffle.adoc).
+ * The [Choosing a Test Runner](docs/modules/ROOT/pages/choosing-a-test-runner.adoc) guide will teach you how to use each of the different runners.
+ * For detailed usage information, take a look at the [API Reference](docs/modules/ROOT/pages/api.adoc).
 
 ## License
 
