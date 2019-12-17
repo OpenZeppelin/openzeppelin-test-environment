@@ -14,7 +14,7 @@ const { accounts, defaultSender, contract, web3, provider, isHelpersConfigured }
 accounts: string[]
 ----
 
-An array of strings with the addresses of the accounts available for testing. By default, there are 10 unlocked accounts with 100 ETH each, but this can be xref:setup.adoc#configuration[configured].
+An array of strings with the addresses of the accounts available for testing. By default, there are 10 unlocked accounts with 100 ETH each, but this can be xref:getting-started.adoc#configuration[configured].
 
 [source,javascript]
 ----
@@ -23,6 +23,7 @@ const [ sender, receiver ] = accounts;
 await myToken.transfer(receiver, 100, { from: sender });
 ----
 
+[[default-sender]]
 == defaultSender
 
 [source,typescript]
@@ -54,7 +55,7 @@ contract.fromABI: (abi: object, bytecode?: string | undefined) => any;
 
 The `contract` object is in charge of creating contracts from compilation artifacts. It does this via two functions: * `fromArtifact` looks for a `.json` file in the `build/contracts` directory (equivalent to Truffle's `artifact.require`) * `fromABI` receives an ABI object directly, useful when the full compilation artifacts are not available
 
-They both return instances of either [@truffle/contract](https://www.npmjs.com/package/@truffle/contract) (by default) or https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html[web3-eth-contract], depending on xref:setup.adoc#configuration[configuration].
+They both return instances of either https://www.npmjs.com/package/@truffle/contract[`@truffle/contract`] (by default) or https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html[`web3-eth-contract`], depending on your xref:getting-started.adoc#configuration[configuration].
 
 [source,javascript]
 ----

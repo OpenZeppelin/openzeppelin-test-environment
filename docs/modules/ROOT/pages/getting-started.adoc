@@ -1,0 +1,181 @@
+= Getting Started
+
+This guide will cover what you need to know to start using Test Environment, from installation of dependencies to configuration.
+
+To learn instead how to migrate an existing Truffle project, check out our xref:migrating-from-truffle.adoc[Migrating from Truffle] guide.
+
+TIP: If you're new to smart contract testing, you should probably first look at our [guide for automated tests], and then come back here.
+
+== Installing Dependencies
+
+Unlike Truffle, Test Environment is a testing _library_: it provides utilities that help you write tests, but it doesn't run your tests for you.
+
+This is a good thing: it means you are free to use any test runner of your choice. Here we will use https://mochajs.org/[Mocha] (along with https://www.chaijs.com[Chai]):
+
+```bash
+$ npm install --save-dev @openzeppelin/test-environment mocha chai
+```
+
+TIP: Head to our xref:choosing-a-test-runner.adoc[Choosing a Test Runner] guide to learn about different test runners, their pros and cons, and how to use them.
+
+== Writing Tests
+
+Each test file should have a `require` statement importing Test Environment. This will bring up the local blockchain where your tests will run, and provide utilities to interact with it.
+
+```javascript
+const { accounts, contracts } = require('@openzeppelin/test-environment');
+```
+
+The exports you will be using the most are `accounts` and `contracts`.
+
+=== `accounts`
+
+This is an array with the addresses of all unlocked accounts in the local blockchain. They are also prefunded, so they can all be used to send transactions.
+
+A good practice is to use https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment[array destructuring] to give meaningful names to each account, such as:
+
+```javascript
+const [ admin, purchaser, user ] = accounts;
+```
+
+This will let you write clearer tests by making it obvious which actor is executing each action:
+
+```javascript
+const crowdsale = await Crowdsale.new({ from: admin });
+
+await crowdsale.buyTokens(amount, { from: purchaser });
+```
+
+NOTE: Unlike Truffle's `accounts` array, the default address (the one that is used when you don't provide one) is **not** included in `accounts`. This will help you avoid common pitfalls while writing tests. Head to the xref:api.adoc#default-sender[API reference] to learn more.
+
+=== `contracts`
+
+You will use this function to load your compiled contracts into JavaScript objects. By default these will be https://www.npmjs.com/package/@truffle/contract[Truffle contracts], but they can be <<configuration, configured>> to be https://web3js.readthedocs.io/en/v1.2.4/web3-eth-contract.html[web3 contracts].
+
+```javascript
+// Loads the built artifact from build/contracts/Crowdsale.json
+const Crowdsale = contracts.fromArtifact('Crowdsale');
+```
+
+=== Test Cases
+
+The overall structure of your tests will be determined not by Test Environment, but by your test runner of choice.
+
+In Mocha, test cases are declared with the `it` function, and grouped in `describe` blocks.
+
+We'll use the following contract to provide an example. It consists of a simple access control mechanism via https://docs.openzeppelin.com/contracts/2.x/api/ownership#Ownable[OpenZeppelin Contracts' `Ownable`]:
+
+```solidity
+// contracts/MyContract.sol
+
+pragma solidity ^0.5.0;
+
+import "@openzeppelin/contracts/ownership/Ownable.sol";
+
+contract MyContract is Ownable { }
+```
+
+And here's how testing this contract using Test Environment and Mocha looks like:
+
+```javascript
+// test/MyContract.test.js
+
+const { accounts, contract } = require('@openzeppelin/test-environment');
+
+const { expect } = require('chai');
+
+const MyContract = contract.fromArtifact('MyContract');
+
+describe('MyContract', function () {
+  const [ owner ] = accounts;
+
+  beforeEach(async function {
+    this.myContract = await MyContract.new({ from: owner });
+  });
+
+  it('the deployer is the owner', async function () {
+    expect(await this.myContract.owner()).to.equal(owner);
+  });
+});
+```
+
+In xref:choosing-a-test-runner.adoc[Choosing a Test Runner] you can compare how this example looks in each test runner.
+
+== Running your Tests
+
+Test Environment is not executable: tests are run by invoking your runner of choice directly. We recommend that you do this by adding a `test` script to your `package.json`.
+
+This is what that looks like when using Mocha:
+
+```javascript
+// package.json
+
+"scripts": {
+  "test": "npx mocha --exit --recursive test"
+}
+```
+
+WARNING: Mocha's `--exit` flag is required when using Truffle contracts. Otherwise, the test suite will not exit. https://github.com/trufflesuite/truffle/issues/2560[Learn more].
+
+All set! Running `npm test` to execute the test suite:
+
+```bash
+$ npm test
+
+  MyContract
+    ✓ the deployer is the owner
+```
+
+[TIP]
+====
+Because we're running Mocha directly, it is very easy to pass additional options to it. Try the following, which will cause Mocha to stop immediately on the first failing test:
+
+```bash
+$ npm test -- --bail
+```
+====
+
+[[compiling]]
+== Compiling your Contracts
+
+Test Environment requires your contracts to be compiled: you can use the https://docs.openzeppelin.com/sdk[OpenZeppelin CLI] to do this.
+
+```bash
+$ npm install --save-dev @openzeppelin/cli
+$ npx oz compile
+```
+
+Compilation artifacts will be stored in the `build/contracts` directory, where Test Environment (and most other tools) will read them from.
+
+TIP:
+
+== Using OpenZeppelin Test Helpers
+
+Complex assertions, such as testing for reverts or events being emitted, can be performed by using the https://github.com/OpenZeppelin/openzeppelin-test-helpers[OpenZeppelin Test Helpers].
+
+When used alongside Test Environment, there is no need for manual configuration: `require` the helpers and use them as usual.
+
+[[configuration]]
+== Configuration
+
+Multiple aspects of Test Environment can be configured. The default values are very sensible and should work fine for most testing setups, but you are free to modify these.
+
+To do this, create a file named `test-environment.config.js` at the root level of your project: its contents will be automatically loaded.
+
+```javascript
+// test-environment.config.js
+
+module.exports = {
+  accounts: {
+    amount: 10, // Number of unlocked accounts
+    ether: 100, // Initial balance of unlocked accounts (in ether)
+  },
+
+  contracts: {
+    type: 'truffle', // Contract abstraction to use: 'truffle' for @truffle/contract or 'web3' for web3-eth-contract
+    defaultGas: 6e6, // Maximum gas for contract calls (when unspecified)
+  },
+
+  blockGasLimit: 8e6, // Maximum gas per block
+};
+```

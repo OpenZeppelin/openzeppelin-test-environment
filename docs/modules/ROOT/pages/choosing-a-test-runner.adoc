@@ -1,0 +1,157 @@
+= Choosing a Test Runner
+
+Test Environment is only a testing _library_: something you use _in_ your tests, but not what actually _runs_ them.
+
+This is very much by design: it gives you the freedom to use **any regular JavaScript test runner**.
+
+We recommend picking one of the following:
+
+* https://mochajs.org/[Mocha]: simple and straightforward, the easiest way to get started when migrating from `truffle test`.
+* https://jestjs.io/[Jest]: the most popular runner out there, featuring lightning speed, parallel tests, and extensive guides.
+* https://www.npmjs.com/package/ava/[Ava]: a minimalistic runner with parallel tests and support for ES6 and TypeScript.
+
+NOTE: Both Jest and Ava have their own assertions library, but for Mocha, you may want to also use https://www.chaijs.com[Chai].
+
+=== Example Contract
+
+To showcase the different runners, we will write tests for the following contract using each one.
+
+It consists of a simple access control mechanism via https://docs.openzeppelin.com/contracts/2.x/api/ownership#Ownable[OpenZeppelin Contracts' `Ownable`]:
+
+```solidity
+// contracts/MyContract.sol
+
+pragma solidity ^0.5.0;
+
+import "@openzeppelin/contracts/ownership/Ownable.sol";
+
+contract MyContract is Ownable { }
+```
+
+== Mocha & Chai
+
+Test cases are declared with the `it` function, and grouped in `describe blocks`:
+
+```javascript
+// test/MyContract.test.js
+
+const { accounts, contract } = require('@openzeppelin/test-environment');
+
+const { expect } = require('chai');
+
+const MyContract = contract.fromArtifact('MyContract');
+
+describe('MyContract', function () {
+  const [ owner ] = accounts;
+
+  beforeEach(async function {
+    this.myContract = await MyContract.new({ from: owner });
+  });
+
+  it('the deployer is the owner', async function () {
+    expect(await this.myContract.owner()).to.equal(owner);
+  });
+});
+```
+
+To install Mocha and Chai, run:
+
+```bash
+$ npm install --save-dev mocha chai
+```
+
+All tests in the `test` directory are then executed with:
+
+```bash
+$ npx mocha --recursive test --exit
+```
+
+WARNING: Mocha's `--exit` flag is required when using Truffle contracts. Otherwise, the test suite will not exit. https://github.com/trufflesuite/truffle/issues/2560[Learn more].
+
+Mocha will run tests sequentially, waiting for each to finish before starting the next one. A single local blockchain will be created, and shared by all tests.
+
+[[parallel-tests]]
+== Parallel Tests
+
+Unlike Mocha, both Jest and Ava will let you run tests in parallel: each test file will be executed _at the same time_, leading to massive time savings when running a large test suite.
+
+When using these runners, Test Environment will create an independent local blockchain for each parallel run, so there is zero risk of your tests unexpectedly interacting with each other.
+
+Migrating from Mocha to Jest is rather straightforward, and is well worth the effort if you are spending much time waiting for tests to finish.
+
+== Jest
+
+Jest looks very similar to Mocha (`describe`, `it` and `beforeEach` are all there), but there are two big differences:
+
+* You don't need to use Chai, since Jest has its own assertion library (see the https://jestjs.io/docs/en/using-matchers[official documentation])
+* You cannot store objects in `this` inside `beforeEach`
+
+```javascript
+// test/MyContract.test.js
+
+const { accounts, contract } = require('@openzeppelin/test-environment');
+
+const MyContract = contract.fromArtifact('MyContract');
+let myContract;
+
+describe('MyContract', function () {
+  const [ owner ] = accounts;
+
+  beforeEach(async function {
+    myContract = await MyContract.new({ from: owner });
+  });
+
+  it('the deployer is the owner', async function () {
+    expect(await myContract.owner()).toEqual(owner);
+  });
+});
+```
+
+TIP: If migrating from Mocha, you can still use Chai to reduce the number of changes you need to make to your tests. Just be careful not to get Chai's and Jest's `expect` mixed up!
+
+To install Jest, run:
+
+```bash
+$ npm install --save-dev jest
+```
+
+Jest will execute all tests in files matching `\*.test.js` with:
+
+```bash
+$ npx jest ./test
+```
+
+== Ava
+
+Ava is a new, modern test runner, product of learnings on the JavaScript ecosystem over the years. As such, it may look different from what you're used to, but it is a great tool that is worth learning how to use. https://github.com/avajs/ava/blob/master/docs/01-writing-tests.md[Their documentation] is a great starting point.
+
+```javascript
+// test/MyContract.test.js
+
+import test from 'ava';
+
+import { accounts, contract } from '@openzeppelin/test-environment';
+const [ owner ] = accounts;
+
+const MyContract = contract.fromArtifact('MyContract');
+
+test.before(async t => {
+  t.context.myContract = await MyContract.new({ from: owner });
+});
+
+test('the deployer is the owner', async t => {
+  t.is(await myContract.owner(), owner);
+});
+```
+
+To install Ava, run
+
+```bash
+$ npm install --save-dev ava
+```
+
+Ava will execute all tests in all files in the `test` directory with:
+
+```bash
+$ npx ava
+```

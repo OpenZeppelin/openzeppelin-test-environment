@@ -14,9 +14,9 @@
 
 _`test-environment` is the result of our learnings while developing the [OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts), combining best practices and the tools we've come to rely on over the years. We think you'll love it!_
 
-## Quickstart
+## Overview
 
-### Install
+### Installation
 
 ```bash
 npm install --save-dev @openzeppelin/test-environment
@@ -24,24 +24,33 @@ npm install --save-dev @openzeppelin/test-environment
 
 ### Usage
 
-Simply `require('@openzeppelin/test-environment')` in your test files, and it will take care of all Ethereum-related tasks. A local [ganache-powered blockchain](https://github.com/trufflesuite/ganache-core) with unlocked accounts will be spun up, and all tools will be configured to work with it.
+By including `require('@openzeppelin/test-environment')` in your test files, a local [ganache-powered blockchain](https://github.com/trufflesuite/ganache-core) with unlocked accounts will be spun up, and all tools configured to work with it.
+
+Here's a quick sample of how using `test-environment` in a [Mocha](https://mochajs.org/) + [Chai](https://www.chaijs.com/) setup looks like.
 
 ```javascript
 const { accounts, contract } = require('@openzeppelin/test-environment');
-const [ tokenHolder ] = accounts;
+const [ owner ] = accounts;
 
-const ERC20 = contract.fromArtifact('ERC20'); // Loads a compiled contract
+const { expect } = require('chai');
 
-async function test() {
-  const token = await ERC20.new({ from: tokenHolder });
-  const initialBalance = await token.balanceOf(tokenHolder);
-}
+const MyContract = contract.fromArtifact('MyContract'); // Loads a compiled contract
+
+describe('MyContract', function () {
+  it('deployer is owner', async function () {
+    const myContract = await MyContract.new({ from: owner });
+    expect(await myContract.owner()).to.equal(owner);
+  });
+});
 ```
+
+If you're used to `truffle test`, this probably looks very familiar. Follow our guide on [migrating from Truffle](docs/modules/ROOT/pages/migrating-from-truffle.adoc) to have your project running with `test-environment` in a breeze!
 
 _Note: if you'd rather not rely on truffle contracts and use web3 contract types directly, worry not: you can [configure `test-environment`](https://github.com/OpenZeppelin/openzeppelin-test-environment/blob/master/docs/modules/ROOT/pages/setup.adoc#configuration) to use the `web3-eth-contract` abstraction._
 
 ## Documentation
 
+- [Quickstart](docs/modules/ROOT/pages/quickstart.adoc)
 - [Setting up Your Project](docs/modules/ROOT/pages/setup.adoc)
 - [Migrate from Truffle](docs/modules/ROOT/pages/migrate-from-truffle.adoc)
 - [Test Runners](docs/modules/ROOT/pages/test-runners.adoc)
