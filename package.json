@@ -17,7 +17,8 @@
   "files": [
     "lib",
     "!*.test.js",
-    "!*.test.js.map"
+    "!*.test.js.map",
+    "!*.test.d.ts"
   ],
   "husky": {
     "hooks": {
