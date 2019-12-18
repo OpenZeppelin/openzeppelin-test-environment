@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "One-line setup for an awesome testing experience.",
   "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "compile": "rm -rf lib && tsc",
     "docs": "oz-docs -c docs",
