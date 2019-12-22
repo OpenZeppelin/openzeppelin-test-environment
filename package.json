@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "One-line setup for an awesome testing experience.",
   "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "compile": "rm -rf lib && tsc",
     "docs": "oz-docs -c docs",
@@ -16,7 +17,8 @@
   "files": [
     "lib",
     "!*.test.js",
-    "!*.test.js.map"
+    "!*.test.js.map",
+    "!*.test.d.ts"
   ],
   "husky": {
     "hooks": {
