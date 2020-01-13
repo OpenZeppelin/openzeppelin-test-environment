@@ -6,7 +6,7 @@
 **Blazing fast smart contract testing.** One-line setup for an awesome testing experience.
 
 - Near-instant start up: have your code running in under 2s after typing `npm test`.
-- Test runner agnostic – from the familiarity https://docs.openzeppelin.con/test-environment/docs/modules/ROOT/pages/choosing-a-test-runner.adoc#parallel-tests) using Jest or Ava!
+- Test runner agnostic – from the familiarity https://docs.openzeppelin.com/test-environment/choosing-a-test-runner#parallel-tests) using Jest or Ava!
 - Non-opinionated: use either [`@truffle/contract`](https://www.npmjs.com/package/@truffle/contract) or [`web3-eth-contract`](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) as you see fit.
 - First class support for the [OpenZeppelin Test Helpers](https://docs.openzeppelin.com/test-helpers).
 - Highly configurable: from gas limit and initial balance, to complex custom web3 providers.
@@ -44,16 +44,16 @@ describe('MyContract', function () {
 });
 ```
 
-If you're used to `truffle test`, this probably looks very familiar. Follow our guide on [migrating from Truffle](https://docs.openzeppelin.con/test-environment/migrating-from-truffle) to have your project running with `test-environment` in a breeze!
+If you're used to `truffle test`, this probably looks very familiar. Follow our guide on [migrating from Truffle](https://docs.openzeppelin.com/test-environment/migrating-from-truffle) to have your project running with `test-environment` in a breeze!
 
-_Note: if you'd rather not rely on truffle contracts and use web3 contract types directly, worry not: you can [configure `test-environment`](https://docs.openzeppelin.con/test-environment/getting-started#configuration) to use the `web3-eth-contract` abstraction._
+_Note: if you'd rather not rely on truffle contracts and use web3 contract types directly, worry not: you can [configure `test-environment`](https://docs.openzeppelin.com/test-environment/getting-started#configuration) to use the `web3-eth-contract` abstraction._
 
 ## Learn More
 
- * Check out [Getting Started](https://docs.openzeppelin.con/test-environment/getting-started) to use Test Environment in a new project.
- * If you are currently using `truffle test`, head instead to [Migrating from Truffle](https://docs.openzeppelin.con/test-environment/migrating-from-truffle).
- * The [Choosing a Test Runner](https://docs.openzeppelin.con/test-environment/choosing-a-test-runner) guide will teach you how to use each of the different runners.
- * For detailed usage information, take a look at the [API Reference](https://docs.openzeppelin.con/test-environment/api).
+ * Check out [Getting Started](https://docs.openzeppelin.com/test-environment/getting-started) to use Test Environment in a new project.
+ * If you are currently using `truffle test`, head instead to [Migrating from Truffle](https://docs.openzeppelin.com/test-environment/migrating-from-truffle).
+ * The [Choosing a Test Runner](https://docs.openzeppelin.com/test-environment/choosing-a-test-runner) guide will teach you how to use each of the different runners.
+ * For detailed usage information, take a look at the [API Reference](https://docs.openzeppelin.com/test-environment/api).
 
 ## License
 
