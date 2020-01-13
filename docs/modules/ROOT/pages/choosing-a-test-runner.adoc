@@ -16,7 +16,7 @@ NOTE: Both Jest and Ava have their own assertions library, but for Mocha, you ma
 
 To showcase the different runners, we will write tests for the following contract using each one.
 
-It consists of a simple access control mechanism via https://docs.openzeppelin.com/contracts/2.x/api/ownership#Ownable[OpenZeppelin Contracts' `Ownable`]:
+It consists of a simple access control mechanism via xref:contracts:api:ownership.adoc#Ownable[*OpenZeppelin Contracts*' `Ownable`]:
 
 ```solidity
 // contracts/MyContract.sol
@@ -30,7 +30,7 @@ contract MyContract is Ownable { }
 
 == Mocha & Chai
 
-Test cases are declared with the `it` function, and grouped in `describe blocks`:
+Test cases are declared with the `it` function, and grouped in `describe` blocks:
 
 ```javascript
 // test/MyContract.test.js

@@ -63,7 +63,7 @@ The overall structure of your tests will be determined not by Test Environment, 
 
 In Mocha, test cases are declared with the `it` function, and grouped in `describe` blocks.
 
-We'll use the following contract to provide an example. It consists of a simple access control mechanism via https://docs.openzeppelin.com/contracts/2.x/api/ownership#Ownable[OpenZeppelin Contracts' `Ownable`]:
+We'll use the following contract to provide an example. It consists of a simple access control mechanism via xref:contracts:api:ownership.adoc#Ownable[*OpenZeppelin Contracts*' `Ownable`]:
 
 ```solidity
 // contracts/MyContract.sol
@@ -138,7 +138,7 @@ $ npm test -- --bail
 [[compiling]]
 == Compiling your Contracts
 
-Test Environment requires your contracts to be compiled: you can use the https://docs.openzeppelin.com/sdk[OpenZeppelin CLI] to do this.
+Test Environment requires your contracts to be compiled: you can use the xref:cli::index.adoc[*OpenZeppelin CLI*] to do this.
 
 ```bash
 $ npm install --save-dev @openzeppelin/cli
@@ -162,7 +162,7 @@ You can set your project to recompile all contracts when running tests by adding
 
 == Using OpenZeppelin Test Helpers
 
-Complex assertions, such as testing for reverts or events being emitted, can be performed by using the https://github.com/OpenZeppelin/openzeppelin-test-helpers[OpenZeppelin Test Helpers].
+Complex assertions, such as testing for reverts or events being emitted, can be performed by using the xref:test-helpers::index.adoc[*OpenZeppelin Test Helpers*].
 
 When used alongside Test Environment, there is no need for manual configuration: `require` the helpers and use them as usual.
 

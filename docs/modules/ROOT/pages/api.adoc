@@ -79,4 +79,4 @@ A https://github.com/ethereum/web3.js/[`web3`] provider, connected to the local 
 isHelpersConfigured: boolean
 ----
 
-A boolean indicating if the OpenZeppelin https://github.com/OpenZeppelin/openzeppelin-test-helpers[Test Helpers] library was autodetected and configured.
+A boolean indicating if the xref:test-helpers::index.adoc[*OpenZeppelin Test Helpers*] library was autodetected and configured.
