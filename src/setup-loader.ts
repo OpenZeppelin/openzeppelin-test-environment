@@ -9,7 +9,9 @@ if (config.contracts.type !== 'truffle' && config.contracts.type !== 'web3') {
 }
 
 export default setupLoader({
+  provider,
   defaultSender,
   defaultGas: config.contracts.defaultGas,
-  provider,
+  defaultGasPrice: config.contracts.defaultGasPrice,
+  artifactsDir: config.contracts.artifactsDir,
 })[config.contracts.type];

@@ -11,7 +11,7 @@ const CONFIG_FILE = 'test-environment.config.js';
 
 type Config = {
   accounts: { amount: number; ether: number };
-  contracts: { type: string; defaultGas: number };
+  contracts: { type: string; defaultGas: number, defaultGasPrice: number, artifactsDir: string, };
   blockGasLimit: number;
   gasPrice: number;
   setupProvider: (baseProvider: Provider) => Promise<Provider>;
@@ -29,6 +29,8 @@ const defaultConfig: Config = {
   contracts: {
     type: 'truffle',
     defaultGas: DEFAULT_BLOCK_GAS_LIMIT * 0.75,
+    defaultGasPrice: 20e9, // 20 gigawei
+    artifactsDir: 'build/contracts',
   },
 
   blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
@@ -61,6 +63,7 @@ function getConfig(): Config {
 
     config.blockGasLimit = 0xfffffffffffff;
     config.contracts.defaultGas = config.blockGasLimit * 0.75;
+    config.contracts.defaultGasPrice = 1;
     config.gasPrice = 1;
   }
 
