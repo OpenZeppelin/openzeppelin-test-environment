@@ -6,7 +6,7 @@
 **Blazing fast smart contract testing.** One-line setup for an awesome testing experience.
 
 - Near-instant start up: have your code running in under 2s after typing `npm test`.
-- Test runner agnostic – from the familiarity https://docs.openzeppelin.com/test-environment/choosing-a-test-runner#parallel-tests) using Jest or Ava!
+- Test runner agnostic – from the familiarity of Mocha, to [_parallel tests_](https://docs.openzeppelin.com/test-environment/choosing-a-test-runner#parallel-tests) using Jest or Ava!
 - Non-opinionated: use either [`@truffle/contract`](https://www.npmjs.com/package/@truffle/contract) or [`web3-eth-contract`](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html) as you see fit.
 - First class support for the [OpenZeppelin Test Helpers](https://docs.openzeppelin.com/test-helpers).
 - Highly configurable: from gas limit and initial balance, to complex custom web3 providers.
