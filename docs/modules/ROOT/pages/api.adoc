@@ -67,6 +67,8 @@ const ERC20 = contract.fromArtifact('ERC20');
 const myToken = await ERC20.new(initialBalance, initialHolder);
 ----
 
+NOTE: Head over to the xref:contract-loader::index.adoc[documentation for Contract Loader] to learn more.
+
 == web3
 
 A https://www.npmjs.com/package/web3[`web3`] instance, connected to the local testing blockchain. Useful to access utiltiies like `web3.eth.sign`, `web3.eth.getTransaction`, or `web3.utils.sha3`.
