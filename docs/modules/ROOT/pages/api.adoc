@@ -53,7 +53,10 @@ contract.fromArtifact: (contract: string) => any;
 contract.fromABI: (abi: object, bytecode?: string | undefined) => any;
 ----
 
-The `contract` object is in charge of creating contracts from compilation artifacts. It does this via two functions: * `fromArtifact` looks for a `.json` file in the `build/contracts` directory (equivalent to Truffle's `artifact.require`) * `fromABI` receives an ABI object directly, useful when the full compilation artifacts are not available
+The `contract` object is in charge of creating contracts from compilation artifacts. It does this via two functions:
+
+* `fromArtifact` looks for a `.json` file in the local or a dependency's `build/contracts` directory (equivalent to Truffle's `artifact.require`).
+* `fromABI` receives an ABI object directly, useful when the full compilation artifacts are not available.
 
 They both return instances of either https://www.npmjs.com/package/@truffle/contract[`@truffle/contract`] (by default) or https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html[`web3-eth-contract`], depending on your xref:getting-started.adoc#configuration[configuration].
 
