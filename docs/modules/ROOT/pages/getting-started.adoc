@@ -23,10 +23,10 @@ TIP: Head to our xref:choosing-a-test-runner.adoc[Choosing a Test Runner] guide 
 Each test file should have a `require` statement importing Test Environment. This will bring up the local blockchain where your tests will run, and provide utilities to interact with it.
 
 ```javascript
-const { accounts, contracts } = require('@openzeppelin/test-environment');
+const { accounts, contract } = require('@openzeppelin/test-environment');
 ```
 
-The exports you will be using the most are `accounts` and `contracts`.
+The exports you will be using the most are `accounts` and `contract`.
 
 === `accounts`
 
@@ -48,7 +48,7 @@ await crowdsale.buyTokens(amount, { from: purchaser });
 
 NOTE: Unlike Truffle's `accounts` array, the default address (the one that is used when you don't provide one) is **not** included in `accounts`. This will help you avoid common pitfalls while writing tests. Head to the xref:api.adoc#default-sender[API reference] to learn more.
 
-=== `contracts`
+=== `contract`
 
 You will use this function to load your compiled contracts into JavaScript objects. By default these will be https://www.npmjs.com/package/@truffle/contract[Truffle contracts], but they can be <<configuration, configured>> to be https://web3js.readthedocs.io/en/v1.2.4/web3-eth-contract.html[web3 contracts].
 
