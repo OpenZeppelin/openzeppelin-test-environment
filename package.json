@@ -55,7 +55,6 @@
     "@types/lodash.merge": "^4.6.6",
     "@types/node": "^12.12.7",
     "@types/semver": "^6.2.0",
-    "@types/web3": "^1.0.19",
     "@typescript-eslint/eslint-plugin": "^2.1.0",
     "@typescript-eslint/parser": "^2.1.0",
     "code-style": "git+https://github.com/OpenZeppelin/code-style.git",
@@ -73,6 +72,7 @@
   "dependencies": {
     "@openzeppelin/contract-loader": "^0.6.1",
     "@truffle/contract": "^4.0.38",
+    "@types/web3": "^1.0.19",
     "ansi-colors": "^4.1.1",
     "ethereumjs-wallet": "^0.6.3",
     "find-up": "^4.1.0",
