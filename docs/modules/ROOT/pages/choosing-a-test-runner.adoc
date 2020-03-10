@@ -63,7 +63,7 @@ $ npm install --save-dev mocha chai
 All tests in the `test` directory are then executed with:
 
 ```bash
-$ npx mocha --recursive test --exit
+$ npx mocha --recursive --exit
 ```
 
 WARNING: Mocha's `--exit` flag is required when using Truffle contracts. Otherwise, the test suite will not exit. https://github.com/trufflesuite/truffle/issues/2560[Learn more].
