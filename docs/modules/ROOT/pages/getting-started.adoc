@@ -111,7 +111,7 @@ This is what that looks like when using Mocha:
 // package.json
 
 "scripts": {
-  "test": "mocha --exit --recursive test"
+  "test": "mocha --exit --recursive"
 }
 ```
 
@@ -155,7 +155,7 @@ You can set your project to recompile all contracts when running tests by adding
 // package.json
 
 "scripts": {
-  "test": "oz compile && mocha --exit --recursive test"
+  "test": "oz compile && mocha --exit --recursive"
 }
 ```
 ====
