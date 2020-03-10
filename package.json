@@ -20,17 +20,6 @@
     "!*.test.js.map",
     "!*.test.d.ts"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && npx tsc --noEmit"
-    }
-  },
-  "lint-staged": {
-    "*.ts": [
-      "eslint --fix",
-      "git add"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OpenZeppelin/openzeppelin-test-environment.git"
@@ -62,9 +51,7 @@
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.2.0",
     "eslint-plugin-prettier": "^3.1.0",
-    "husky": "^3.0.5",
     "jest": "^24.9.0",
-    "lint-staged": "^9.2.5",
     "prettier": "^1.18.2",
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.2"
