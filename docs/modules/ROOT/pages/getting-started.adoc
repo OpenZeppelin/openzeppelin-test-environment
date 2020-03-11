@@ -194,3 +194,36 @@ module.exports = {
   blockGasLimit: 8e6, // Maximum gas per block
 };
 ```
+
+[[advanced-options]]
+=== Advanced Options
+
+These settings are meant to support more complex use cases: most applications will not require using them.
+
+==== `setupProvider`
+
+```javascript
+async function setupProvider(baseProvider)
+```
+
+Returns a new https://web3js.readthedocs.io/en/v1.2.0/web3.html#providers[web3 provider] that will be used by all contracts and helpers.
+
+Often used to wrap the base provider in one that performs additional tasks, such as logging or https://docs.openzeppelin.com/gsn-provider[Gas Station Network integration]:
+
+```javascript
+// test-environment.config.js
+
+module.exports = {
+  setupProvider: (baseProvider) => {
+    const { GSNDevProvider } = require('@openzeppelin/gsn-provider');
+    const { accounts } = require('@openzeppelin/test-environment');
+
+    return new GSNDevProvider(baseProvider, {
+      txfee: 70,
+      useGSN: false,
+      ownerAddress: accounts[8],
+      relayerAddress: accounts[9],
+    });
+  },
+};
+```
