@@ -44,7 +44,7 @@
     "@types/jest": "^24.0.23",
     "@types/lodash.merge": "^4.6.6",
     "@types/node": "^12.12.7",
-    "@types/semver": "^6.2.0",
+    "@types/semver": "^7.1.0",
     "@typescript-eslint/eslint-plugin": "^2.1.0",
     "@typescript-eslint/parser": "^2.1.0",
     "code-style": "git+https://github.com/OpenZeppelin/code-style.git",
