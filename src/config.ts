@@ -16,6 +16,7 @@ type Config = {
   gasPrice: number;
   setupProvider: (baseProvider: Provider) => Promise<Provider>;
   coverage: boolean;
+  allowUnlimitedContractSize: boolean;
 };
 
 export const DEFAULT_BLOCK_GAS_LIMIT = 8e6;
@@ -39,6 +40,7 @@ const defaultConfig: Config = {
   setupProvider: async baseProvider => baseProvider,
 
   coverage: false,
+  allowUnlimitedContractSize: false,
 };
 
 function getConfig(): Config {
