@@ -59,7 +59,7 @@
   "dependencies": {
     "@openzeppelin/contract-loader": "^0.6.1",
     "@truffle/contract": "^4.0.38",
-    "@types/web3": "1.0.19",
+    "@types/web3": "1.2.2",
     "ansi-colors": "^4.1.1",
     "ethereumjs-wallet": "^0.6.3",
     "find-up": "^4.1.0",
