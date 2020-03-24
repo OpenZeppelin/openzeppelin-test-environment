@@ -12,7 +12,9 @@
     "test:integration": "node scripts/run-integration-test.js",
     "test:unit": "jest --verbose",
     "test": "npm run test:unit && npm run test:integration",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "lint": "yarn lint:check --fix",
+    "lint:check": "npx eslint 'src/**/*.{js,ts}' --quiet"
   },
   "files": [
     "lib",

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import findUp from 'find-up';
 import merge from 'lodash.merge';
-import tryRequire from 'try-require'
+import tryRequire from 'try-require';
 
 import { log } from './log';
 
@@ -11,7 +11,7 @@ const CONFIG_FILE = 'test-environment.config.js';
 
 type Config = {
   accounts: { amount: number; ether: number };
-  contracts: { type: string; defaultGas: number, defaultGasPrice: number, artifactsDir: string, };
+  contracts: { type: string; defaultGas: number; defaultGasPrice: number; artifactsDir: string };
   blockGasLimit: number;
   gasPrice: number;
   setupProvider: (baseProvider: Provider) => Promise<Provider>;
