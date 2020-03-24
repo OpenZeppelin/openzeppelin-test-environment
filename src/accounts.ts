@@ -19,10 +19,11 @@ function generateAccounts(count: number, ether: number) {
   const wallets = Array.from({ length: count }, wallet.generate);
   const accounts = wallets.map(w => w.getChecksumAddressString());
   const accountsConfig = wallets.map(getConfig(ether));
-  return { accounts, accountsConfig };
+  const privateKeys = accountsConfig.map(c => c.secretKey);
+  return { accounts, privateKeys, accountsConfig };
 }
 
-const { accounts: allAccounts, accountsConfig } = generateAccounts(
+const { accounts: allAccounts, privateKeys: allPrivateKeys, accountsConfig } = generateAccounts(
   config.accounts.amount + 1, // extra account for the default sender
   config.accounts.ether,
 );
@@ -36,5 +37,6 @@ const { accounts: allAccounts, accountsConfig } = generateAccounts(
 
 const defaultSender = allAccounts[0];
 const accounts = allAccounts.slice(1);
+const privateKeys = allPrivateKeys.slice(1);
 
-export { accounts, accountsConfig, defaultSender, getConfig, generateAccounts };
+export { accounts, privateKeys, accountsConfig, defaultSender, getConfig, generateAccounts };
