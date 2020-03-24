@@ -41,11 +41,14 @@ commands:
           command: "npm run test:integration run-tarball package.tgz << parameters.test-name >>"
 
 jobs:
-  dependencies:
+  setup:
     <<: *defaults
     steps:
       - checkout
       - npm-install-with-cache
+      - run:
+          name: Lint check
+          command: npm run lint:check
       - run:
           name: "Pack tarball for integration tests"
           command: "npm run test:integration pack package.tgz"
@@ -97,22 +100,22 @@ workflows:
   version: 2
   everything:
     jobs:
-      - dependencies
+      - setup
       - test-unit:
           requires:
-            - dependencies
+            - setup
       - test-mocha:
           requires:
-            - dependencies
+            - setup
       - test-ava:
           requires:
-            - dependencies
+            - setup
       - test-jest:
           requires:
-            - dependencies
+            - setup
       - test-mocha-defaults:
           requires:
-            - dependencies
+            - setup
       - test-mocha-config:
           requires:
-            - dependencies
+            - setup
