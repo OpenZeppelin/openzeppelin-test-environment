@@ -32,7 +32,7 @@ export default async function(): Promise<string> {
     // Prevent the child process from also being started in inspect mode, which
     // would cause issues due to parent and child sharing the port.
     // See https://github.com/OpenZeppelin/openzeppelin-test-environment/pull/23
-    execArgv: process.execArgv.filter(opt => opt !== '--inspect')
+    execArgv: process.execArgv.filter(opt => opt !== '--inspect'),
   });
 
   const options: Options = {
