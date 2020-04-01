@@ -9,13 +9,14 @@ import { Provider } from 'web3/providers';
 
 const CONFIG_FILE = 'test-environment.config.js';
 
-type Config = {
+export type Config = {
   accounts: { amount: number; ether: number };
   contracts: { type: string; defaultGas: number; defaultGasPrice: number; artifactsDir: string };
   blockGasLimit: number;
   gasPrice: number;
   setupProvider: (baseProvider: Provider) => Promise<Provider>;
   coverage: boolean;
+  node: { allowUnlimitedContractSize: boolean };
 };
 
 export const DEFAULT_BLOCK_GAS_LIMIT = 8e6;
@@ -39,6 +40,8 @@ const defaultConfig: Config = {
   setupProvider: async baseProvider => baseProvider,
 
   coverage: false,
+
+  node: { allowUnlimitedContractSize: false },
 };
 
 function getConfig(): Config {

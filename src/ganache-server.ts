@@ -9,11 +9,12 @@ function send(msg: Message): void {
   process.send(msg);
 }
 
-function setupServer({ accountsConfig, gasLimit, gasPrice, coverage }: Options) {
+function setupServer({ accountsConfig, gasLimit, gasPrice, coverage, allowUnlimitedContractSize }: Options): any {
   const ganacheOpts = {
     accounts: accountsConfig,
     gasLimit,
     gasPrice: `0x${gasPrice.toString(16)}`,
+    allowUnlimitedContractSize,
   };
 
   if (!coverage) {

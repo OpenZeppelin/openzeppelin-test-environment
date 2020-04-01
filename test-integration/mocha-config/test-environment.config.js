@@ -5,4 +5,8 @@ module.exports = {
   },
 
   blockGasLimit: 7000000,
+
+  node: {
+    allowUnlimitedContractSize: true,
+  },
 };

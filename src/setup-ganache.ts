@@ -25,6 +25,7 @@ export type Options = {
   gasLimit: number;
   gasPrice: number;
   coverage: boolean;
+  allowUnlimitedContractSize: boolean;
 };
 
 export default async function(): Promise<string> {
@@ -40,6 +41,7 @@ export default async function(): Promise<string> {
     gasLimit: config.blockGasLimit,
     gasPrice: config.gasPrice,
     coverage: config.coverage,
+    allowUnlimitedContractSize: config.node.allowUnlimitedContractSize,
   };
   server.send(options);
 
