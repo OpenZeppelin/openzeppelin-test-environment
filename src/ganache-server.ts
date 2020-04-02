@@ -1,6 +1,6 @@
 import ganache from 'ganache-core';
 
-import { Message, Options } from './setup-ganache';
+import { Message, NodeOptions } from './setup-ganache';
 
 function send(msg: Message): void {
   if (process.send === undefined) {
@@ -9,7 +9,7 @@ function send(msg: Message): void {
   process.send(msg);
 }
 
-function setupServer({ accountsConfig, gasLimit, gasPrice, coverage, allowUnlimitedContractSize }: Options): any {
+function setupServer({ accountsConfig, gasLimit, gasPrice, coverage, allowUnlimitedContractSize }: NodeOptions): any {
   const ganacheOpts = {
     accounts: accountsConfig,
     gasLimit,
@@ -28,7 +28,7 @@ function setupServer({ accountsConfig, gasLimit, gasPrice, coverage, allowUnlimi
   }
 }
 
-process.once('message', (options: Options) => {
+process.once('message', (options: NodeOptions) => {
   const server = setupServer(options);
 
   // An undefined port number makes ganache-core choose a random free port,

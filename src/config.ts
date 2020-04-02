@@ -16,7 +16,12 @@ export type Config = {
   gasPrice: number;
   setupProvider: (baseProvider: Provider) => Promise<Provider>;
   coverage: boolean;
-  node: { allowUnlimitedContractSize: boolean };
+  node: {
+    allowUnlimitedContractSize: boolean;
+    // {url:port@blocknumber} for example http://localhost:8545@1599200
+    fork?: string;
+    unlocked_accounts?: string[];
+  };
 };
 
 export const DEFAULT_BLOCK_GAS_LIMIT = 8e6;

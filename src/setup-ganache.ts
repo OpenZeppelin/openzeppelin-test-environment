@@ -2,7 +2,7 @@ import path from 'path';
 import { fork, ChildProcess } from 'child_process';
 
 import { accountsConfig } from './accounts';
-import config from './config';
+import config, { Config } from './config';
 
 interface ErrorMessage {
   type: 'error';
@@ -20,12 +20,14 @@ export type AccountConfig = {
   secretKey: string;
 };
 
-export type Options = {
+export type NodeOptions = {
   accountsConfig: AccountConfig[];
   gasLimit: number;
   gasPrice: number;
   coverage: boolean;
   allowUnlimitedContractSize: boolean;
+  fork?: string;
+  unlocked_accounts?: string[];
 };
 
 export default async function(): Promise<string> {
@@ -36,12 +38,12 @@ export default async function(): Promise<string> {
     execArgv: process.execArgv.filter(opt => opt !== '--inspect'),
   });
 
-  const options: Options = {
+  const options: NodeOptions = {
+    ...config.node,
     accountsConfig,
     gasLimit: config.blockGasLimit,
     gasPrice: config.gasPrice,
     coverage: config.coverage,
-    allowUnlimitedContractSize: config.node.allowUnlimitedContractSize,
   };
   server.send(options);
 
