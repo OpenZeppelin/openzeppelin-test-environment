@@ -9,19 +9,12 @@ function send(msg: Message): void {
   process.send(msg);
 }
 
-function setupServer({ accountsConfig, gasLimit, gasPrice, coverage, allowUnlimitedContractSize }: NodeOptions): any {
-  const ganacheOpts = {
-    accounts: accountsConfig,
-    gasLimit,
-    gasPrice: `0x${gasPrice.toString(16)}`,
-    allowUnlimitedContractSize,
-  };
-
-  if (!coverage) {
-    return ganache.server(ganacheOpts);
+function setupServer(nodeOptions: NodeOptions): any {
+  if (!nodeOptions.coverage) {
+    return ganache.server(nodeOptions);
   } else {
     return require('ganache-core-coverage').server({
-      ...ganacheOpts,
+      ...nodeOptions,
       emitFreeLogs: true,
       allowUnlimitedContractSize: true,
     });

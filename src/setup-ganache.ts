@@ -21,9 +21,9 @@ export type AccountConfig = {
 };
 
 export type NodeOptions = {
-  accountsConfig: AccountConfig[];
+  accounts: AccountConfig[];
   gasLimit: number;
-  gasPrice: number;
+  gasPrice: string;
   coverage: boolean;
   allowUnlimitedContractSize: boolean;
   fork?: string;
@@ -40,9 +40,9 @@ export default async function(): Promise<string> {
 
   const options: NodeOptions = {
     ...config.node,
-    accountsConfig,
+    accounts: accountsConfig,
     gasLimit: config.blockGasLimit,
-    gasPrice: config.gasPrice,
+    gasPrice: `0x${config.gasPrice.toString(16)}`,
     coverage: config.coverage,
   };
   server.send(options);
