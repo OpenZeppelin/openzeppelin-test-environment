@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha --exit --timeout 10000"
+    "test": "mocha --exit --timeout 10000"
   },
   "author": "",
   "license": "MIT",
