@@ -29,10 +29,10 @@ describe('config', function() {
 
   describe('blockchain', function() {
     it('the block gas limit can be configured', async function() {
-      await web3.eth.sendTransaction({ from: accounts[0], to: accounts[1], gas: config.blockGasLimit });
+      await web3.eth.sendTransaction({ from: accounts[0], to: accounts[1], gas: config.node.gasLimit });
 
       try {
-        await web3.eth.sendTransaction({ from: accounts[0], to: accounts[1], gas: config.blockGasLimit + 1 });
+        await web3.eth.sendTransaction({ from: accounts[0], to: accounts[1], gas: config.node.gasLimit + 1 });
         expect.fail('Transaction over gas limit was executed');
       } catch {}
     });

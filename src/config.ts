@@ -9,15 +9,19 @@ import { Provider } from 'web3/providers';
 
 const CONFIG_FILE = 'test-environment.config.js';
 
+const configHelpUrl = 'https://docs.openzeppelin.com/test-environment/getting-started#configuration';
+
 export type Config = {
   accounts: { amount: number; ether: number };
   contracts: { type: string; defaultGas: number; defaultGasPrice: number; artifactsDir: string };
   blockGasLimit: number;
-  gasPrice: number;
+  gasPrice: number | string;
   setupProvider: (baseProvider: Provider) => Promise<Provider>;
   coverage: boolean;
   node: {
-    allowUnlimitedContractSize: boolean;
+    gasLimit?: number;
+    gasPrice?: number | string;
+    allowUnlimitedContractSize?: boolean;
     // {url:port@blocknumber} for example http://localhost:8545@1599200
     fork?: string;
     unlocked_accounts?: string[];
@@ -46,14 +50,31 @@ const defaultConfig: Config = {
 
   coverage: false,
 
-  node: { allowUnlimitedContractSize: false },
+  node: {
+    allowUnlimitedContractSize: false,
+    gasLimit: DEFAULT_BLOCK_GAS_LIMIT,
+    gasPrice: 20e9, // 20 gigawei
+  },
 };
 
 function getConfig(): Config {
   const location = findUp.sync(CONFIG_FILE, { type: 'file' });
   const providedConfig: Partial<Config> = location !== undefined && fs.existsSync(location) ? require(location) : {};
 
+  if (providedConfig.blockGasLimit !== undefined) {
+    log(
+      `blockGasLimit option will be depricated in future releases. Please use gasLimit instead. See ${configHelpUrl} for more details.`,
+    );
+  }
+
+  if (providedConfig.gasPrice !== undefined) {
+    log(`Please move gasPrice option inside node option.See ${configHelpUrl} for more details.`);
+  }
+
   const config: Config = merge(defaultConfig, providedConfig);
+
+  config.gasPrice = `0x${config.gasPrice.toString(16)}`;
+  if (config.node.gasPrice) config.node.gasPrice = `0x${config.node.gasPrice.toString(16)}`;
 
   if (process.env.OZ_TEST_ENV_COVERAGE !== undefined) {
     const coveragePath = tryRequire.resolve('ganache-core-coverage');

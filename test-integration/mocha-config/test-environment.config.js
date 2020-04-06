@@ -4,9 +4,8 @@ module.exports = {
     ether: 1e6,
   },
 
-  blockGasLimit: 7000000,
-
   node: {
     allowUnlimitedContractSize: true,
+    gasLimit: 7000000,
   },
 };
