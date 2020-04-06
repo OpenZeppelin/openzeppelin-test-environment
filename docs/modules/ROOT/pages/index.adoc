@@ -6,7 +6,7 @@
 * Test runner agnostic – from the familiarity of Mocha, to xref:choosing-a-test-runner.adoc#parallel-tests[_parallel tests_] using Jest or Ava!
 * Non-opinionated: use either https://www.npmjs.com/package/@truffle/contract[`@truffle/contract`] or https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html[`web3-eth-contract`] as you see fit.
 * First class support for the xref:test-helpers::index.adoc[OpenZeppelin Test Helpers].
-* Highly configurable: from gas limit and initial balance, to complex custom web3 providers.
+* Highly configurable: from gas limit, initial balance, and fork option, to complex custom web3 providers.
 * No global variables, no hacks.
 
 _Test Environment is the result of our learnings while developing the xref:contracts::index.adoc[OpenZeppelin Contracts], combining best practices and the tools we've come to rely on over the years. We think you'll love it!_
