@@ -13,7 +13,7 @@ const defaultConfig: Config = {
     artifactsDir: 'build/contracts',
   },
 
-  setupProvider: async baseProvider => baseProvider,
+  setupProvider: async (baseProvider) => baseProvider,
 
   coverage: false,
 

@@ -44,7 +44,7 @@ describe('TestProvider class', (): void => {
       id: 324,
     };
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const callback: Callback<JsonRPCResponse> = function() {};
+    const callback: Callback<JsonRPCResponse> = function () {};
 
     // @ts-ignore
     provider.queue.onIdle = jest.fn((): Promise<void> => Promise.resolve());

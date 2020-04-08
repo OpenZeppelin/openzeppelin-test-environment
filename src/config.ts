@@ -43,7 +43,7 @@ const defaultConfig: Config = {
     artifactsDir: 'build/contracts',
   },
 
-  setupProvider: async baseProvider => baseProvider,
+  setupProvider: async (baseProvider) => baseProvider,
 
   coverage: false,
 
@@ -67,11 +67,15 @@ function getConfig(): Config {
   }
 
   if (!!providedConfig.gasPrice && !!providedConfig.node?.gasPrice) {
-    throw new Error('GasPrice is specified twice in config. Please fix your config. See ${configHelpUrl} for more details.')
+    throw new Error(
+      'GasPrice is specified twice in config. Please fix your config. See ${configHelpUrl} for more details.',
+    );
   }
 
   if (!!providedConfig.blockGasLimit && !!providedConfig.node?.gasLimit) {
-    throw new Error('GasLimit is specified twice in config. Please fix your config. See ${configHelpUrl} for more details.')
+    throw new Error(
+      'GasLimit is specified twice in config. Please fix your config. See ${configHelpUrl} for more details.',
+    );
   }
 
   const config: Config = merge(defaultConfig, providedConfig);

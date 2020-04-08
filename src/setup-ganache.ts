@@ -30,12 +30,12 @@ export type NodeOptions = {
   unlocked_accounts?: string[];
 };
 
-export default async function(): Promise<string> {
+export default async function (): Promise<string> {
   const server = fork(path.join(__dirname, 'ganache-server'), [], {
     // Prevent the child process from also being started in inspect mode, which
     // would cause issues due to parent and child sharing the port.
     // See https://github.com/OpenZeppelin/openzeppelin-test-environment/pull/23
-    execArgv: process.execArgv.filter(opt => opt !== '--inspect'),
+    execArgv: process.execArgv.filter((opt) => opt !== '--inspect'),
   });
 
   const gasPrice = typeof config.node.gasPrice === 'string' ? config.node.gasPrice : undefined;
