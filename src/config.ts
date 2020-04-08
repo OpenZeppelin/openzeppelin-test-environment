@@ -62,13 +62,11 @@ function getConfig(): Config {
   const providedConfig: Partial<Config> = location !== undefined && fs.existsSync(location) ? require(location) : {};
 
   if (providedConfig.blockGasLimit !== undefined) {
-    log(
-      `blockGasLimit is deprecated. Use node.gasLimit instead. See ${configHelpUrl} for details.`,
-    );
+    log(`blockGasLimit is deprecated. Use node.gasLimit instead. See ${configHelpUrl} for details.`);
   }
 
   if (providedConfig.gasPrice !== undefined) {
-    log(`Please move gasPrice option inside node option.See ${configHelpUrl} for more details.`);
+    log(`Please move gasPrice option inside node option. See ${configHelpUrl} for more details.`);
   }
 
   const config: Config = merge(defaultConfig, providedConfig);
