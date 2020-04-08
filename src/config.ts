@@ -63,7 +63,7 @@ function getConfig(): Config {
 
   if (providedConfig.blockGasLimit !== undefined) {
     log(
-      `blockGasLimit option will be depricated in future releases. Please use gasLimit instead. See ${configHelpUrl} for more details.`,
+      `blockGasLimit is deprecated. Use node.gasLimit instead. See ${configHelpUrl} for details.`,
     );
   }
 
