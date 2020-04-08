@@ -13,9 +13,6 @@ const defaultConfig: Config = {
     artifactsDir: 'build/contracts',
   },
 
-  blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
-  gasPrice: '0x4a817c800', // 20 gigawei
-
   setupProvider: async baseProvider => baseProvider,
 
   coverage: false,

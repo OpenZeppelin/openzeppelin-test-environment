@@ -38,11 +38,12 @@ export default async function(): Promise<string> {
     execArgv: process.execArgv.filter(opt => opt !== '--inspect'),
   });
 
+  const gasPrice = typeof config.node.gasPrice === 'string' ? config.node.gasPrice : undefined;
+
   const options: NodeOptions = {
     ...config.node,
+    gasPrice,
     accounts: accountsConfig,
-    gasLimit: config.blockGasLimit,
-    gasPrice: typeof config.gasPrice === 'string' ? config.gasPrice : undefined,
     coverage: config.coverage,
   };
   server.send(options);

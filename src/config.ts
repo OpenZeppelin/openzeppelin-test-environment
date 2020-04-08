@@ -14,8 +14,8 @@ const configHelpUrl = 'https://zpl.in/test-env-config';
 export type Config = {
   accounts: { amount: number; ether: number };
   contracts: { type: string; defaultGas: number; defaultGasPrice: number; artifactsDir: string };
-  blockGasLimit: number;
-  gasPrice: number | string;
+  blockGasLimit?: number;
+  gasPrice?: number;
   setupProvider: (baseProvider: Provider) => Promise<Provider>;
   coverage: boolean;
   node: {
@@ -43,9 +43,6 @@ const defaultConfig: Config = {
     artifactsDir: 'build/contracts',
   },
 
-  blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
-  gasPrice: 20e9, // 20 gigawei
-
   setupProvider: async baseProvider => baseProvider,
 
   coverage: false,
@@ -69,9 +66,19 @@ function getConfig(): Config {
     log(`Please move gasPrice option inside node option. See ${configHelpUrl} for more details.`);
   }
 
+  if (!!providedConfig.gasPrice && !!providedConfig.node?.gasPrice) {
+    throw new Error('GasPrice is specified twice in config. Please fix your config. See ${configHelpUrl} for more details.')
+  }
+
+  if (!!providedConfig.blockGasLimit && !!providedConfig.node?.gasLimit) {
+    throw new Error('GasLimit is specified twice in config. Please fix your config. See ${configHelpUrl} for more details.')
+  }
+
   const config: Config = merge(defaultConfig, providedConfig);
 
-  config.gasPrice = `0x${config.gasPrice.toString(16)}`;
+  if (config.gasPrice) config.node.gasPrice = config.gasPrice;
+  if (config.blockGasLimit) config.node.gasLimit = config.blockGasLimit;
+
   if (config.node.gasPrice) config.node.gasPrice = `0x${config.node.gasPrice.toString(16)}`;
 
   if (process.env.OZ_TEST_ENV_COVERAGE !== undefined) {
