@@ -3,7 +3,7 @@ import findUp from 'find-up';
 import merge from 'lodash.merge';
 import tryRequire from 'try-require';
 
-import { log } from './log';
+import { log, warn } from './log';
 
 import { Provider } from 'web3/providers';
 
@@ -59,22 +59,22 @@ function getConfig(): Config {
   const providedConfig: Partial<Config> = location !== undefined && fs.existsSync(location) ? require(location) : {};
 
   if (providedConfig.blockGasLimit !== undefined) {
-    log(`blockGasLimit is deprecated. Use node.gasLimit instead. See ${configHelpUrl} for details.`);
+    warn(`blockGasLimit is deprecated. Use node.gasLimit instead. See ${configHelpUrl} for details.`);
   }
 
   if (providedConfig.gasPrice !== undefined) {
-    log(`Please move gasPrice option inside node option. See ${configHelpUrl} for more details.`);
+    warn(`Please move gasPrice option inside node option. See ${configHelpUrl} for more details.`);
   }
 
   if (!!providedConfig.gasPrice && !!providedConfig.node?.gasPrice) {
     throw new Error(
-      'GasPrice is specified twice in config. Please fix your config. See ${configHelpUrl} for more details.',
+      `GasPrice is specified twice in config. Please fix your config. See ${configHelpUrl} for more details.`,
     );
   }
 
   if (!!providedConfig.blockGasLimit && !!providedConfig.node?.gasLimit) {
     throw new Error(
-      'GasLimit is specified twice in config. Please fix your config. See ${configHelpUrl} for more details.',
+      `GasLimit is specified twice in config. Please fix your config. See ${configHelpUrl} for more details.`,
     );
   }
 
