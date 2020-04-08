@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 0.2.0 (2020-04-6)
 ### Added
 - Added a `node` option to `test-environment.config` which contains options directly passed to Ganache, including `fork` and `unlocked_accounts` which are handy for tesing on forked chains. `allowUnlimitedContractSize` is supported as well. [See all Ganache options](https://github.com/trufflesuite/ganache-cli).
+- Deprecated the configuration options `blockGasLimit` and `gasPrice`. Users should instead use the options `node.gasLimit` and `node.gasPrice`.
 
 ## 0.1.3 (2020-02-18)
 ### Fixed
