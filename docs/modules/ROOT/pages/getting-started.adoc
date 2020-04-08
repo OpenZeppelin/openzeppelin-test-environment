@@ -194,9 +194,6 @@ module.exports = {
   node: { // Options passed directly to Ganache client
     gasLimit: 8e6, // Maximum gas per block
     gasPrice: 20e9 // Sets the default gas price for transactions if not otherwise specified.
-    fork: 'https://mainnet.infura.io/v3/{token}@{blocknumber}, // An url to Ethereum node to use as a source for a fork
-    unlocked_accounts: ['0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B'], // Array of addresses specifying which accounts should be unlocked.
-    allowUnlimitedContractSize: false // Allows unlimited contract sizes.
   },
 };
 ```
@@ -230,6 +227,37 @@ module.exports = {
       ownerAddress: accounts[8],
       relayerAddress: accounts[9],
     });
+  },
+};
+```
+
+==== `fork`and `unlocked_accounts`
+
+Allows to fork a chain and unlock specified accounts on it. Useful for running integration tests with other protocols.
+
+
+```javascript
+// test-environment.config.js
+
+module.exports = {
+  node: { // Options passed directly to Ganache client
+    fork: 'https://mainnet.infura.io/v3/{token}@{blocknumber}, // An url to Ethereum node to use as a source for a fork
+    unlocked_accounts: ['0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B'], // Array of addresses specifying which accounts should be unlocked.
+    allowUnlimitedContractSize: false // Allows unlimited contract sizes.
+  },
+};
+```
+
+==== `allowUnlimitedContractSize`
+
+Allows unlimited contract sizes while debugging. By enabling this flag, the check within the EVM for contract size limit of 24KB (see EIP-170) is bypassed. Enabling this flag will cause ganache-cli to behave differently than production environments.
+
+```javascript
+// test-environment.config.js
+
+module.exports = {
+  node: { // Options passed directly to Ganache client
+     allowUnlimitedContractSize: false // Allows unlimited contract sizes.
   },
 };
 ```
