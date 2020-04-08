@@ -9,7 +9,7 @@ import { Provider } from 'web3/providers';
 
 const CONFIG_FILE = 'test-environment.config.js';
 
-const configHelpUrl = 'https://docs.openzeppelin.com/test-environment/getting-started#configuration';
+const configHelpUrl = 'https://zpl.in/test-env-config';
 
 export type Config = {
   accounts: { amount: number; ether: number };
