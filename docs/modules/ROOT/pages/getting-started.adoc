@@ -243,7 +243,6 @@ module.exports = {
   node: { // Options passed directly to Ganache client
     fork: 'https://mainnet.infura.io/v3/{token}@{blocknumber}, // An url to Ethereum node to use as a source for a fork
     unlocked_accounts: ['0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B'], // Array of addresses specifying which accounts should be unlocked.
-    allowUnlimitedContractSize: false // Allows unlimited contract sizes.
   },
 };
 ```
