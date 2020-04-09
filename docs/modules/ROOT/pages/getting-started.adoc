@@ -258,7 +258,7 @@ WARNING: Enabling this flag causes Ganache to behave differently from production
 
 module.exports = {
   node: { // Options passed directly to Ganache client
-     allowUnlimitedContractSize: false // Allows unlimited contract sizes.
+     allowUnlimitedContractSize: true, // Allows unlimited contract sizes.
   },
 };
 ```
