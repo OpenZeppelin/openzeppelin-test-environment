@@ -250,7 +250,9 @@ module.exports = {
 
 ==== `allowUnlimitedContractSize`
 
-Allows unlimited contract sizes while debugging. By enabling this flag, the check within the EVM for contract size limit of 24KB (see EIP-170) is bypassed. Enabling this flag will cause ganache-cli to behave differently than production environments.
+Allows unlimited contract sizes. By enabling this flag, the check within the EVM for contract size limit of 24kB (see https://eips.ethereum.org/EIPS/eip-170[EIP-170]) is bypassed. Useful when testing unoptimized contracts that wouldn't be otherwise deployable.
+
+WARNING: Enabling this flag causes Ganache to behave differently from production environments.
 
 ```javascript
 // test-environment.config.js
