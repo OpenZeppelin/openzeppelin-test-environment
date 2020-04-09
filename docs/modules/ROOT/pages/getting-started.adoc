@@ -233,7 +233,9 @@ module.exports = {
 
 ==== `fork`and `unlocked_accounts`
 
-Allows to fork a chain and unlock specified accounts on it. Useful for running integration tests with other protocols.
+These options allow Test Environment's local blockchain to _fork_ an existing one instead of starting from an empty state. By using them you can test how your code interacts with live third party protocols (like the MakerDAO system) without having to deploy them yourself!
+
+In forked mode, you will also be able to send transactions from any of the `unlocked_accounts` (even if you don't know their private keys!).
 
 
 ```javascript
