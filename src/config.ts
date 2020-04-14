@@ -80,7 +80,7 @@ function getConfig(): Config {
 
   const config: Config = merge(defaultConfig, providedConfig);
 
-  if (config.gasPrice) config.node.gasPrice = config.gasPrice;
+  if (config.gasPrice !== undefined) config.node.gasPrice = config.gasPrice;
   if (config.blockGasLimit) config.node.gasLimit = config.blockGasLimit;
 
   if (config.node.gasPrice) config.node.gasPrice = `0x${config.node.gasPrice.toString(16)}`;
