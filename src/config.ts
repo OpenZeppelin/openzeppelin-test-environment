@@ -66,7 +66,7 @@ function getConfig(): Config {
     warn(`Please move gasPrice option inside node option. See ${configHelpUrl} for more details.`);
   }
 
-  if (!!providedConfig.gasPrice && !!providedConfig.node?.gasPrice) {
+  if (providedConfig.gasPrice !== undefined && providedConfig.node?.gasPrice !== undefined) {
     throw new Error(
       `GasPrice is specified twice in config. Please fix your config. See ${configHelpUrl} for more details.`,
     );
