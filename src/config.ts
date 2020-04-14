@@ -83,7 +83,7 @@ function getConfig(): Config {
   if (config.gasPrice !== undefined) config.node.gasPrice = config.gasPrice;
   if (config.blockGasLimit) config.node.gasLimit = config.blockGasLimit;
 
-  if (config.node.gasPrice) config.node.gasPrice = `0x${config.node.gasPrice.toString(16)}`;
+  if (config.node.gasPrice !== undefined) config.node.gasPrice = `0x${config.node.gasPrice.toString(16)}`;
 
   if (process.env.OZ_TEST_ENV_COVERAGE !== undefined) {
     const coveragePath = tryRequire.resolve('ganache-core-coverage');
