@@ -7,7 +7,7 @@ import { AccountConfig } from './setup-ganache';
 const { utils } = Web3;
 
 function getConfig(ether: number) {
-  return function(wallet: Wallet): AccountConfig {
+  return function (wallet: Wallet): AccountConfig {
     return {
       balance: utils.toWei(ether.toString(), 'ether'),
       secretKey: wallet.getPrivateKeyString(),
@@ -17,9 +17,9 @@ function getConfig(ether: number) {
 
 function generateAccounts(count: number, ether: number) {
   const wallets = Array.from({ length: count }, wallet.generate);
-  const accounts = wallets.map(w => w.getChecksumAddressString());
+  const accounts = wallets.map((w) => w.getChecksumAddressString());
   const accountsConfig = wallets.map(getConfig(ether));
-  const privateKeys = accountsConfig.map(c => c.secretKey);
+  const privateKeys = accountsConfig.map((c) => c.secretKey);
   return { accounts, privateKeys, accountsConfig };
 }
 

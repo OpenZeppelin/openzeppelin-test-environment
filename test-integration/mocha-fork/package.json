@@ -1,0 +1,20 @@
+{
+  "name": "mocha-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --exit --timeout 10000"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "bn.js": "^5.0.0",
+    "chai": "^4.2.0",
+    "lodash.uniq": "^4.5.0",
+    "mocha": "^6.2.0",
+    "prettier": "^1.18.2",
+    "web3": "^1.2.1"
+  },
+  "dependencies": {}
+}

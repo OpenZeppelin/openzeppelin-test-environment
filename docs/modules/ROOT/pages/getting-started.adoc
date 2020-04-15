@@ -191,7 +191,10 @@ module.exports = {
     artifactsDir: 'build/contracts', // Directory where contract artifacts are stored
   },
 
-  blockGasLimit: 8e6, // Maximum gas per block
+  node: { // Options passed directly to Ganache client
+    gasLimit: 8e6, // Maximum gas per block
+    gasPrice: 20e9 // Sets the default gas price for transactions if not otherwise specified.
+  },
 };
 ```
 
@@ -224,6 +227,40 @@ module.exports = {
       ownerAddress: accounts[8],
       relayerAddress: accounts[9],
     });
+  },
+};
+```
+
+==== `fork`and `unlocked_accounts`
+
+These options allow Test Environment's local blockchain to _fork_ an existing one instead of starting from an empty state. By using them you can test how your code interacts with live third party protocols (like the MakerDAO system) without having to deploy them yourself!
+
+In forked mode, you will also be able to send transactions from any of the `unlocked_accounts` (even if you don't know their private keys!).
+
+
+```javascript
+// test-environment.config.js
+
+module.exports = {
+  node: { // Options passed directly to Ganache client
+    fork: 'https://mainnet.infura.io/v3/{token}@{blocknumber}, // An url to Ethereum node to use as a source for a fork
+    unlocked_accounts: ['0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B'], // Array of addresses specifying which accounts should be unlocked.
+  },
+};
+```
+
+==== `allowUnlimitedContractSize`
+
+Allows unlimited contract sizes. By enabling this flag, the check within the EVM for contract size limit of 24kB (see https://eips.ethereum.org/EIPS/eip-170[EIP-170]) is bypassed. Useful when testing unoptimized contracts that wouldn't be otherwise deployable.
+
+WARNING: Enabling this flag causes Ganache to behave differently from production environments.
+
+```javascript
+// test-environment.config.js
+
+module.exports = {
+  node: { // Options passed directly to Ganache client
+     allowUnlimitedContractSize: true, // Allows unlimited contract sizes.
   },
 };
 ```

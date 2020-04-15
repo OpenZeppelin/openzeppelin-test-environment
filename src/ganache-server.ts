@@ -1,6 +1,6 @@
 import ganache from 'ganache-core';
 
-import { Message, Options } from './setup-ganache';
+import { Message, NodeOptions } from './setup-ganache';
 
 function send(msg: Message): void {
   if (process.send === undefined) {
@@ -9,25 +9,19 @@ function send(msg: Message): void {
   process.send(msg);
 }
 
-function setupServer({ accountsConfig, gasLimit, gasPrice, coverage }: Options) {
-  const ganacheOpts = {
-    accounts: accountsConfig,
-    gasLimit,
-    gasPrice: `0x${gasPrice.toString(16)}`,
-  };
-
-  if (!coverage) {
-    return ganache.server(ganacheOpts);
+function setupServer(nodeOptions: NodeOptions): any {
+  if (!nodeOptions.coverage) {
+    return ganache.server(nodeOptions);
   } else {
     return require('ganache-core-coverage').server({
-      ...ganacheOpts,
+      ...nodeOptions,
       emitFreeLogs: true,
       allowUnlimitedContractSize: true,
     });
   }
 }
 
-process.once('message', (options: Options) => {
+process.once('message', (options: NodeOptions) => {
   const server = setupServer(options);
 
   // An undefined port number makes ganache-core choose a random free port,
@@ -35,7 +29,7 @@ process.once('message', (options: Options) => {
   // processes of test-environment may be run in parallel.
   // It also means however that the port (and therefore host URL) is not
   // available until the server finishes initialization.
-  server.listen(undefined, function(err: unknown) {
+  server.listen(undefined, function (err: unknown) {
     if (err) {
       send({ type: 'error' });
     } else {

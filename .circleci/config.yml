@@ -95,6 +95,11 @@ jobs:
     steps:
       - integration-test:
           test-name: mocha-config
+  test-mocha-fork:
+    <<: *defaults
+    steps:
+      - integration-test:
+          test-name: mocha-fork
 
 workflows:
   version: 2
@@ -117,5 +122,8 @@ workflows:
           requires:
             - setup
       - test-mocha-config:
+          requires:
+            - setup
+      - test-mocha-fork:
           requires:
             - setup
