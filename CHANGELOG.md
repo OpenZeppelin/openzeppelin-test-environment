@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## 0.1.4 (unreleased)
+## 0.1.4 (2020-04-15)
 ### Added
 - Added a `node` option to `test-environment.config` which contains options directly passed to Ganache, including `fork` and `unlocked_accounts` which are handy for tesing on forked chains. `allowUnlimitedContractSize` is supported as well. [See all Ganache options](https://github.com/trufflesuite/ganache-cli).
 ### Deprecated
