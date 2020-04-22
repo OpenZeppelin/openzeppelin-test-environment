@@ -231,7 +231,7 @@ module.exports = {
 };
 ```
 
-==== `fork` and `unlocked_accounts`
+==== ``fork`` and ``unlocked_accounts``
 
 These options allow Test Environment's local blockchain to _fork_ an existing one instead of starting from an empty state. By using them you can test how your code interacts with live third party protocols (like the MakerDAO system) without having to deploy them yourself!
 
