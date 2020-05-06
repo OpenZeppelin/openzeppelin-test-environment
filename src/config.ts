@@ -99,8 +99,8 @@ function getConfig(): Config {
     //  2. increase how much gas transactions send by default
     //  3. reduce the gas price to prevent the account's funds from being affected by this too much
 
-    config.blockGasLimit = 0xfffffffffffff;
-    config.contracts.defaultGas = config.blockGasLimit * 0.75;
+    config.blockGasLimit = 0xfffffffffff;
+    config.contracts.defaultGas = Math.floor(config.blockGasLimit * 0.75);
     config.contracts.defaultGasPrice = 1;
     config.gasPrice = 1;
   }
