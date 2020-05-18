@@ -43,7 +43,7 @@
   "homepage": "https://github.com/OpenZeppelin/openzeppelin-test-environment#readme",
   "devDependencies": {
     "@openzeppelin/docs-utils": "^0.1.0",
-    "@types/jest": "^24.0.23",
+    "@types/jest": "^25.2.2",
     "@types/lodash.merge": "^4.6.6",
     "@types/node": "^12.12.7",
     "@types/semver": "^7.1.0",
