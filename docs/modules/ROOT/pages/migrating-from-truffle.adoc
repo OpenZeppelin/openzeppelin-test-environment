@@ -32,14 +32,14 @@ Don't forget to make Mocha the entry point of your test suite once you install i
 
 WARNING: Mocha's `--exit` flag is required when using Truffle contracts. Otherwise, the test suite will not exit. https://github.com/trufflesuite/truffle/issues/2560[Learn more].
 
-== Switching to Test Envrionment
+== Switching to Test Environment
 
 Some bits of your test files will need to be modified during the migration. The changes are only a few, but important:
 
 1. Add `require('@openzeppelin/test-environment')` and export relevant objects, such as `accounts`, `contract` and `web3`.
 2. Add `require('chai')` and set it up (Truffle does this automagically).
 3. Replace all instances of `artifacts.require` with `contract.fromArtifact`
-4. Replace all intances of Truffle's `contract` function with a regular Mocha `describe`. You can still access the accounts array in `accounts`.
+4. Replace all instances of Truffle's `contract` function with a regular Mocha `describe`. You can still access the accounts array in `accounts`.
 
 That's it! Let's see what a full migration might look like:
 
