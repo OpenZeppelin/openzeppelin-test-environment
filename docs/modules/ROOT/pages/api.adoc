@@ -1,6 +1,6 @@
 = API Reference
 
-`test-environment` exposes a number of variables that are used to interact with the local testing blockchain it setups. These are described in detail here:
+`test-environment` exposes a number of variables that are used to interact with the local testing blockchain it sets up. These are described in detail here:
 
 [source,javascript]
 ----
@@ -31,13 +31,13 @@ await myToken.transfer(receiver, 100, { from: sender });
 defaultSender: string
 ----
 
-A special account that is used by contracts created via `contract` when no account is specified for a transaction (i.e. there is no explicit `from`). This account is _not_ included in `accounts` to prevent accidental bugs during testing: whenever you want an account to make an action (deploy a contract, transfer ownership, etc.) you should be explicit about the sender of the transaction:
+A special account that is used by contracts created via `contract` when no account is specified for a transaction (i.e. there is no explicit `from`). This account is _not_ included in `accounts` to prevent accidental bugs during testing: whenever you want an account to make an action (deploy a contract, transfer ownership, etc.) you should be explicit about the sender of the transaction:
 
 [source,javascript]
 ----
 const [ owner ] = accounts;
 
-// The depoloyment will be made by 'defaultSender' (not 'owner'!), making it
+// The deployment will be made by 'defaultSender' (not 'owner'!), making it
 // the contract's owner
 const myContract = await Ownable.new();
 
@@ -71,7 +71,7 @@ NOTE: Head over to the xref:contract-loader::index.adoc[documentation for Contra
 
 == web3
 
-A https://www.npmjs.com/package/web3[`web3`] instance, connected to the local testing blockchain. Useful to access utiltiies like `web3.eth.sign`, `web3.eth.getTransaction`, or `web3.utils.sha3`.
+A https://www.npmjs.com/package/web3[`web3`] instance, connected to the local testing blockchain. Useful to access utilities like `web3.eth.sign`, `web3.eth.getTransaction`, or `web3.utils.sha3`.
 
 == provider
 
