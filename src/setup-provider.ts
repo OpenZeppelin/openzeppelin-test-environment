@@ -1,5 +1,4 @@
 import Web3 from 'web3';
-// @ts-expect-error
 import { provider } from 'web3-core';
 
 import TestProvider from './test-provider';
