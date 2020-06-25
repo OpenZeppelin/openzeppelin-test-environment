@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "compile": "npx oz compile",
-    "test": "npm run compile && npx mocha --exit --timeout 10000",
+    "test": "npm run compile && npx mocha --exit --timeout 10000 && npm run coverage && rm -rf ./coverage && rm -rf ./coverage.json",
     "coverage": "node ./coverage.js"
   },
   "author": "",
