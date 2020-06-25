@@ -1,10 +1,29 @@
+import { fork, execSync } from 'child_process';
+import path from 'path';
+import fs from 'fs';
+
+export function cleanUp(): void {
+  if (fs.existsSync('./contracts-backup/')) {
+    execSync('cp -rf ./contracts-backup/ ./contracts');
+  }
+  execSync('rm -rf ./contracts-backup/');
+  execSync('rm -rf ./build/contracts/');
+  execSync('rm -rf ./.coverage_artifacts/');
+  execSync('rm -rf ./.coverage_contracts/');
+}
+
+['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach((signal) =>
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  process.on(signal, () => {
+    cleanUp();
+    process.exit();
+  }),
+);
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 export async function runCoverage(skipFiles: string[], compileCommand: string, testCommand: string): Promise<void> {
-  const { promisify } = require('util');
-  const { fork } = require('child_process');
-  const exec = promisify(require('child_process').exec);
   const client = require('ganache-cli');
-  const path = require('path');
   const CoverageAPI = require('solidity-coverage/api');
   const utils = require('solidity-coverage/utils');
 
@@ -27,11 +46,11 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
     utils.save(instrumented, config.contractsDir, tempContractsDir);
 
     // backup original contracts
-    await exec('cp -rf ./contracts/ ./contracts-backup');
-    await exec(`cp -rf ./.coverage_contracts/ ./contracts`);
+    execSync('cp -rf ./contracts/ ./contracts-backup');
+    execSync(`cp -rf ./.coverage_contracts/ ./contracts`);
 
     // compile instrumented contracts
-    await exec(compileCommand);
+    execSync(compileCommand);
 
     // run tests
     const fokred = fork(testCommand.split(' ')[0], testCommand.split(' ').slice(1), {
@@ -61,9 +80,7 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
   } catch (e) {
     console.log(e);
   } finally {
-    utils.finish(config, api);
-    await exec('cp -rf ./contracts-backup/ ./contracts');
-    await exec('rm -rf ./contracts-backup/');
-    await exec('rm -rf ./build/contracts/');
+    await utils.finish(config, api);
+    cleanUp();
   }
 }
