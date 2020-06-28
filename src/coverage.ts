@@ -1,3 +1,4 @@
+import { once } from 'events';
 import { fork, execSync } from 'child_process';
 import path from 'path';
 import fs from 'fs';
@@ -61,7 +62,7 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
       },
     });
 
-    const accounts = await new Promise((resolve): unknown => fokred.once('message', resolve));
+    const [accounts] = await once(fokred, 'message');
     api.providerOptions = { accounts: accounts };
 
     // run Ganache
@@ -71,12 +72,10 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
     fokred.send(address);
 
     // wait for the tests to finish
-    await new Promise((resolve): unknown => fokred.once('close', resolve));
+    await once(fokred, 'close');
 
     // write a report
     await api.report();
-    // put original source code back
-    return Promise.resolve();
   } catch (e) {
     console.log(e);
   } finally {
