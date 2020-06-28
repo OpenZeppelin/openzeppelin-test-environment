@@ -1,16 +1,17 @@
 import { once } from 'events';
 import { fork, execSync } from 'child_process';
 import path from 'path';
-import fs from 'fs';
+import { existsSync, renameSync } from 'fs';
+import { removeSync, moveSync } from 'fs-extra';
 
 export function cleanUp(): void {
-  if (fs.existsSync('./contracts-backup/')) {
-    execSync('cp -rf ./contracts-backup/ ./contracts');
+  if (existsSync('./contracts-backup/')) {
+    moveSync('./contracts-backup', './contracts', { overwrite: true });
   }
-  execSync('rm -rf ./contracts-backup/');
-  execSync('rm -rf ./build/contracts/');
-  execSync('rm -rf ./.coverage_artifacts/');
-  execSync('rm -rf ./.coverage_contracts/');
+  removeSync('./contracts-backup/');
+  removeSync('./build/contracts/');
+  removeSync('./.coverage_artifacts/');
+  removeSync('./.coverage_contracts/');
 }
 
 ['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach((signal) =>
@@ -47,8 +48,8 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
     utils.save(instrumented, config.contractsDir, tempContractsDir);
 
     // backup original contracts
-    execSync('cp -rf ./contracts/ ./contracts-backup');
-    execSync(`cp -rf ./.coverage_contracts/ ./contracts`);
+    renameSync('./contracts/', './contracts-backup');
+    renameSync('./.coverage_contracts/', './contracts/');
 
     // compile instrumented contracts
     execSync(compileCommand);
