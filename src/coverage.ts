@@ -2,7 +2,7 @@ import { once } from 'events';
 import { fork, execSync } from 'child_process';
 import path from 'path';
 import { existsSync, renameSync } from 'fs';
-import { removeSync, moveSync } from 'fs-extra';
+import { removeSync, moveSync, copySync } from 'fs-extra';
 import exitHook from 'exit-hook';
 
 export function cleanUp(): void {
@@ -42,8 +42,8 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
     utils.save(instrumented, config.contractsDir, tempContractsDir);
 
     // backup original contracts
-    renameSync('./contracts/', './contracts-backup');
-    renameSync('./.coverage_contracts/', './contracts/');
+    copySync('./contracts/', './contracts-backup', { overwrite: true });
+    copySync('./.coverage_contracts/', './contracts/', { overwrite: true });
 
     // compile instrumented contracts
     execSync(compileCommand);
