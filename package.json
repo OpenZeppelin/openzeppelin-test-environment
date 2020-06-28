@@ -66,6 +66,7 @@
     "@types/web3": "1.0.19",
     "ansi-colors": "^4.1.1",
     "ethereumjs-wallet": "^0.6.3",
+    "exit-hook": "^2.2.0",
     "find-up": "^4.1.0",
     "fs-extra": "^9.0.1",
     "ganache-core": "^2.8.0",

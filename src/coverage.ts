@@ -3,6 +3,7 @@ import { fork, execSync } from 'child_process';
 import path from 'path';
 import { existsSync, renameSync } from 'fs';
 import { removeSync, moveSync } from 'fs-extra';
+import exitHook from 'exit-hook';
 
 export function cleanUp(): void {
   if (existsSync('./contracts-backup/')) {
@@ -14,14 +15,7 @@ export function cleanUp(): void {
   removeSync('./.coverage_contracts/');
 }
 
-['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach((signal) =>
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  process.on(signal, () => {
-    cleanUp();
-    process.exit();
-  }),
-);
+exitHook(cleanUp);
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 export async function runCoverage(skipFiles: string[], compileCommand: string, testCommand: string[]): Promise<void> {
