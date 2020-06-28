@@ -79,6 +79,7 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
     await api.report();
   } catch (e) {
     console.log(e);
+    process.exitCode = 1;
   } finally {
     await utils.finish(config, api);
     cleanUp();
