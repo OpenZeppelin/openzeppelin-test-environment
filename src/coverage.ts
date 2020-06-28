@@ -24,7 +24,7 @@ export function cleanUp(): void {
 );
 
 /* eslint-disable @typescript-eslint/no-var-requires */
-export async function runCoverage(skipFiles: string[], compileCommand: string, testCommand: string): Promise<void> {
+export async function runCoverage(skipFiles: string[], compileCommand: string, testCommand: string[]): Promise<void> {
   const client = require('ganache-cli');
   const CoverageAPI = require('solidity-coverage/api');
   const utils = require('solidity-coverage/utils');
@@ -55,7 +55,7 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
     execSync(compileCommand);
 
     // run tests
-    const fokred = fork(testCommand.split(' ')[0], testCommand.split(' ').slice(1), {
+    const fokred = fork(testCommand[0], testCommand.slice(1), {
       env: {
         ...process.env,
         cwd: __dirname,
