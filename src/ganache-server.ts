@@ -29,7 +29,7 @@ process.once('message', (options: NodeOptions) => {
   // processes of test-environment may be run in parallel.
   // It also means however that the port (and therefore host URL) is not
   // available until the server finishes initialization.
-  server.listen(undefined, function (err: unknown) {
+  server.listen(options.port, function (err: unknown) {
     if (err) {
       send({ type: 'error' });
     } else {
