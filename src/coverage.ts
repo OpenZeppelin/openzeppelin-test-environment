@@ -9,7 +9,6 @@ export function cleanUp(): void {
   if (existsSync('./contracts-backup/')) {
     moveSync('./contracts-backup', './contracts', { overwrite: true });
   }
-  removeSync('./contracts-backup/');
   removeSync('./build/contracts/');
   removeSync('./.coverage_artifacts/');
   removeSync('./.coverage_contracts/');
