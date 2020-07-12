@@ -1,4 +1,5 @@
 import { once } from 'events';
+import { log } from './log';
 import { fork, execSync } from 'child_process';
 import path from 'path';
 import { existsSync } from 'fs';
@@ -17,13 +18,12 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
     workingDir: process.cwd(),
     contractsDir: path.join(process.cwd(), 'contracts'),
     logger: {
-      log: (msg: string): void => console.log(msg),
+      log: (msg: string): void => log(msg),
     },
   };
 
   try {
     const { tempContractsDir, tempArtifactsDir } = utils.getTempLocations(config);
-    console.log(tempContractsDir, tempArtifactsDir);
 
     function cleanUp(): void {
       if (existsSync('./contracts-backup/')) {
@@ -74,7 +74,7 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
     // write a report
     await api.report();
   } catch (e) {
-    console.log(e);
+    log(e);
     process.exitCode = 1;
   } finally {
     await utils.finish(config, api);
