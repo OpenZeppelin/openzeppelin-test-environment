@@ -43,8 +43,8 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
     utils.save(skipped, config.contractsDir, tempContractsDir);
 
     // backup original contracts
-    copySync('./contracts/', './contracts-backup', { overwrite: true });
-    copySync('./.coverage_contracts/', './contracts/', { overwrite: true });
+    moveSync('./contracts/', './contracts-backup');
+    moveSync(tempContractsDir, './contracts/');
 
     // compile instrumented contracts
     execSync(compileCommand);
