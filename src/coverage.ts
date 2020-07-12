@@ -39,9 +39,10 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
 
     utils.setupTempFolders(config, tempContractsDir, tempArtifactsDir);
 
-    const { targets } = utils.assembleFiles(config, skipFiles);
+    const { targets, skipped } = utils.assembleFiles(config, skipFiles);
     const instrumented = api.instrument(targets);
     utils.save(instrumented, config.contractsDir, tempContractsDir);
+    utils.save(skipped, config.contractsDir, tempContractsDir);
 
     // backup original contracts
     copySync('./contracts/', './contracts-backup', { overwrite: true });
