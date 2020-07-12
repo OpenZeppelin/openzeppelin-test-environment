@@ -2,7 +2,7 @@ import { once } from 'events';
 import { fork, execSync } from 'child_process';
 import path from 'path';
 import { existsSync } from 'fs';
-import { removeSync, moveSync, copySync } from 'fs-extra';
+import { removeSync, moveSync } from 'fs-extra';
 import exitHook from 'exit-hook';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -29,7 +29,6 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
       if (existsSync('./contracts-backup/')) {
         moveSync('./contracts-backup', './contracts', { overwrite: true });
       }
-      removeSync('./contracts-backup/');
       removeSync('./build/contracts/');
       removeSync(tempArtifactsDir);
       removeSync(tempContractsDir);
@@ -45,8 +44,8 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
     utils.save(skipped, config.contractsDir, tempContractsDir);
 
     // backup original contracts
-    copySync('./contracts/', './contracts-backup', { overwrite: true });
-    copySync(tempContractsDir, './contracts/', { overwrite: true });
+    moveSync('./contracts/', './contracts-backup');
+    moveSync(tempContractsDir, './contracts/');
 
     // compile instrumented contracts
     execSync(compileCommand);
