@@ -1,21 +1,9 @@
 import { once } from 'events';
 import { fork, execSync } from 'child_process';
 import path from 'path';
-import { existsSync, renameSync } from 'fs';
+import { existsSync } from 'fs';
 import { removeSync, moveSync, copySync } from 'fs-extra';
 import exitHook from 'exit-hook';
-
-export function cleanUp(): void {
-  if (existsSync('./contracts-backup/')) {
-    moveSync('./contracts-backup', './contracts', { overwrite: true });
-  }
-  removeSync('./contracts-backup/');
-  removeSync('./build/contracts/');
-  removeSync('./.coverage_artifacts/');
-  removeSync('./.coverage_contracts/');
-}
-
-exitHook(cleanUp);
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 export async function runCoverage(skipFiles: string[], compileCommand: string, testCommand: string[]): Promise<void> {
@@ -35,6 +23,20 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
 
   try {
     const { tempContractsDir, tempArtifactsDir } = utils.getTempLocations(config);
+    console.log(tempContractsDir, tempArtifactsDir);
+
+    function cleanUp(): void {
+      if (existsSync('./contracts-backup/')) {
+        moveSync('./contracts-backup', './contracts', { overwrite: true });
+      }
+      removeSync('./contracts-backup/');
+      removeSync('./build/contracts/');
+      removeSync(tempArtifactsDir);
+      removeSync(tempContractsDir);
+    }
+
+    exitHook(cleanUp);
+
     utils.setupTempFolders(config, tempContractsDir, tempArtifactsDir);
 
     const { targets } = utils.assembleFiles(config, skipFiles);
@@ -43,13 +45,13 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
 
     // backup original contracts
     copySync('./contracts/', './contracts-backup', { overwrite: true });
-    copySync('./.coverage_contracts/', './contracts/', { overwrite: true });
+    copySync(tempContractsDir, './contracts/', { overwrite: true });
 
     // compile instrumented contracts
     execSync(compileCommand);
 
     // run tests
-    const fokred = fork(testCommand[0], testCommand.slice(1), {
+    const forked = fork(testCommand[0], testCommand.slice(1), {
       env: {
         ...process.env,
         cwd: __dirname,
@@ -57,17 +59,17 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
       },
     });
 
-    const [accounts] = await once(fokred, 'message');
+    const [accounts] = await once(forked, 'message');
     api.providerOptions = { accounts: accounts };
 
     // run Ganache
     const address = await api.ganache();
 
     // start test-env tests
-    fokred.send(address);
+    forked.send(address);
 
     // wait for the tests to finish
-    await once(fokred, 'close');
+    await once(forked, 'close');
 
     // write a report
     await api.report();
@@ -76,6 +78,5 @@ export async function runCoverage(skipFiles: string[], compileCommand: string, t
     process.exitCode = 1;
   } finally {
     await utils.finish(config, api);
-    cleanUp();
   }
 }
