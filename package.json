@@ -43,6 +43,7 @@
   "homepage": "https://github.com/OpenZeppelin/openzeppelin-test-environment#readme",
   "devDependencies": {
     "@openzeppelin/docs-utils": "^0.1.0",
+    "@types/fs-extra": "^9.0.1",
     "@types/jest": "^24.0.23",
     "@types/lodash.merge": "^4.6.6",
     "@types/node": "^12.12.7",
@@ -65,7 +66,9 @@
     "@types/web3": "1.0.19",
     "ansi-colors": "^4.1.1",
     "ethereumjs-wallet": "^0.6.3",
+    "exit-hook": "^2.2.0",
     "find-up": "^4.1.0",
+    "fs-extra": "^9.0.1",
     "ganache-core": "^2.8.0",
     "lodash.merge": "^4.6.2",
     "p-queue": "^6.2.0",

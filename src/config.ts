@@ -1,9 +1,8 @@
 import fs from 'fs';
 import findUp from 'find-up';
 import merge from 'lodash.merge';
-import tryRequire from 'try-require';
 
-import { log, warn } from './log';
+import { warn } from './log';
 
 import { Provider } from 'web3/providers';
 
@@ -54,7 +53,7 @@ const defaultConfig: Config = {
   },
 };
 
-function getConfig(): Config {
+export function getConfig(): Config {
   const location = findUp.sync(CONFIG_FILE, { type: 'file' });
   const providedConfig: Partial<Config> = location !== undefined && fs.existsSync(location) ? require(location) : {};
 
@@ -83,26 +82,13 @@ function getConfig(): Config {
   if (config.gasPrice !== undefined) config.node.gasPrice = config.gasPrice;
   if (config.blockGasLimit) config.node.gasLimit = config.blockGasLimit;
 
-  if (config.node.gasPrice !== undefined) config.node.gasPrice = `0x${config.node.gasPrice.toString(16)}`;
+  if (config.node.gasPrice !== undefined && typeof config.node.gasPrice !== 'string')
+    config.node.gasPrice = `0x${config.node.gasPrice.toString(16)}`;
 
   if (process.env.OZ_TEST_ENV_COVERAGE !== undefined) {
-    const coveragePath = tryRequire.resolve('ganache-core-coverage');
-    if (coveragePath === undefined) {
-      throw new Error(`Package 'ganache-core-coverage' is required for coverage runs.`);
-    }
-
-    log('Running on coverage mode: overriding some configuration values');
     config.coverage = true;
-
-    // Solidity coverage causes transactions to require much more gas. We need to:
-    //  1. increase the block gas limit so that transactions don't go over it
-    //  2. increase how much gas transactions send by default
-    //  3. reduce the gas price to prevent the account's funds from being affected by this too much
-
-    config.blockGasLimit = 0xfffffffffffff;
-    config.contracts.defaultGas = config.blockGasLimit * 0.75;
+    config.contracts.defaultGas = 0xffffffffff;
     config.contracts.defaultGasPrice = 1;
-    config.gasPrice = 1;
   }
 
   return config;

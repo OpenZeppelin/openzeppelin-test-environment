@@ -5,14 +5,17 @@
   "main": "index.js",
   "scripts": {
     "compile": "npx oz compile",
-    "test": "npm run compile && npx mocha --exit --timeout 10000"
+    "test": "npm run compile && npx mocha --exit --timeout 10000 && npm run coverage && rm -rf ./coverage && rm -rf ./coverage.json",
+    "coverage": "node ./coverage.js"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "chai": "^4.2.0",
+    "ganache-cli": "^6.9.1",
     "mocha": "^6.2.0",
     "prettier": "^1.18.2",
+    "solidity-coverage": "^0.7.7",
     "web3": "^1.2.1"
   },
   "dependencies": {
