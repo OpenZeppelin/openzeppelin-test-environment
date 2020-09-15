@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 0.1.5 (unreleased)
 ### Added
-- Support for [solidity-coverage](https://github.com/sc-forks/solidity-coverage).
+- Added support for [solidity-coverage](https://github.com/sc-forks/solidity-coverage).
+- Bumped ganache-core to 2.11.2.
 
 ## 0.1.4 (2020-04-15)
 ### Added
