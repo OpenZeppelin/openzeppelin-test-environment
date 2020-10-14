@@ -4,7 +4,7 @@ Test Environment's scope is much smaller than Truffle's: it is only a _testing l
 
 Despite this, it is still quite simple to migrate from a `truffle test`-based suite. Doing the whole process on the xref:contracts::index.adoc[*OpenZeppelin Contracts*] repository took less than thirty minutes!
 
-NOTE: We will only be replacing `truffle test` in this guide. If you want to, you can continue using other Truffle commands such as `truffle compile`, `truffle migrate` or `truffle console`.
+NOTE: We will only be replacing `truffle test` in this guide. You can continue using other Truffle commands such as `truffle compile`, `truffle migrate` or `truffle console`.
 
 == Installing Dependencies
 
@@ -84,7 +84,7 @@ You will notice your tests start executing almost immediately: the xref:contract
 
 Enjoy lightning fast testing!
 
-NOTE: Unlike Truffle, Test Environment will not compile your contracts. You can do this manually with `truffle compile`, or use xref:getting-started.adoc#compiling[the *OpenZeppelin CLI*] for faster compilation times.
+NOTE: Unlike Truffle, Test Environment will not compile your contracts. You can do this manually with `truffle compile`.
 
 == Learn More
 

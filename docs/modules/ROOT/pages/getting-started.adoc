@@ -138,11 +138,10 @@ $ npm test -- --bail
 [[compiling]]
 == Compiling your Contracts
 
-Test Environment requires your contracts to be compiled: you can use the xref:cli::index.adoc[*OpenZeppelin CLI*] to do this.
+Test Environment requires your contracts to be compiled: you can use https://www.trufflesuite.com/docs/truffle/getting-started/compiling-contracts[*Truffle*] to do this.
 
 ```bash
-$ npm install --save-dev @openzeppelin/cli
-$ npx oz compile
+$ npx truffle compile
 ```
 
 Compilation artifacts will be stored in the `build/contracts` directory, where Test Environment (and most other tools) will read them from.
@@ -155,7 +154,7 @@ You can set your project to recompile all contracts when running tests by adding
 // package.json
 
 "scripts": {
-  "test": "oz compile && mocha --exit --recursive"
+  "test": "truffle compile && mocha --exit --recursive"
 }
 ```
 ====
