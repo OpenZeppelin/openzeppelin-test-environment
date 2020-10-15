@@ -23,6 +23,7 @@ export type Config = {
     allowUnlimitedContractSize?: boolean;
     // {url:port@blocknumber} for example http://localhost:8545@1599200
     fork?: string;
+    port?: number;
     unlocked_accounts?: string[];
   };
 };

@@ -27,6 +27,7 @@ export type NodeOptions = {
   gasLimit?: number;
   allowUnlimitedContractSize?: boolean;
   fork?: string;
+  port?: number;
   unlocked_accounts?: string[];
 };
 
