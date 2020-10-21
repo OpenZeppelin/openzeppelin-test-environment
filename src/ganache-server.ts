@@ -1,15 +1,19 @@
 import ganache from 'ganache-core';
+import events from 'events';
 
-import { Message, NodeOptions } from './setup-ganache';
+import type { Message, NodeOptions } from './setup-ganache';
+import type { Server } from 'net';
 
 function send(msg: Message): void {
   if (process.send === undefined) {
     throw new Error('Module must be started through child_process.fork');
   }
-  process.send(msg);
+  process.send(msg, (err: Error) => {
+    if (err) process.exit();
+  });
 }
 
-function setupServer(nodeOptions: NodeOptions): any {
+function setupServer(nodeOptions: NodeOptions): Server {
   if (!nodeOptions.coverage) {
     return ganache.server(nodeOptions);
   } else {
@@ -21,23 +25,29 @@ function setupServer(nodeOptions: NodeOptions): any {
   }
 }
 
-process.once('message', (options: NodeOptions) => {
+process.once('message', async (options: NodeOptions) => {
   const server = setupServer(options);
+
+  process.on('disconnect', () => {
+    server.close();
+  });
 
   // An undefined port number makes ganache-core choose a random free port,
   // which plays nicely with environments such as jest and ava, where multiple
   // processes of test-environment may be run in parallel.
   // It also means however that the port (and therefore host URL) is not
   // available until the server finishes initialization.
-  server.listen(undefined, function (err: unknown) {
-    if (err) {
-      send({ type: 'error' });
-    } else {
-      send({ type: 'ready', port: server.address().port });
-    }
-  });
+  server.listen(undefined);
 
-  process.on('disconnect', () => {
-    server.close();
-  });
+  try {
+    await events.once(server, 'listening');
+    const addr = server.address();
+    if (typeof addr === 'object' && addr !== null) {
+      send({ type: 'ready', port: addr.port });
+    } else {
+      send({ type: 'error' });
+    }
+  } catch (err) {
+    send({ type: 'error' });
+  }
 });
