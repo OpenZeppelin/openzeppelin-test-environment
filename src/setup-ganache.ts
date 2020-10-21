@@ -1,6 +1,5 @@
 import path from 'path';
 import { fork, ChildProcess } from 'child_process';
-import events from 'events';
 
 import { accountsConfig } from './accounts';
 import config from './config';
@@ -50,7 +49,13 @@ export default async function (): Promise<string> {
     };
     server.send(options);
 
-    const [message]: Message[] = await events.once(server, 'message');
+    const messageReceived: Promise<Message> = new Promise(
+      (resolve): ChildProcess => {
+        return server.once('message', resolve);
+      },
+    );
+
+    const message = await messageReceived;
 
     switch (message.type) {
       case 'ready':
