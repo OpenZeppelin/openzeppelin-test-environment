@@ -1,6 +1,6 @@
 {
   "name": "@openzeppelin/test-environment",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "One-line setup for an awesome testing experience.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
