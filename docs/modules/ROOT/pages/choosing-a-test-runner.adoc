@@ -12,7 +12,7 @@ We recommend picking one of the following:
 
 NOTE: Both Jest and Ava have their own assertions library, but for Mocha, you may want to also use https://www.chaijs.com[Chai].
 
-=== Example Contract
+== Example Contract
 
 To showcase the different runners, we will write tests for the following contract using each one.
 
