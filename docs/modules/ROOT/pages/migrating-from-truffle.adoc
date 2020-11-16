@@ -25,8 +25,8 @@ Don't forget to make Mocha the entry point of your test suite once you install i
 // package.json
 
  "scripts": {
--  "test": "npx truffle test"
-+  "test": "npx mocha --exit --recursive"
+-  "test": "truffle test"
++  "test": "mocha --exit --recursive"
  }
 ----
 
