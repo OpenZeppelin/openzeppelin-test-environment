@@ -39,13 +39,9 @@ export default async function (): Promise<string> {
       execArgv: process.execArgv.filter((opt) => opt !== '--inspect'),
     });
 
-    const gasPrice = typeof config.node.gasPrice === 'string' ? config.node.gasPrice : undefined;
-
     const options: NodeOptions = {
-      ...config.node,
-      gasPrice,
       accounts: accountsConfig,
-      coverage: config.coverage,
+      coverage: false,
     };
     server.send(options);
 

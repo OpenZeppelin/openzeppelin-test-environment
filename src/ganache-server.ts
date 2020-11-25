@@ -3,6 +3,7 @@ import events from 'events';
 
 import type { Message, NodeOptions } from './setup-ganache';
 import type { Server } from 'net';
+import { Config, getConfig } from './config';
 
 function send(msg: Message): void {
   if (process.send === undefined) {
@@ -13,7 +14,7 @@ function send(msg: Message): void {
   });
 }
 
-function setupServer(nodeOptions: NodeOptions): Server {
+function setupServer(nodeOptions: any): Server {
   if (!nodeOptions.coverage) {
     return ganache.server(nodeOptions);
   } else {
@@ -26,7 +27,8 @@ function setupServer(nodeOptions: NodeOptions): Server {
 }
 
 process.once('message', async (options: NodeOptions) => {
-  const server = setupServer(options);
+  const config: Config = getConfig();
+  const server: Server = setupServer({...options, ...config.node});
 
   process.on('disconnect', () => {
     server.close();
