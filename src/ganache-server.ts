@@ -3,6 +3,7 @@ import events from 'events';
 
 import type { Message, NodeOptions } from './setup-ganache';
 import type { Server } from 'net';
+import { getConfig } from './config';
 
 function send(msg: Message): void {
   if (process.send === undefined) {
@@ -26,7 +27,8 @@ function setupServer(nodeOptions: NodeOptions): Server {
 }
 
 process.once('message', async (options: NodeOptions) => {
-  const server = setupServer(options);
+  const config = getConfig();
+  const server = setupServer({ ...options, ...config.node });
 
   process.on('disconnect', () => {
     server.close();
