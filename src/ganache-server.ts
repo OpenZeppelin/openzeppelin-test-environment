@@ -14,7 +14,7 @@ function send(msg: Message): void {
   });
 }
 
-function setupServer(nodeOptions: any): Server {
+function setupServer(nodeOptions: NodeOptions): Server {
   if (!nodeOptions.coverage) {
     return ganache.server(nodeOptions);
   } else {

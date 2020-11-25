@@ -10,7 +10,7 @@ const CONFIG_FILE = 'test-environment.config.js';
 
 const configHelpUrl = 'https://zpl.in/test-env-config';
 
-export type Config = {
+interface InputConfig {
   accounts: { amount: number; ether: number };
   contracts: { type: string; defaultGas: number; defaultGasPrice: number; artifactsDir: string };
   blockGasLimit?: number;
@@ -25,11 +25,17 @@ export type Config = {
     fork?: string;
     unlocked_accounts?: string[];
   };
+}
+
+export type Config = InputConfig & {
+  node: {
+    gasPrice?: string;
+  };
 };
 
 export const DEFAULT_BLOCK_GAS_LIMIT = 8e6;
 
-const defaultConfig: Config = {
+const defaultConfig: InputConfig = {
   accounts: {
     amount: 10,
     ether: 100,
@@ -55,7 +61,8 @@ const defaultConfig: Config = {
 
 export function getConfig(): Config {
   const location = findUp.sync(CONFIG_FILE, { type: 'file' });
-  const providedConfig: Partial<Config> = location !== undefined && fs.existsSync(location) ? require(location) : {};
+  const providedConfig: Partial<InputConfig> =
+    location !== undefined && fs.existsSync(location) ? require(location) : {};
 
   if (providedConfig.blockGasLimit !== undefined) {
     warn(`blockGasLimit is deprecated. Use node.gasLimit instead. See ${configHelpUrl} for details.`);
@@ -77,7 +84,7 @@ export function getConfig(): Config {
     );
   }
 
-  const config: Config = merge(defaultConfig, providedConfig);
+  const config: InputConfig = merge(defaultConfig, providedConfig);
 
   if (config.gasPrice !== undefined) config.node.gasPrice = config.gasPrice;
   if (config.blockGasLimit) config.node.gasLimit = config.blockGasLimit;
@@ -91,7 +98,7 @@ export function getConfig(): Config {
     config.contracts.defaultGasPrice = 1;
   }
 
-  return config;
+  return config as Config;
 }
 
 export default getConfig();
