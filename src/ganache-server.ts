@@ -28,7 +28,7 @@ function setupServer(nodeOptions: any): Server {
 
 process.once('message', async (options: NodeOptions) => {
   const config: Config = getConfig();
-  const server: Server = setupServer({...options, ...config.node});
+  const server: Server = setupServer({ ...options, ...config.node });
 
   process.on('disconnect', () => {
     server.close();
