@@ -1,17 +1,15 @@
 import PQueue from 'p-queue';
 
 import Web3 from 'web3';
-import type { AbstractProvider } from 'web3-core';
-import type { JsonRpcPayload, JsonRpcResponse } from 'web3-core-helpers';
+import type { JsonRpcPayload } from 'web3-core-helpers';
+import type { Provider, JsonRpcCallback } from './provider';
 
 import setupGanache from './setup-ganache';
 import config from './config';
 
-type JsonRpcCallback = (error: Error | null, result?: JsonRpcResponse) => void;
-
-export default class TestProvider implements AbstractProvider {
+export default class TestProvider implements Provider {
   private queue: PQueue;
-  private wrappedProvider?: AbstractProvider;
+  private wrappedProvider?: Provider;
   sendAsync: (payload: JsonRpcPayload, callback: JsonRpcCallback) => void;
 
   constructor() {
@@ -22,10 +20,10 @@ export default class TestProvider implements AbstractProvider {
       // Setup node
       const url = await setupGanache();
       // Create base provider (connection to node)
-      const baseProvider = new Web3(url).eth.currentProvider;
+      const baseProvider = new Web3(url).eth.currentProvider as Provider;
 
       // Create a custom provider (e.g. GSN provider) and wrap it
-      this.wrappedProvider = await config.setupProvider(baseProvider as AbstractProvider);
+      this.wrappedProvider = await config.setupProvider(baseProvider);
     });
   }
 
@@ -33,7 +31,7 @@ export default class TestProvider implements AbstractProvider {
     this.queue.onIdle().then(() => {
       // wrapped provider is always not a null due to PQueue running the provider initialization
       // before any send calls yet TypeScript can't possibly knows that
-      this.wrappedProvider?.sendAsync(payload, callback);
+      this.wrappedProvider?.send(payload, callback);
     });
   }
 }

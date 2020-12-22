@@ -3,8 +3,7 @@ import findUp from 'find-up';
 import merge from 'lodash.merge';
 
 import { warn } from './log';
-
-import type { AbstractProvider } from 'web3-core';
+import type { Provider } from './provider';
 
 const CONFIG_FILE = 'test-environment.config.js';
 
@@ -15,7 +14,7 @@ interface InputConfig {
   contracts: { type: string; defaultGas: number; defaultGasPrice: number; artifactsDir: string };
   blockGasLimit?: number;
   gasPrice?: number;
-  setupProvider: (baseProvider: AbstractProvider) => Promise<AbstractProvider>;
+  setupProvider: (baseProvider: Provider) => Promise<Provider>;
   coverage: boolean;
   node: {
     gasLimit?: number;
