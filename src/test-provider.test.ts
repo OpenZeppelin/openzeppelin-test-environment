@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 import PQueue from 'p-queue';
-import { JsonRPCRequest, Callback, JsonRPCResponse } from 'web3/providers';
+import type { JsonRpcPayload } from 'web3-core-helpers';
 
 import { mocked } from 'ts-jest/utils';
 
@@ -37,14 +37,14 @@ describe('TestProvider class', (): void => {
   });
 
   it('sends a request', async () => {
-    const request: JsonRPCRequest = {
+    const request: JsonRpcPayload = {
       jsonrpc: '2.0',
       method: 'web3_getAllTheMoney',
       params: [],
       id: 324,
     };
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const callback: Callback<JsonRPCResponse> = function () {};
+    const callback = (): void => {};
 
     // @ts-ignore
     provider.queue.onIdle = jest.fn((): Promise<void> => Promise.resolve());

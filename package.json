@@ -63,7 +63,6 @@
   "dependencies": {
     "@openzeppelin/contract-loader": "^0.6.1",
     "@truffle/contract": "^4.0.38",
-    "@types/web3": "1.0.19",
     "ansi-colors": "^4.1.1",
     "ethereumjs-wallet": "^0.6.3",
     "exit-hook": "^2.2.0",
@@ -74,6 +73,6 @@
     "p-queue": "^6.2.0",
     "semver": "^7.1.3",
     "try-require": "^1.2.1",
-    "web3": "1.2.2"
+    "web3": "^1.3.0"
   }
 }
