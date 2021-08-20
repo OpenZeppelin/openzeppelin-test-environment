@@ -1,3 +1,5 @@
+> :warning: **This project is not being actively maintained.** It is advisable to use an alternative ([Hardhat](https://hardhat.org/), [Truffle](https://www.trufflesuite.com/truffle)).
+
 # OpenZeppelin Test Environment
 
 [![Docs](https://img.shields.io/badge/docs-%F0%9F%93%84-blue)](https://docs.openzeppelin.com/test-environment)
